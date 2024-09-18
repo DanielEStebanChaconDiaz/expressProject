@@ -3,6 +3,7 @@ const passport = require('passport');
 const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
+const googleRoutes = require('../server/routes/googleRoutes');
 const app = express();
 //const path = require('path');
 require('dotenv').config();
@@ -12,13 +13,14 @@ connectMongoDB();
 app.use(express.json());
 
 app.use(session({
-    secret: 'your-secret-key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
   }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
+app.use(googleRoutes);
 
 
 
