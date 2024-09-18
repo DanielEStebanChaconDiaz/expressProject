@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const UsuarioSchema = new mongoose.Schema({
+  fotoPerfil: {type: String, sparse: true},
   nombreUsuario: { type: String, unique: true, sparse: true },
-  correoElectronico: { type: String, unique: true, sparse: true },
+  correoElectronico: { type: String, sparse: true },
   celular: { type: String, unique: true, sparse: true },
   contrasena: { type: String },
   sexo: { type: String },
@@ -18,9 +19,6 @@ const UsuarioSchema = new mongoose.Schema({
   facebookId: { type: String, unique: true, sparse: true },
   googleId: { type: String, unique: true, sparse: true },
   instagramId: { type: String, unique: true, sparse: true },
-  
-  // Campo para almacenar el avatar del usuario
-  avatarUrl: { type: String },
 
   // Campo para almacenar datos adicionales de proveedores de autenticación
   providerData: { type: mongoose.Schema.Types.Mixed }

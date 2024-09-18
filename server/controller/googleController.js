@@ -1,5 +1,4 @@
 const passport = require('passport');
-const path = require('path');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/user');
 
@@ -14,12 +13,14 @@ passport.use(new GoogleStrategy({
         if (!user) {
             user = new User({
                 googleId: profile.id,
-                name: profile.displayName,
-                email: profile.emails[0].value
+                nombreUsuario: profile.displayName,
+                correoElectronico: profile.emails[0].value,
+                fotoPerfil: profile.photos[0].value
             });
             await user.save();
         } else {
             user.email = profile.emails[0].value || user.email;
+            user.fotoPerfil = profile.photos[0].value || user.fotoPerfil;
             await user.save();
         }
         done(null, user);
