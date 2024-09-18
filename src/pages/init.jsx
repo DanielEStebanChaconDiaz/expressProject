@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import '../styles/login.css';
-import Login from './login';
+import '../styles/register.css';
+import Register from './register';
 
 export default function Init() {
   const animatedTextRef = useRef(null);
@@ -44,7 +44,7 @@ export default function Init() {
         />
       </div>
       <div ref={registerFormContainerRef} className="register-form-container">
-        <Login />
+        <Register />
       </div>
     </div>
   );

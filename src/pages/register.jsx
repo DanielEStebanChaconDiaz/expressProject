@@ -1,6 +1,6 @@
-import '../styles/login.css'
+import '../styles/register.css'
 
-export default function Login() {
+export default function Register() {
     return (
         <div className="container">
             <div className="container-top">
