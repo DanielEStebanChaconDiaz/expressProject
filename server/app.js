@@ -4,6 +4,7 @@ const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
+const authRoutes = require('../server/routes/authRoutes');
 const app = express();
 //const path = require('path');
 require('dotenv').config();
@@ -21,6 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
 app.use(googleRoutes);
+app.use(authRoutes);
 
 
 
