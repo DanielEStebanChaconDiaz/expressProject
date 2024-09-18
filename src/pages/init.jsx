@@ -11,10 +11,7 @@ export default function Init() {
   useEffect(() => {
     const handleAnimationEnd = () => {
       if (backgroundRef.current) {
-        backgroundRef.current.style.backgroundImage = "url('/img/familiafondo.png')";
-      }
-      if (overlayRef.current) {
-        overlayRef.current.style.backgroundColor = "rgba(80, 30, 20, 0.8)";
+        backgroundRef.current.style.backgroundImage = "url('/img/familiafondo.svg')";
       }
       setTimeout(() => {
         if (registerFormContainerRef.current) {

@@ -10,7 +10,8 @@ body, html {
 .background {
     position: relative;
     height: 100vh;
-    background-image: url('../../public/img/fondo.png');
+    background-image: url('../../public/img/fondo.svg');
+    background-color: black;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -56,12 +57,12 @@ body, html {
 }
 
 .register-form-container h2 {
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-bottom: 10px;
 }
 
 .register-form-container span {
-    color: #e6a124;
+    color: #000000;
 }
 
 .container-top{
@@ -75,11 +76,11 @@ body, html {
 
 .container-bottom{
     padding-top: 15px;
-    font-size: 1.8em;;
+    font-size: 1.5em;;
 }
 
 .container-bottom a{
-    color: orange;
+    color: rgb(0, 0, 0);
 }
 
 .social-btn {
@@ -87,7 +88,7 @@ body, html {
     width: 100%;
     padding: 15px;
     margin: 10px 0;
-    color: white;
+    /* color: white; */
     border: none;
     border-radius: 5px;
     font-size: 1em;
@@ -99,23 +100,23 @@ body, html {
     background-color: #3b2b20;
 }
 
-.fb-btn { background-color: #912b2b; }
+.fb-btn { background-color: #ffffff; }
 .fb-btn i{
     margin-right: 20px;
 }
-.insta-btn { background-color: #912b2b; }
+.insta-btn { background-color: #ffffff; }
 .insta-btn i{
     margin-right: 20px;
 }
-.gmail-btn { background-color: #912b2b; }
+.gmail-btn { background-color: #ffffff; }
 .gmail-btn i{
     margin-right: 20px;
 }
-.mail-btn { background-color: #912b2b; }
+.mail-btn { background-color: #ffffff; }
 .mail-btn i{
     margin-right: 20px;
 }
-.phone-btn { background-color: #912b2b; }
+.phone-btn { background-color: #ffffff; }
 .phone-btn i{
     margin-right: 20px;
 }

@@ -4,7 +4,7 @@ export default function Login() {
     return (
         <div className="container">
             <div className="container-top">
-            <h2>Regístrate ahora y obtén las mejores promociones en <span>artesanías peruanas</span></h2>
+            <h2>Regístrate ahora y obtén las mejores promociones en <strong>artesanías peruanas</strong></h2>
                 <button className="social-btn fb-btn">
                     <i className="fab fa-facebook-f"></i> Regístrate con Facebook
                 </button>
