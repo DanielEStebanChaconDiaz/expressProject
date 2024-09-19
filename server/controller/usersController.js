@@ -1,5 +1,6 @@
 const usuarioService = require('../services/users');
 
+
 const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await usuarioService.obtenerUsuarios();
