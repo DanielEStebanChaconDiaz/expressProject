@@ -14,27 +14,6 @@
   background-size: contain;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
-}
-.menu{
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  /* border: 1px solid red; */
-  width: 100%;
-  margin: 0;
-  background-color: black;
-  padding: 18px;
-}
-
-.menu img {
-  width: 40px;  
-}
-
 .search-bar {
   background-color: #3D3D3D;
   display: flex ;
@@ -58,27 +37,6 @@
   height: 18px;
 }
 
-.footer-nav {
-  background-color: black;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 13px;
-  border-top: 1px solid #ddd;
-  position: fixed;
-  bottom: 0;
-  width: 24.4rem;
-  height: 4.2rem;
-}
-
-.nav-item img {
-  width: 40px;  
-
-}
-
-.nav-item1 img{
-  width: 70px;
-}
 
 /*talleres*/
 /* Sección de talleres */

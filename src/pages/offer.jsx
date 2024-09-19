@@ -24,9 +24,8 @@ export default function Offer(){
           </div>
         </header>
         <section className="promociones-section">
-        <h2>Descuentos y promociones</h2>
-        <p>En cientos de artesanías</p>
-
+            <h2>Descuentos y promociones</h2>
+            <p>En cientos de artesanías</p>
         {/* Categorías */}
         <div className="categorias-carrusel">
             <div className="categorias-tabs">
