@@ -3,8 +3,9 @@
     height: 100vh;
     background-image: url('../../public/img/fondo.svg');
     background-color: rgb(255, 255, 255);
-    background-size: cover;
-    background-position: center;
+    background-size: 100%;
+    background-position: contain;
+
     background-repeat: no-repeat;
     display: flex;
     justify-content: center;
@@ -63,11 +64,28 @@ select{
     margin-right: 10px;
 }
 .continuar{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.continuar button{
+    background: none;
+    border: none;
     display: flex;
     justify-content: end;
     align-items: center;
     font-size: 1.1rem;
 }
+.continuar button p{
+    border-bottom: 1px solid black;
+}
 .bx-chevron-right{
     font-size: 1.5rem;
+}
+.bx-arrow-back{
+    position:absolute;
+    color: black;
+    font-size: 2rem;
+    top: 34px;
+    left: 0;
 }

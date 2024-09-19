@@ -1,22 +1,16 @@
 import { useEffect, useRef } from 'react';
 import '../styles/register.css';
-import Register from './register';
-
+import {useNavigate } from 'react-router-dom';
 export default function Init() {
   const animatedTextRef = useRef(null);
-  const registerFormContainerRef = useRef(null);
   const backgroundRef = useRef(null);
   const overlayRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleAnimationEnd = () => {
-      if (backgroundRef.current) {
-        backgroundRef.current.style.backgroundImage = "url('/img/familiafondo.svg')";
-      }
       setTimeout(() => {
-        if (registerFormContainerRef.current) {
-          registerFormContainerRef.current.classList.add('slide-in');
-        }
+        navigate('/register');
       }, 100);
     };
 
@@ -42,9 +36,6 @@ export default function Init() {
           alt="Animated Text" 
           className="animated-text" 
         />
-      </div>
-      <div ref={registerFormContainerRef} className="register-form-container">
-        <Register />
       </div>
     </div>
   );

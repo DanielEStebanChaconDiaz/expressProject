@@ -109,7 +109,11 @@ body, html {
     font-size: 1.5rem;
     margin-right: 20px;
 }
-
+.mail-btn a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
 
 .slide-in {
     left: 50%;
