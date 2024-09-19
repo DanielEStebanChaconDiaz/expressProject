@@ -1,6 +1,6 @@
 import '../styles/home.css'
 
-function App() {
+export default function Home() {
   const categories = [
     { name: 'Textilería', icon: '../../public/img/category1.svg' },
     { name: 'Cerámica', icon: '../../public/img/category2.svg' },
@@ -69,4 +69,4 @@ function App() {
   );
 }
 
-export default App;
+

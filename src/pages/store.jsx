@@ -1,6 +1,6 @@
 import '../styles/store.css'
 
-function App() {
+export default function Store() {
   const talleres = [
     { nombre: 'Arte Abedail Aller Escalante', lugar: 'Cusco', imagen: '../../public/img/taller-ejemplo.svg'},
     { nombre: 'Aso. de artesanos Tinkuy', lugar: 'Huánuco', imagen: '../../public/img/taller-ejemplo.svg' },
@@ -65,4 +65,3 @@ function App() {
   );
 }
 
-export default App;
