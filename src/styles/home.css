@@ -8,7 +8,9 @@
 
 
 .App {
-  padding-bottom: 50px; /* Espacio para la barra de navegación inferior */
+  padding-bottom: 50px; 
+  background-image: url('../../public/img/fondo-home.svg');
+  background-size: contain;
 }
 
 /* Header */
@@ -119,7 +121,7 @@
 
 /* Workshops */
 .workshops {
-  margin-top: 4px;
+  margin-top: 5px;
   padding: 20px;
   text-align: center;
 }
@@ -167,8 +169,3 @@
   width: 70px;
 }
 
-body{
-  background-image: url('../../public/img/fondo-home.svg');
-  background-size: contain;
-
-}
