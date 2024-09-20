@@ -2,11 +2,11 @@ const Tienda = require('../models/tienda');
 
 class TiendaService {
   async getAll() {
-    return await Tienda.find().populate('artesanoId productos talleres');
+    return await Tienda.find();
   }
 
   async getById(id) {
-    return await Tienda.findById(id).populate('artesanoId productos talleres');
+    return await Tienda.findById(id);
   }
 
   async create(data) {

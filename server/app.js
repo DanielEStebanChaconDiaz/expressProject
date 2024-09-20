@@ -8,6 +8,7 @@ const emailRoutes = require('../server/routes/emailRoutes');
 const phoneRoutes = require('../server/routes/phoneRoutes');
 const usuarioRoutes = require('../server/routes/usersRoutes');
 const tiendaRoutes = require('../server/routes/tiendaRoutes');
+const tallerRoutes = require('../server/routes/tallerRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -34,12 +35,13 @@ app.use(emailRoutes);
 app.use(phoneRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', tiendaRoutes);
+app.use('/taller', tallerRoutes);
 
 
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(instagramRoutes); 
+app.use(instagramRoutes);
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
