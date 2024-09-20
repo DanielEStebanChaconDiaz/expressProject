@@ -7,6 +7,7 @@ const googleRoutes = require('../server/routes/googleRoutes');
 const emailRoutes = require('../server/routes/emailRoutes');
 const phoneRoutes = require('../server/routes/phoneRoutes');
 const usuarioRoutes = require('../server/routes/usersRoutes');
+const tiendaRoutes = require('../server/routes/tiendaRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -32,6 +33,7 @@ app.use(googleRoutes);
 app.use(emailRoutes);
 app.use(phoneRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/tiendas', tiendaRoutes);
 
 
 
