@@ -10,6 +10,9 @@ const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
 const couponRoutes = require('../server/routes/couponRoutes')
 const messagesRoutes = require('../server/routes/messageRoutes')
+const tiendaRoutes = require('../server/routes/tiendaRoutes');
+const tallerRoutes = require('../server/routes/tallerRoutes');
+const pedidoRoutes = require('../server/routes/pedidoRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -39,7 +42,9 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', shopRoutes);
 app.use('/api/cupones', couponRoutes)
 app.use('/api/mensajes', messagesRoutes)
-
+app.use('/api/tiendas', tiendaRoutes);
+app.use('/api/taller', tallerRoutes);
+app.use('/api/pedido', pedidoRoutes);
 app.use(bodyParser.json());
 
 
