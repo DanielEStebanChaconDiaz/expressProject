@@ -1,5 +1,5 @@
 const usuarioService = require('../services/users');
-const UserDTO = require('../dto/usersDto'); // Asegúrate de que la ruta sea correcta
+const UserDTO = require('../dto/usersDto');
 
 const obtenerUsuarios = async (req, res) => {
   try {
