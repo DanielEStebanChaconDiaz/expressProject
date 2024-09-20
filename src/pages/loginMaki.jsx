@@ -26,8 +26,8 @@ export default function MakiLogin() {
   }, []);
 
   return (
-    <div ref={backgroundRef} className="background-email">
-      <div ref={registerFormContainerRef} className="register-form-email">
+    <div ref={backgroundRef} className="background-maki">
+      <div ref={registerFormContainerRef} className="login-form-maki">
         <Maki />
       </div>
     </div>

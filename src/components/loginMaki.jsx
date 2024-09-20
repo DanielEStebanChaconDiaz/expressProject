@@ -21,11 +21,11 @@ export default function Maki() {
             return;
         }
 
-        // Validar si es un email o un número de teléfono
         const isEmail = /\S+@\S+\.\S+/.test(contactInfo);
         const isPhone = /^\+?[\d\s-]{10,}$/.test(contactInfo);
+        const isUsername = /^[a-zA-Z0-9_]{5,12}$/.test(contactInfo);
 
-        if (!isEmail && !isPhone) {
+        if (!isEmail && !isPhone && !isUsername) {
             setError('Por favor, ingrese un correo electrónico o número de teléfono válido.');
             return;
         }
@@ -43,25 +43,29 @@ export default function Maki() {
         console.log("Datos guardados:", formData);
 
         // Redirigir a #/politics
-        navigate('/politics');
+        navigate('/Home');
+    };
+
+    const handleForgotPassword = (e) => {
+        e.preventDefault();
+        // Redirigir a la página de restablecimiento de contraseña
+        navigate('/reset-password');
     };
 
     return (
-        <div className="container-email">
-            <i className='bx bx-arrow-back' onClick={handleClick} style={{ cursor: 'pointer' }}></i>
-            <div className="container-top-email">
-                <form onSubmit={handleSubmit}>
-                    <h3>Correo electrónico o número de teléfono*</h3>
+        <div className="container-login">
+            <div className="container-top-login">
+                <form onSubmit={handleSubmit} className='loginMaki'>
+                    <h3>Nombre de usuario, Celular o Correo</h3>
                     <input 
                         type="text" 
-                        placeholder="Correo electrónico o número de teléfono" 
+                        placeholder="Nombre de usuario, Celular o Correo" 
                         value={contactInfo} 
                         onChange={(e) => setContactInfo(e.target.value)} 
                         required 
                     />
 
-                    <h3>Contraseña*</h3>
-                    <p>Recuerda crear una contraseña difícil de adivinar</p>
+                    <h3>Contraseña</h3>
                     <input 
                         type="password" 
                         placeholder="Contraseña" 
@@ -72,9 +76,14 @@ export default function Maki() {
 
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                     
-                    <div className="continuar">
+                    <div className="iniciar">
                         <button type="submit">
-                            <i className='bx bx-chevron-right'></i><p>Continuar</p>
+                            <p>Iniciar sesión</p>
+                        </button>
+                    </div>
+                    <div className="Olvidaste">
+                        <button type="button" onClick={handleForgotPassword}>
+                            <p>¿Olvidaste tu contraseña?</p>
                         </button>
                     </div>
                 </form>

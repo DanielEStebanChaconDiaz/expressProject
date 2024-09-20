@@ -1,0 +1,30 @@
+.loginMaki{
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    gap: 3%;
+}
+.loginMaki h3{
+    font-size: 1rem;
+}
+.iniciar, .Olvidaste{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iniciar button{
+    background: none;
+    border: none;
+    width: 30%;
+}
+.Olvidaste button{
+    background: none;
+    border: none;
+    width: 50%;
+}
+
+.iniciar p, .Olvidaste p{
+    cursor: pointer;
+    border-bottom: 1px solid black;
+}
