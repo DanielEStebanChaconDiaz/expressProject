@@ -5,6 +5,8 @@ import Store from './pages/store'
 import Offer from './pages/offer'
 import Car from './pages/car'
 import Confirmacion from './pages/confirmacion_compra'
+import Exito from './pages/exito_compra'
+
 import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a HashRouter
 export default function App() {
     return (
@@ -16,6 +18,7 @@ export default function App() {
                 <Route path ="/offer" element={<Offer/>}/>
                 <Route path ="/car" element={<Car/>}/>
                 <Route path ="/confirmacion_compra" element={<Confirmacion/>}/>
+                <Route path ="/exito_compra" element={<Exito/>}/>
             </Routes>
         </HashRouter>
     )

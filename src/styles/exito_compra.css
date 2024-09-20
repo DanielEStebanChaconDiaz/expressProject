@@ -1,0 +1,40 @@
+.confirmacion-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmacion-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.btn-compras, .btn-inicio {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: gray;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.email-input {
+    margin-top: 15px;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+
+.exito{
+ width: 300px;
+}

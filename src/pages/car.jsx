@@ -3,19 +3,15 @@ import "../styles/car.css";
 import Confirmacion from './confirmacion_compra'
 
 export default function Car() {
-    
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Función para abrir el modal
     const handleCheckoutClick = () => {
-      setIsModalOpen(true);
+        setIsModalOpen(true); // Abre el modal de confirmación
     };
-  
-    // Función para cerrar el modal
+
     const closeModal = () => {
-      setIsModalOpen(false);
+        setIsModalOpen(false); // Cierra el modal
     };
-  // Estado del carrito
   const [items, setItems] = useState([
     {
       id: 1,
