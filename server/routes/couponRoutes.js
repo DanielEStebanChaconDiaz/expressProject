@@ -1,6 +1,6 @@
 const express = require('express');
 const cuponController = require('../controller/couponController');
-const { validarCrearCupon, validarActualizarCupon } = require('../validators/cuponValidator');
+const { validarCrearCupon, validarActualizarCupon } = require('../validator/couponsValidator');
 
 const router = express.Router();
 

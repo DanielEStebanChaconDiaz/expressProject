@@ -6,8 +6,10 @@ const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
 const emailRoutes = require('../server/routes/emailRoutes');
 const phoneRoutes = require('../server/routes/phoneRoutes');
-const shopRoutes= require('../server/routes/shopRoutes')
+const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
+const couponRoutes = require('../server/routes/couponRoutes')
+const messagesRoutes = require('../server/routes/messageRoutes')
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -34,9 +36,11 @@ app.use(googleRoutes);
 app.use(emailRoutes);
 app.use(phoneRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/tiendas', shopRoutes);
+app.use('/api/cupones', couponRoutes)
+app.use('/api/mensajes', messagesRoutes)
 
 app.use(bodyParser.json());
-app.use('/api', shopRoutes);
 
 
 

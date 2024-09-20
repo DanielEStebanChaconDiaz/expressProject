@@ -1,4 +1,4 @@
-const cuponService = require('../services/cuponService');
+const cuponService = require('../services/coupons');
 
 class CuponController {
   async crearCupon(req, res) {

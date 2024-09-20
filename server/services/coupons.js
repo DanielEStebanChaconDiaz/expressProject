@@ -1,4 +1,4 @@
-const Cupon = require('../models/cupon');
+const Cupon = require('../models/coupons');
 
 class CuponService {
   async crearCupon(cuponData) {

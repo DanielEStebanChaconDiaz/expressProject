@@ -1,4 +1,4 @@
-const Mensaje = require('../models/mensaje');
+const Mensaje = require('../models/message');
 
 class MensajeService {
   async crearMensaje(mensajeData) {
