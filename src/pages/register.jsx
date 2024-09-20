@@ -18,7 +18,7 @@ export default function Register() {
                     <a href="#/email"><i className='bx bx-envelope' ></i> Regístrate con tu correo</a>
                 </button>
                 <button className="social-btn phone-btn">
-                    <i className='bx bxs-phone' ></i> Regístrate con tu celular
+                    <a href="#/number"><i className='bx bxs-phone' ></i> Regístrate con tu celular</a>
                 </button>
             </div>
             <div className="container-bottom">
