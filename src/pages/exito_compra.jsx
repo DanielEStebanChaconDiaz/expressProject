@@ -1,7 +1,14 @@
 import '../styles/exito_compra.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function Exito(){
+    const navigate = useNavigate();
+
+    const handleConfirmarCompra = () => {
+      navigate('/home');
+    };
     return(
+        
         <div className="confirmacion-container">
             <div className="confirmacion-content">
                 <h2>¡Compra realizada con éxito!</h2>
@@ -16,9 +23,9 @@ export default function Exito(){
                     placeholder="Añadir correo electrónico"
                     className="email-input"
                 />
-                <button className="btn-inicio">
+                <button className="btn-inicio" onClick={handleConfirmarCompra}>
                     Regresar al inicio
-                </button>
+                </button>   
             </div>
         </div>
 );
