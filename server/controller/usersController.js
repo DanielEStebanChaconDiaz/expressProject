@@ -1,6 +1,5 @@
 const usuarioService = require('../services/users');
 
-
 const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await usuarioService.obtenerUsuarios();
@@ -46,9 +45,48 @@ const eliminarUsuario = async (req, res) => {
   }
 };
 
+const agregarProductoFavorito = async (req, res) => {
+  try {
+    const usuario = await usuarioService.agregarProductoFavorito(req.params.userId, req.body.productoId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al agregar producto favorito', error });
+  }
+};
+
+const agregarTallerFavorito = async (req, res) => {
+  try {
+    const usuario = await usuarioService.agregarTallerFavorito(req.params.userId, req.body.tallerId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al agregar taller favorito', error });
+  }
+};
+
+const agregarTiendaFavorita = async (req, res) => {
+  try {
+    const usuario = await usuarioService.agregarTiendaFavorita(req.params.userId, req.body.tiendaId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al agregar tienda favorita', error });
+  }
+};
+
 module.exports = {
   obtenerUsuarios,
   obtenerUsuarioPorId,
   actualizarUsuario,
   eliminarUsuario,
+  agregarProductoFavorito,
+  agregarTallerFavorito,
+  agregarTiendaFavorita,
 };

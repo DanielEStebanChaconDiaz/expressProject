@@ -1,30 +1,32 @@
 const mongoose = require('mongoose');
 
 const UsuarioSchema = new mongoose.Schema({
-  fotoPerfil: {type: String, sparse: true},
+  fotoPerfil: { type: String, sparse: true },
   nombreUsuario: { type: String, unique: true, sparse: true },
   correoElectronico: { type: String, sparse: true },
   celular: { type: String, unique: true, sparse: true },
   contrasena: { type: String },
   sexo: { type: String },
   fechaNacimiento: { type: Date },
+  direccion: { type: String },
+  tipo: { type: String, enum: ['comprador', 'artesano'], default: 'comprador' },
   metodosPago: [{
     tipo: { type: String },
     detalles: { type: String }
   }],
-  productosComprados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
+  productosComprados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' }],
   talleresSuscritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Taller' }],
+  tiendaFavoritas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tienda' }],
+  productosFavoritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
+  talleresFavoritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Taller' }],
+  cuponesAsignados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cupon' }],
   
   // Campos para autenticación de terceros
   facebookId: { type: String, unique: true, sparse: true },
   googleId: { type: String, unique: true, sparse: true },
-  instagramId: { type: String, unique: true, sparse: true },
-
-  // Campo para almacenar datos adicionales de proveedores de autenticación
+  discordId: { type: String, unique: true, sparse: true },
   providerData: { type: mongoose.Schema.Types.Mixed }
 });
 
-const Usuario = mongoose.model('Usuario', UsuarioSchema); // Modelo en singular
-
+const Usuario = mongoose.model('Usuario', UsuarioSchema);
 module.exports = Usuario;
-
