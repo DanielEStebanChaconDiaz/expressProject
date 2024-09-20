@@ -1,9 +1,10 @@
 const tiendaService = require('../services/tienda');
+const TiendaDTO = require('../dto/tiendaDto');
 
 class TiendaController {
   async getAll(req, res) {
     const tiendas = await tiendaService.getAll();
-    res.json(tiendas);
+    res.json(tiendas.map(tienda => new TiendaDTO(tienda)));
   }
 
   async getById(req, res) {
@@ -11,12 +12,12 @@ class TiendaController {
     if (!tienda) {
       return res.status(404).json({ message: 'Tienda no encontrada' });
     }
-    res.json(tienda);
+    res.json(new TiendaDTO(tienda));
   }
 
   async create(req, res) {
     const tienda = await tiendaService.create(req.body);
-    res.status(201).json(tienda);
+    res.status(201).json(new TiendaDTO(tienda));
   }
 
   async update(req, res) {
@@ -24,7 +25,7 @@ class TiendaController {
     if (!tienda) {
       return res.status(404).json({ message: 'Tienda no encontrada' });
     }
-    res.json(tienda);
+    res.json(new TiendaDTO(tienda));
   }
 
   async delete(req, res) {

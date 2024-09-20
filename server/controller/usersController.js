@@ -1,10 +1,10 @@
 const usuarioService = require('../services/users');
-
+const UserDTO = require('../dto/usersDto'); // Asegúrate de que la ruta sea correcta
 
 const obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await usuarioService.obtenerUsuarios();
-    res.status(200).json(usuarios);
+    res.status(200).json(usuarios.map(usuario => new UserDTO(usuario)));
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener usuarios', error });
   }
@@ -16,7 +16,7 @@ const obtenerUsuarioPorId = async (req, res) => {
     if (!usuario) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
-    res.status(200).json(usuario);
+    res.status(200).json(new UserDTO(usuario));
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al obtener el usuario', error });
   }
@@ -28,7 +28,7 @@ const actualizarUsuario = async (req, res) => {
     if (!usuarioActualizado) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
-    res.status(200).json(usuarioActualizado);
+    res.status(200).json(new UserDTO(usuarioActualizado));
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al actualizar el usuario', error });
   }

@@ -35,7 +35,7 @@ app.use(emailRoutes);
 app.use(phoneRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', tiendaRoutes);
-app.use('/taller', tallerRoutes);
+app.use('/api/taller', tallerRoutes);
 
 
 
