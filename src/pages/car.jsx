@@ -1,7 +1,20 @@
 import { useState } from "react";
 import "../styles/car.css";
+import Confirmacion from './confirmacion_compra'
 
 export default function Car() {
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Función para abrir el modal
+    const handleCheckoutClick = () => {
+      setIsModalOpen(true);
+    };
+  
+    // Función para cerrar el modal
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
   // Estado del carrito
   const [items, setItems] = useState([
     {
@@ -120,7 +133,13 @@ export default function Car() {
             <span>Total</span>
             <span>S/{total}</span>
           </div>
-          <button className="checkout-button">Realizar compra</button>
+            {/* Botón para realizar compra */}
+            <button className="checkout-button" onClick={handleCheckoutClick}>Realizar compra</button>
+
+            {/* Renderizar el modal si isModalOpen es true */}
+            {isModalOpen && (
+            <Confirmacion closeModal={closeModal} />
+            )}
         </div>
       </section>
 
