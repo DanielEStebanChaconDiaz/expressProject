@@ -1,0 +1,97 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+  
+  
+.category-container{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../public/img/fondo-categoria.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.header-category{
+    /* border: 1px solid red;  */
+    width: 100%;
+}
+
+
+.header-category i{
+    font-size: 25px;
+    width: 10%;
+    
+}
+
+.back-button{
+    /* border: 1px solid green; */
+    width:100%;
+    display: flex;
+    padding-top: 6%;
+}
+.back-button h3{
+    margin-left: 28%;
+}
+
+/* Categories */
+.categories-cate {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .categories-cate h3{
+    margin-top: 22px;
+    margin-left: 25px;
+  
+  }
+  
+  .category-item-cate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+    border-radius: 8px;
+    padding-left: 15px;
+    padding-bottom: 0;
+  
+  }
+  
+  .category-box-cate {
+    display: grid;
+    grid-template-columns: repeat(10, 0.5fr); /* Puedes ajustar el número de columnas */
+    margin-left: 10px;
+    overflow-x: auto; /* Activa el scroll horizontal si es necesario */
+    overflow-y: hidden;
+    margin-bottom: 100px;
+    margin-top: 16px;
+     /* Espacio adicional para evitar que el contenido se corte */
+}
+
+/* Personaliza el scroll horizontal */
+.category-box-cate::-webkit-scrollbar {
+    height: 5px; /* Cambia la altura del scroll horizontal */
+}
+
+.category-box-cate::-webkit-scrollbar-thumb {
+    background-color: #000000; /* Color del "pulgar" (la parte que se arrastra) */ /* Bordes redondeados para el pulgar */
+}
+
+
+  .category-item-cate img {
+   width: 2.7rem;
+    display: block;
+  }
+  
+  .category-item-cate span {
+    margin-top: 5px;
+    display: block;
+    font-size: 12.5px;
+    line-height: 1;
+  }
+  
+
