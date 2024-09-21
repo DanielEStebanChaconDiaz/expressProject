@@ -1,7 +1,7 @@
 class DTOProducto {
     constructor(datos) {
       this.id = datos._id;
-      this.idTienda = datos.idTienda;
+      this.tiendaId = datos.tiendaId;
       this.imagen = datos.imagen;
       this.nombre = datos.nombre;
       this.descripcion = datos.descripcion;
@@ -19,7 +19,7 @@ class DTOProducto {
   
     static aEntidad(dto) {
       return {
-        idTienda: dto.idTienda,
+        tiendaId: dto.tiendaId,
         imagen: dto.imagen,
         nombre: dto.nombre,
         descripcion: dto.descripcion,

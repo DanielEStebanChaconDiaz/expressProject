@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controladorProducto = require('../controller/productController');
-const { validadorCrearProducto, validadorActualizarProducto, validadorObtenerProducto } = require('../validadores/validadorProducto');
+const { validadorCrearProducto, validadorActualizarProducto, validadorObtenerProducto } = require('../validator/productValidator');
 const { validationResult } = require('express-validator');
 
 const manejarErroresValidacion = (req, res, next) => {

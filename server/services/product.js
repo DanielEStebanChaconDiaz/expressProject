@@ -1,10 +1,17 @@
-const Producto = require('../modelos/producto');
-const DTOProducto = require('../dto/dtoProducto');
+const Producto = require('../models/product');
+const Tienda = require('../models/shop'); // Asegúrate de requerir el modelo de tienda
+const DTOProducto = require('../dto/productDto');
 
 class ServicioProducto {
   async crearProducto(datosProducto) {
     const producto = new Producto(DTOProducto.aEntidad(datosProducto));
     await producto.save();
+
+    await Tienda.updateOne(
+      { _id: datosProducto.tiendaId },
+      { $push: { productos: producto._id } }
+    );
+
     return DTOProducto.desdeEntidad(producto);
   }
 
@@ -20,7 +27,14 @@ class ServicioProducto {
 
   async eliminarProducto(id) {
     const producto = await Producto.findByIdAndDelete(id);
-    return producto ? DTOProducto.desdeEntidad(producto) : null;
+    if (producto) {
+      await Tienda.updateOne(
+        { productos: id },
+        { $pull: { productos: id } }
+      );
+      return DTOProducto.desdeEntidad(producto);
+    }
+    return null;
   }
 
   async obtenerTodosLosProductos(filtro = {}) {

@@ -11,6 +11,7 @@ const messagesRoutes = require('../server/routes/messageRoutes')
 const tiendaRoutes = require('./routes/shopRoutes');
 const tallerRoutes = require('./routes/workshopRoutes');
 const pedidoRoutes = require('./routes/orderRoutes');
+const productoRoutes = require('./routes/productRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -41,6 +42,7 @@ app.use('/api/mensajes', messagesRoutes)
 app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/taller', tallerRoutes);
 app.use('/api/pedido', pedidoRoutes);
+app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
 
 

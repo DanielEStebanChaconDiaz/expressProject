@@ -1,7 +1,7 @@
 const { body, param } = require('express-validator');
 
 const validadorCrearProducto = [
-  body('idTienda').isMongoId().withMessage('ID de tienda inválido'),
+  body('tiendaId').isMongoId().withMessage('ID de tienda inválido'),
   body('imagen').optional().isURL().withMessage('La URL de la imagen no es válida'),
   body('nombre').notEmpty().withMessage('El nombre es requerido'),
   body('descripcion').optional(),
