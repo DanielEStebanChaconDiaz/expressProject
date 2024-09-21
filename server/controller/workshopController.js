@@ -1,4 +1,4 @@
-const tallerService = require('../services/taller');
+const tallerService = require('../services/workshop');
 const TallerDTO = require('../dto/tallerDto');
 
 class TallerController {

@@ -1,4 +1,4 @@
-const tiendaService = require('../services/tienda');
+const tiendaService = require('../services/shop');
 const TiendaDTO = require('../dto/tiendaDto');
 
 class TiendaController {

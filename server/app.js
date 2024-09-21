@@ -4,15 +4,13 @@ const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
-const emailRoutes = require('../server/routes/emailRoutes');
-const phoneRoutes = require('../server/routes/phoneRoutes');
 const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
 const couponRoutes = require('../server/routes/couponRoutes')
 const messagesRoutes = require('../server/routes/messageRoutes')
-const tiendaRoutes = require('../server/routes/tiendaRoutes');
-const tallerRoutes = require('../server/routes/tallerRoutes');
-const pedidoRoutes = require('../server/routes/pedidoRoutes');
+const tiendaRoutes = require('./routes/shopRoutes');
+const tallerRoutes = require('./routes/workshopRoutes');
+const pedidoRoutes = require('./routes/orderRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -36,8 +34,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
 app.use(googleRoutes);
-app.use(emailRoutes);
-app.use(phoneRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', shopRoutes);
 app.use('/api/cupones', couponRoutes)

@@ -1,4 +1,4 @@
-const Pedido = require('../models/pedido');
+const Pedido = require('../models/order');
 
 const obtenerPedidos = async () => {
   return await Pedido.find();

@@ -1,4 +1,4 @@
-const Taller = require('../models/taller');
+const Taller = require('../models/workshop');
 
 class TallerService {
   async getAll() {
