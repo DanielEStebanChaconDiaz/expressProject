@@ -6,8 +6,10 @@ export default function Craft(){
             <header className="header-craft">
                 <div className="back-button-craft">
                     <i className="bx bx-arrow-back"></i>
+                    <img src="../../public/img/flecha-craft.svg" alt="" className='flecha'/>
                 </div>
                 <div className='titulo'>
+                    <img src="../../public/img/titulo-craft.svg" alt="" />
                     <h3>Taller Awaq Ayllus</h3>
                 </div>
             </header>
