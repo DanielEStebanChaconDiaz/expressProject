@@ -29,11 +29,12 @@ class TallerController {
   }
 
   async delete(req, res) {
-    const taller = await tallerService.delete(req.params.id);
-    if (!taller) {
-      return res.status(404).json({ message: 'Taller no encontrado' });
-    }
-    res.status(204).send();
+      const taller = await tallerService.getById(req.params.id);
+      if (!taller) {
+        return res.status(404).json({ message: 'Taller no encontrado' });
+      }
+      await tallerService.delete(req.params.id);
+      res.status(204).send();
   }
 }
 

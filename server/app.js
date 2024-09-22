@@ -40,7 +40,7 @@ app.use('/api/tiendas', shopRoutes);
 app.use('/api/cupones', couponRoutes)
 app.use('/api/mensajes', messagesRoutes)
 app.use('/api/tiendas', tiendaRoutes);
-app.use('/api/taller', tallerRoutes);
+app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedido', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
