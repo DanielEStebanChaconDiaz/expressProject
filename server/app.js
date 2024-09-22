@@ -16,10 +16,8 @@ const path = require('path');
 const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-
-const instagramRoutes = require('../server/routes/instagramRoutes');
+const discordRoutes = require('./routes/discordRoutes');
 const app = express();
-//const path = require('path');
 require('dotenv').config();
 
 connectMongoDB();
@@ -35,13 +33,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
 app.use(googleRoutes);
+app.use(discordRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', shopRoutes);
 app.use('/api/cupones', couponRoutes)
 app.use('/api/mensajes', messagesRoutes)
 app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
-app.use('/api/pedido', pedidoRoutes);
+app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
 
@@ -50,7 +49,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(instagramRoutes);
+app.use(discordRoutes);
 
 
 const sslOptions = {

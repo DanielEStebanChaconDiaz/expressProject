@@ -10,6 +10,14 @@ const CuponSchema = new mongoose.Schema({
   tallerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Taller', index: true }
 });
 
+CuponSchema.pre('validate', function(next) {
+  if (!this.productoId && !this.tallerId) {
+    next(new Error('El cupón debe estar asignado a un taller o a un producto.'));
+  } else {
+    next();
+  }
+});
+
 CuponSchema.index({ fechaExpiracion: 1, tipo: 1 });
 
 const Cupon = mongoose.model('Cupon', CuponSchema);
