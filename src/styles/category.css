@@ -27,6 +27,15 @@
     
 }
 
+.header-category h3{
+  width: 40%;
+  height: 10px;
+  margin: 0;
+  text-align: center;
+  /* border: 1px solid red ; */
+  line-height: 1;
+}
+
 .back-button{
     /* border: 1px solid green; */
     width:100%;
@@ -34,7 +43,7 @@
     padding-top: 6%;
 }
 .back-button h3{
-    margin-left: 28%;
+    margin-left: 20%;
 }
 
 /* Categories */
