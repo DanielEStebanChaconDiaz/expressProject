@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const usuarioService = require('../services/users');
 const UserDTO = require('../dto/usersDto');
+const { cloudinary, upload, uploadToCloudinary } = require('../config/cloudinaryConfig');
 
 exports.registerUser = async (req, res) => {
     const { nombreUsuario, correoElectronico, contrasena, sexo, fechaNacimiento, tipo } = req.body;
@@ -65,17 +66,46 @@ exports.obtenerUsuarioPorId = async (req, res) => {
     }
 };
 
-exports.actualizarUsuario = async (req, res) => {
+exports.actualizarFotoPerfil = async (req, res) => {
     try {
-        const usuarioActualizado = await usuarioService.actualizarUsuario(req.params.id, req.body);
-        if (!usuarioActualizado) {
-            return res.status(404).json({ mensaje: 'Usuario no encontrado' });
-        }
-        res.status(200).json(new UserDTO(usuarioActualizado));
+      if (!req.file) {
+        return res.status(400).json({ message: 'No se ha subido ninguna imagen' });
+      }
+  
+      const uploadResult = await uploadToCloudinary(req.file);
+      const usuarioActualizado = await usuarioService.actualizarUsuario(req.params.id, { fotoPerfil: uploadResult.secure_url });
+      
+      if (!usuarioActualizado) {
+        return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+      }
+  
+      res.status(200).json(new UserDTO(usuarioActualizado));
     } catch (error) {
-        res.status(500).json({ mensaje: 'Error al actualizar el usuario', error: error.message });
+      res.status(500).json({ mensaje: 'Error al actualizar la foto de perfil', error: error.message });
     }
-};
+  };
+  
+  exports.actualizarUsuario = async (req, res) => {
+    try {
+      let datosActualizacion = req.body;
+      
+      if (req.file) {
+        const uploadResult = await uploadToCloudinary(req.file);
+        datosActualizacion.fotoPerfil = uploadResult.secure_url;
+      }
+  
+      const usuarioActualizado = await usuarioService.actualizarUsuario(req.params.id, datosActualizacion);
+      
+      if (!usuarioActualizado) {
+        return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+      }
+      
+      res.status(200).json(new UserDTO(usuarioActualizado));
+    } catch (error) {
+      res.status(500).json({ mensaje: 'Error al actualizar el usuario', error: error.message });
+    }
+  };
+  
 
 exports.eliminarUsuario = async (req, res) => {
     try {

@@ -18,6 +18,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
 const app = express();
+const multer = require('multer');
 require('dotenv').config();
 
 connectMongoDB();
@@ -42,6 +43,7 @@ app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
+app.use(discordRoutes);
 app.use(bodyParser.json());
 
 
@@ -49,8 +51,14 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(discordRoutes);
-
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    if (err instanceof multer.MulterError) {
+      return res.status(400).json({ message: 'Error en la carga de archivos: ' + err.message });
+    }
+    res.status(500).json({ message: 'Error interno del servidor' });
+  });
+  
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),

@@ -1,5 +1,5 @@
-package-lock.json
-node_modules
 .env
+package-lock.json
+node_modules/
 certificate.crt
 private.key
