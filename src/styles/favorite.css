@@ -1,0 +1,89 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+.favorite-container{
+
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../public/img/fondo-categoria.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.close-button {
+    width: 15px;
+    position: absolute;
+    z-index:9999;
+    top: -18px;
+    right: -4px;
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    color: #000;
+    
+    
+}
+
+
+.products-grid-favorite {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
+    margin-left: 30px;
+  }
+  
+  .product-card-favorite {
+    position: relative;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    width: 149px;
+    height: 170px;
+    margin-bottom: 10px;
+  }
+  
+  .product-card-favorite img {
+    left: 0px;
+    top: 0px;
+  
+    /* border: 1px solid red; */
+    position: absolute;
+    width: 150px;
+    
+  }
+  
+  .product-info-favorite h5 {
+    color: white;
+    margin-left: 10px;
+    bottom: 45px;
+    font-size: 12px;
+    position: absolute;
+  
+  }
+  
+  .product-info-favorite h6 {
+    font-size: 12px;
+    position: absolute;
+    bottom: 23px;
+    color: white;
+    margin: 5px 0;
+    margin-left: 10px;
+  
+  }
+  
+  
+  .product-info-favorite p {
+    position: absolute;
+    bottom: 7px;
+    color: white;
+    margin: 5px 0;
+    font-size: 12px;
+    margin-left: 10px;
+  }
