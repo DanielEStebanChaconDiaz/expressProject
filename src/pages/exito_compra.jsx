@@ -7,6 +7,9 @@ export default function Exito(){
     const handleConfirmarCompra = () => {
       navigate('/home');
     };
+    const handleCompras = () => {
+        navigate('/compras')
+      };
     return(
         
         <div className="confirmacion-container">
@@ -16,7 +19,7 @@ export default function Exito(){
                     Gracias por apoyar a los artesanos peruanos, puedes revisar tu compra
                     en la opción de
                 </h4>
-                <button className="btn-compras">Compras</button>
+                <button className="btn-compras" onClick={handleCompras}>Compras</button>
                 <p>Vincula tu correo para recibir más detalles sobre tus compras realizadas</p>
                 <input
                     type="email"

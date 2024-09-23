@@ -14,7 +14,7 @@ export default function Login() {
                 <i className='bx bxl-gmail' ></i> Regístrate con Gmail
             </button>
             <button className="social-btn mail-btn">
-                <i className='bx bxs-user-circle' ></i> Regístrate con tu cuenta de Ruraq Maki
+                <a href="#/Maki"><i className='bx bxs-user-circle' ></i> Regístrate con tu cuenta de Ruraq Maki</a>
             </button>
         </div>
     )
