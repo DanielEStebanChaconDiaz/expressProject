@@ -50,13 +50,13 @@
   }
   
   .product-card-favorite img {
-    left: 0;
-    top: 0;
+    left: 0px;
+    top: 0px;
   
     /* border: 1px solid red; */
     position: absolute;
-    width: 149px;
-    border-radius: 9px 9px 0 0;
+    width: 150px;
+    
   }
   
   .product-info-favorite h5 {

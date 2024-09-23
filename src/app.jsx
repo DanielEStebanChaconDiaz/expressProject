@@ -9,6 +9,7 @@ import Exito from './pages/exito_compra'
 import Category from './pages/category'
 import Craft from './pages/craft'
 import Favorite from './pages/favorite'
+import Compras from './pages/shopping'
 
 import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a HashRouter
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
                 <Route path ="/category" element={<Category/>}/>
                 <Route path ="/craft" element={<Craft/>}/>
                 <Route path ="/favorite" element={<Favorite/>}/> 
+                <Route path ="/compras" element={<Compras/>}/> 
             </Routes>
         </HashRouter>
     )
