@@ -17,8 +17,13 @@ const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
+
 const app = express();
 const multer = require('multer');
+const setupChat = require('../server/services/chatBot'); // Importar el chatbot
+
+
+//app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
 require('dotenv').config();
 
 connectMongoDB();
@@ -36,14 +41,12 @@ app.use(facebookRoutes);
 app.use(googleRoutes);
 app.use(discordRoutes);
 app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/tiendas', shopRoutes);
 app.use('/api/cupones', couponRoutes)
 app.use('/api/mensajes', messagesRoutes)
 app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
-app.use(discordRoutes);
 app.use(bodyParser.json());
 
 
@@ -54,18 +57,23 @@ app.use(passport.session());
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (err instanceof multer.MulterError) {
-      return res.status(400).json({ message: 'Error en la carga de archivos: ' + err.message });
+        return res.status(400).json({ message: 'Error en la carga de archivos: ' + err.message });
     }
     res.status(500).json({ message: 'Error interno del servidor' });
-  });
-  
+});
+
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
 };
 
-https.createServer(sslOptions, app).listen({
+const server = https.createServer(sslOptions, app);
+
+// Configurar el chatbot
+setupChat(server);
+
+server.listen({
     host: process.env.EXPRESS_HOST || 'localhost',
     port: process.env.PORT || 3000
 }, () => {
