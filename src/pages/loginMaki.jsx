@@ -9,7 +9,7 @@ export default function MakiLogin() {
   useEffect(() => {
     const handleAnimationEnd = () => {
       if (backgroundRef.current) {
-        backgroundRef.current.style.backgroundImage = "url('/img/makilogin.svg')";
+        backgroundRef.current.style.backgroundImage = "url('/img/fondo-loginMaki.svg')";
       }
       setTimeout(() => {
         if (registerFormContainerRef.current) {

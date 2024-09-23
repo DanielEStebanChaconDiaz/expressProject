@@ -58,7 +58,7 @@ body, html {
 
 .register-form-container h2 {
     font-size: 1.5em;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .register-form-container span {
@@ -67,6 +67,9 @@ body, html {
 
 .container-top{
     padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .container-top button{
@@ -75,25 +78,29 @@ body, html {
 }
 
 .container-bottom{
-    padding-top: 15px;
+    padding-top: 40px;
     font-size: 1.5em;;
 }
 
 .container-bottom a{
     color: rgb(0, 0, 0);
+    margin-right: 25px;
 }
+
+
 
 .social-btn {
     display: block;
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
+    width: 90%;
+    padding: 8px;
     /* color: white; */
     border: none;
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-align: center;
+    padding-right: 10px;
 }
 
 .social-btn:hover {
@@ -102,7 +109,7 @@ body, html {
 
 .fb-btn, .insta-btn, .gmail-btn, .mail-btn, .phone-btn {
     display: flex;
-    align-items: center; 
+    align-items: center;
     background-color: #ffffff;
 }
 .fb-btn i, .insta-btn i, .gmail-btn i, .mail-btn i, .phone-btn i{

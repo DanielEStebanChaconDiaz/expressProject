@@ -2,37 +2,30 @@
     width: 100%;
     height: 100vh;
     justify-content: center;
-    gap: 3%;
+    gap: 1%;
+    padding-top: 0;
 }
 .background-maki{
     position: relative;
     background-color: rgb(255, 255, 255);
-    background-size: cover;
-    background-position: 100%;
+    background-size: contain;
     background-repeat: no-repeat;
 }
 .loginMaki h3{
     font-size: 1rem;
 }
 .iniciar, .Olvidaste{
+    
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .iniciar button{
+    margin-top: 10%;
     background: none;
     border: none;
-    width: 30%;
-}
-.flecha1 {
-    position: absolute;
-    right: 75%;
-    height: 8rem;
-    /* border: 1px solid rgb(0, 255, 119); */
-    width: 10rem;
-    /* margin-left: -5.9rem; */
-    /* position: fixed; */
+    width: 40%;
 }
 .Olvidaste button{
     background: none;
@@ -45,5 +38,7 @@
 
 .iniciar p, .Olvidaste p{
     cursor: pointer;
-    border-bottom: 1px solid black;
+    text-decoration: underline;
+    font-size: 16px;
 }
+
