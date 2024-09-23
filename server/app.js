@@ -13,10 +13,11 @@ const pedidoRoutes = require('../server/routes/pedidoRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
+const setupChat = require('../server/services/chatBot'); // Importar el chatbot
 
 const instagramRoutes = require('../server/routes/instagramRoutes'); 
 const app = express();
-//const path = require('path');
+//app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
 require('dotenv').config();
 
 connectMongoDB();
@@ -27,7 +28,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true }
-  }));
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
@@ -38,11 +39,6 @@ app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/taller', tallerRoutes);
 app.use('/api/pedido', pedidoRoutes);
-
-
-
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(instagramRoutes);
 
 const sslOptions = {
@@ -50,7 +46,12 @@ const sslOptions = {
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
 };
 
-https.createServer(sslOptions, app).listen({
+const server = https.createServer(sslOptions, app);
+
+// Configurar el chatbot
+setupChat(server);
+
+server.listen({
     host: process.env.EXPRESS_HOST || 'localhost',
     port: process.env.PORT || 3000
 }, () => {
