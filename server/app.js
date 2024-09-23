@@ -4,20 +4,20 @@ const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
-const emailRoutes = require('../server/routes/emailRoutes');
-const phoneRoutes = require('../server/routes/phoneRoutes');
+const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
-const tiendaRoutes = require('../server/routes/tiendaRoutes');
-const tallerRoutes = require('../server/routes/tallerRoutes');
-const pedidoRoutes = require('../server/routes/pedidoRoutes');
+const couponRoutes = require('../server/routes/couponRoutes')
+const messagesRoutes = require('../server/routes/messageRoutes')
+const tiendaRoutes = require('./routes/shopRoutes');
+const tallerRoutes = require('./routes/workshopRoutes');
+const pedidoRoutes = require('./routes/orderRoutes');
+const productoRoutes = require('./routes/productRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
-const setupChat = require('../server/services/chatBot'); // Importar el chatbot
-
-const instagramRoutes = require('../server/routes/instagramRoutes'); 
+const bodyParser = require('body-parser');
+const discordRoutes = require('./routes/discordRoutes');
 const app = express();
-//app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
 require('dotenv').config();
 
 connectMongoDB();
@@ -33,13 +33,25 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
 app.use(googleRoutes);
-app.use(emailRoutes);
-app.use(phoneRoutes);
+app.use(discordRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/tiendas', shopRoutes);
+app.use('/api/cupones', couponRoutes)
+app.use('/api/mensajes', messagesRoutes)
 app.use('/api/tiendas', tiendaRoutes);
-app.use('/api/taller', tallerRoutes);
-app.use('/api/pedido', pedidoRoutes);
 app.use(instagramRoutes);
+app.use('/api/talleres', tallerRoutes);
+app.use('/api/pedidos', pedidoRoutes);
+app.use('/api/productos', productoRoutes);
+app.use(bodyParser.json());
+
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(discordRoutes);
+
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),

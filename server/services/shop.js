@@ -1,4 +1,4 @@
-const Tienda = require('../models/tienda');
+const Tienda = require('../models/shop');
 
 class TiendaService {
   async getAll() {

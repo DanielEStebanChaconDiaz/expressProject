@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tiendaController = require('../controller/tiendaController');
+const tiendaController = require('../controller/shopController');
 const { validateCreate, validateUpdate, validateId } = require('../validator/tiendaValidator');
 
 router.get('/', tiendaController.getAll);

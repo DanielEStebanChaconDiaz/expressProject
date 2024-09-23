@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const pedidoController = require('../controller/pedidoController');
+const pedidoController = require('../controller/orderController');
 const {
   crearPedidoValidator,
   actualizarPedidoValidator,

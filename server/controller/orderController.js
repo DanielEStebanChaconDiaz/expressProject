@@ -1,4 +1,4 @@
-const pedidoService = require('../services/pedido');
+const pedidoService = require('../services/order');
 const PedidoDTO = require('../dto/pedidoDto');
 
 const obtenerPedidos = async (req, res) => {

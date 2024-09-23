@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const tallerController = require('../controller/tallerController');
+const tallerController = require('../controller/workshopController');
 const { validateCreate, validateUpdate, validateId } = require('../validator/tallerValidator');
 
 router.get('/', tallerController.getAll);

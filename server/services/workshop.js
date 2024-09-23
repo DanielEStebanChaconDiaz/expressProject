@@ -1,5 +1,5 @@
-const Taller = require('../models/taller');
-
+const Taller = require('../models/workshop');
+const Tienda = require('../models/shop');
 class TallerService {
   async getAll() {
     return await Taller.find();
@@ -11,6 +11,12 @@ class TallerService {
 
   async create(data) {
     const taller = new Taller(data);
+
+    await Tienda.updateOne(
+      { _id: taller.tiendaId },
+      { $push: { talleres: taller._id } }
+    );
+
     return await taller.save();
   }
 
@@ -19,7 +25,15 @@ class TallerService {
   }
 
   async delete(id) {
-    return await Taller.findByIdAndDelete(id);
+     const taller=await Taller.findByIdAndDelete(id);
+    if (taller) {
+      await Tienda.updateOne(
+        { talleres: id },
+        { $pull: { talleres: id } }
+      );
+    }
+    
+    return null;
   }
 }
 
