@@ -54,6 +54,7 @@ export default function Maki() {
 
     return (
         <div className="container-login">
+            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/>
             <div className="container-top-login">
                 <form onSubmit={handleSubmit} className='loginMaki'>
                     <h3>Nombre de usuario, Celular o Correo</h3>

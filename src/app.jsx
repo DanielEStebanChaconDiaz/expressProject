@@ -17,7 +17,7 @@ import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a Hash
 import InitLogin from './pages/initLogin'
 import InitPolitics from './pages/initPolitics'
 import Number from './pages/registerNumber';
-import MakiLogin from './components/loginMaki';
+import MakiLogin from './pages/loginMaki';
 export default function App() {
     return (
         <HashRouter> {/* Cambiado a HashRouter */}

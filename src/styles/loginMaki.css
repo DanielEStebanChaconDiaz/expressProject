@@ -4,6 +4,13 @@
     justify-content: center;
     gap: 3%;
 }
+.background-maki{
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    background-size: cover;
+    background-position: 100%;
+    background-repeat: no-repeat;
+}
 .loginMaki h3{
     font-size: 1rem;
 }
@@ -18,10 +25,22 @@
     border: none;
     width: 30%;
 }
+.flecha1 {
+    position: absolute;
+    right: 75%;
+    height: 8rem;
+    /* border: 1px solid rgb(0, 255, 119); */
+    width: 10rem;
+    /* margin-left: -5.9rem; */
+    /* position: fixed; */
+}
 .Olvidaste button{
     background: none;
     border: none;
-    width: 50%;
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .iniciar p, .Olvidaste p{
