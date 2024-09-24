@@ -1,0 +1,59 @@
+.menu-container{
+    width: 70%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    padding: 5%;
+}
+.menu-container ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+li{
+    list-style: none;
+}
+.profile{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10%;
+}
+.profile h1, .favoritos a{
+    color: white;
+    text-decoration: none;
+}
+.profile h1{
+    font-weight: 100;
+}
+.profile img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+.favoritos{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.favoritos img{
+    width: 35px;
+    height: 35px;
+}
+.rombos img{
+    width: 100%;
+}
+.footer p{
+    color: white;
+    font-weight: 100;
+    font-size: .8rem;
+}
+.footer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.footer img{
+    width: 130px;
+    margin-right: 5px;
+}
