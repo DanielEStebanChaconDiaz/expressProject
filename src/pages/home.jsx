@@ -1,9 +1,7 @@
 import '../styles/home.css';
-import MenuHamburguesa from '../components/menuHamburger'; // Asegúrate de que la ruta de importación sea correcta
 import { useState } from 'react';
 import Header from '../components/header';
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú
 
   const categories = [
     { name: 'Textilería', icon: '../../public/img/category1.svg' },
@@ -17,10 +15,6 @@ export default function Home() {
     { name: 'Estampado', icon: '../../public/img/category9.svg' },
     { name: 'Pintura tradicional', icon: '../../public/img/category10.svg' },
   ];
-
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen); // Alternar el estado del menú
-  };
 
   return (
     <>
@@ -65,7 +59,6 @@ export default function Home() {
       </div>
 
       {/* Componente de menú hamburguesa */}
-      <MenuHamburguesa isOpen={isMenuOpen} toggleMenu={handleMenuToggle} />
     </>
   );
 }

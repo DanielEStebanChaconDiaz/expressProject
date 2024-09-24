@@ -12,25 +12,25 @@ export default function Menu() {
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/heard.svg" alt="" />
-                        <a href="#home">Lista de favoritos</a>
+                        <a href="#/favorite">Lista de favoritos</a>
                     </div>
                 </li>
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/shopy.svg" alt="" />
-                        <a href="#home">Compras</a>
+                        <a href="#/compras">Compras</a>
                     </div>
                 </li>
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/docs.svg" alt="" />
-                        <a href="#home">Talleres</a>
+                        <a href="#/taller">Talleres</a>
                     </div>
                 </li>
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/cupon.svg" alt="" />
-                        <a href="#home">Canjear cupon</a>
+                        <a href="#/cupon">Canjear cupon</a>
                     </div>
                 </li>
                 <div className="rombos">
@@ -39,19 +39,19 @@ export default function Menu() {
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/settings.svg" alt="" />
-                        <a href="#home">Ajustes</a>
+                        <a href="#/settings">Ajustes</a>
                     </div>
                 </li>
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/chat.svg" alt="" />
-                        <a href="#home">Comentarios</a>
+                        <a href="#/chat">Comentarios</a>
                     </div>
                 </li>
                 <li>
                     <div className="favoritos">
                         <img src="../../public/img/headphones.svg" alt="" />
-                        <a href="#home">Atencion al cliente</a>
+                        <a href="#/atencion">Atencion al cliente</a>
                     </div>
                 </li>
                 <div className="footer">
