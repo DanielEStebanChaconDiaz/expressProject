@@ -8,6 +8,7 @@ export default function Offer(){
         { nombre: 'Chullo II', precio: 'S/250', descuento: '', oferta: '2x1', tienda: 'Nación Q’ero', imagen: '../../public/img/producto-ejemplo.svg'  },
         { nombre: 'Faja tradicional', precio: 'S/320', descuento: '', oferta: '3x2', tienda: '', imagen: '../../public/img/producto-ejemplo.svg' },
         { nombre: 'Bufanda especial', precio: 'S/150', descuento: '', oferta: 'Envío gratis', tienda: '', imagen: '../../public/img/producto-ejemplo.svg'  },
+        
       ];
     
       const categorias = ['Textilería', 'Cerámica', 'Joyería', 'Talla en piedra', 'Talla en madera', 'Bordado', 'Joyeria', 'Hojalatería', 'Estampado', 'Pintura Tradicional'];

@@ -54,9 +54,9 @@ export default function Maki() {
 
     return (
         <div className="container-login">
-            {/* <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/> */}
-            <div className="back-button">
-                    <i className="bx bx-arrow-back"></i>
+            <div className="back-button-maki">
+            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/> 
+                   <i className="bx bx-arrow-back" onClick={handleClick}></i>
             </div>
             <div className="container-top-login">
                 <form onSubmit={handleSubmit} className='loginMaki'>

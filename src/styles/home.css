@@ -11,6 +11,7 @@
   padding-bottom: 50px; 
   background-image: url('../../public/img/fondo-home.svg');
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 /* Header */

@@ -4,7 +4,7 @@ body, html {
     padding: 0;
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .background {
@@ -66,10 +66,10 @@ body, html {
 }
 
 .container-top{
-    padding-top: 20px;
+
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .container-top button{
