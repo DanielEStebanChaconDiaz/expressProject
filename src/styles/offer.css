@@ -12,6 +12,7 @@
     min-height: 100vh; 
     background-image: url('../../public/img/fondo-store.svg');
     background-size: contain;
+    background-repeat: no-repeat;
 }
   
 

@@ -54,13 +54,16 @@ export default function Maki() {
 
     return (
         <div className="container-login">
-            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/>
+            <div className="back-button-maki">
+            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha2'/> 
+                   <i className="bx bx-arrow-back" onClick={handleClick}></i>
+            </div>
             <div className="container-top-login">
                 <form onSubmit={handleSubmit} className='loginMaki'>
-                    <h3>Nombre de usuario, Celular o Correo</h3>
+                    <h3>Nombre de usuario, celular o correo</h3>
                     <input 
                         type="text" 
-                        placeholder="Nombre de usuario, Celular o Correo" 
+                        placeholder="" 
                         value={contactInfo} 
                         onChange={(e) => setContactInfo(e.target.value)} 
                         required 
@@ -69,7 +72,7 @@ export default function Maki() {
                     <h3>Contraseña</h3>
                     <input 
                         type="password" 
-                        placeholder="Contraseña" 
+                        placeholder="" 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)} 
                         required 
