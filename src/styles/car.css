@@ -9,9 +9,10 @@
   
 .car-container {
     width: 100%;
-    min-height: 100vh; 
+    min-height: 95vh; 
     background-image: url('../../public/img/fondo-store.svg');
     background-size: contain;
+    background-position: center;
 }
 
 .titulo-car {
@@ -98,7 +99,6 @@
   
   .total-summary {
     margin-top: 20px;
-    background-color: #fff;
     padding: 10px;
     border-radius: 7px;
     

@@ -22,6 +22,7 @@ export default function Category() {
         <div className='category-container'>
             <header className="header-category">
                 <Flecha/>
+                
             </header>
             <section className="categories-cate">
                 <div className='category-box-cate'>

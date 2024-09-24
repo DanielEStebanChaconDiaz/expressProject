@@ -9,9 +9,10 @@
 
 .store-container {
   width: 100%;
-  min-height: 100vh; 
+  min-height: 95vh; 
   background-image: url('../../public/img/fondo-store.svg');
   background-size: contain;
+  background-position: center;
 }
 
 .search-bar {

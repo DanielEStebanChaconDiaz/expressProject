@@ -1,11 +1,16 @@
 import '../styles/craft.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function Craft(){
+    const navigate = useNavigate();
+    const handleClick = () => {
+        navigate(-1);
+    };
     return(
         <div className='craft-container'>
             <header className="header-craft">
                 <div className="back-button-craft">
-                    <i className="bx bx-arrow-back"></i>
+                    <i className="bx bx-arrow-back" onClick={handleClick}></i>
                     <img src="../../public/img/flecha-craft.svg" alt="" className='flecha'/>
                 </div>
                 <div className='titulo'>
