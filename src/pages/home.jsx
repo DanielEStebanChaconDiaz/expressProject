@@ -1,7 +1,7 @@
 import '../styles/home.css';
 import MenuHamburguesa from '../components/menuHamburger'; // Asegúrate de que la ruta de importación sea correcta
-import { useState } from 'react'; // Importar useState
-
+import { useState } from 'react';
+import Header from '../components/header';
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú
 
@@ -25,18 +25,7 @@ export default function Home() {
   return (
     <>
       <div className="App">
-        <header className="header">
-          <div className="menu">
-            <img src="../../public/img/menu.svg" alt="Menu" onClick={handleMenuToggle} /> {/* Al hacer clic, abrir el menú */}
-            <div className="search-container">
-              <img src="../../public/img/search.svg" alt="Buscar" className="search-icon" />
-              <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
-            </div>
-          </div>
-          <button className="location-btn">
-            <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
-          </button>
-        </header>
+        <Header/>
 
         <section className="categories">
           <h3>Categorias</h3>

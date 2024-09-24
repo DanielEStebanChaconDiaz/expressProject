@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../styles/car.css";
 import Confirmacion from './confirmacion_compra'
+import Header from '../components/header';
+
 
 export default function Car() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -64,23 +66,8 @@ export default function Car() {
 
   return (
     <div className="car-container">
-      <header className="header">
-        <div className="menu">
-          <img src="../../public/img/menu.svg" alt="Menu" />
-          <div className="search-container">
-            <img
-              src="../../public/img/search.svg"
-              alt="Buscar"
-              className="search-icon"
-            />
-            <input
-              type="text"
-              placeholder="Buscar producto o tienda..."
-              className="search-bar"
-            />
-          </div>
-        </div>
-      </header>
+              <Header/>
+
 
       <section className="carrito-compras">
         <h2 className="titulo-car">Tu carrito de compras</h2>

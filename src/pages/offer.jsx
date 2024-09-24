@@ -1,4 +1,5 @@
 import '../styles/offer.css'
+import Header from '../components/header';
 
 export default function Offer(){
     const productos = [
@@ -15,15 +16,8 @@ export default function Offer(){
     
     return(
         <div className='offer-container'>
-        <header className="header">
-          <div className="menu">
-              <img src="../../public/img/menu.svg" alt="" />
-              <div className="search-container">
-                  <img src="../../public/img/search.svg" alt="Buscar" className="search-icon" /> {/* Imagen de búsqueda */}
-                  <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
-              </div>
-          </div>
-        </header>
+                <Header/>
+
         <section className="promociones-section">
             <h2>Descuentos y promociones</h2>
             <p>En cientos de artesanías</p>

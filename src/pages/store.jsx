@@ -1,4 +1,5 @@
 import '../styles/store.css'
+import Header from '../components/header';
 
 export default function Store() {
   const talleres = [
@@ -11,15 +12,8 @@ export default function Store() {
   ];
   return (
     <div className='store-container'>
-      <header className="header">
-        <div className="menu">
-            <img src="../../public/img/menu.svg" alt="" />
-            <div className="search-container">
-                <img src="../../public/img/search.svg" alt="Buscar" className="search-icon" /> {/* Imagen de búsqueda */}
-                <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
-            </div>
-        </div>
-      </header>
+              <Header/>
+
       <section className="talleres-section">
         <div className='header-talleres'>
         <div className='texto-encabezado'>
