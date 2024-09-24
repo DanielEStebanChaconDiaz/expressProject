@@ -55,7 +55,7 @@ export default function Maki() {
     return (
         <div className="container-login">
             <div className="back-button-maki">
-            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/> 
+            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha2'/> 
                    <i className="bx bx-arrow-back" onClick={handleClick}></i>
             </div>
             <div className="container-top-login">

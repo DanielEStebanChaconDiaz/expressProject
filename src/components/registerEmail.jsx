@@ -7,6 +7,7 @@ export default function RegisterEmail() {
     const handleClick = () => {
         navigate(-1);
     };
+    
 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');

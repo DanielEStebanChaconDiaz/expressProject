@@ -49,6 +49,7 @@ body, html {
     opacity: 0;
     transition: left 1.5s ease, opacity 1.5s ease;
     text-align: center;
+    display: flex;
     color: white;
     padding: 50px;
     border-radius: 10px;
@@ -107,7 +108,8 @@ body, html {
     cursor: pointer;
     text-align: center;
     transition: background-color 0.3s;
-
+    inset: 0;
+    margin: auto;
     
 }
 

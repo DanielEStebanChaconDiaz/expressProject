@@ -82,11 +82,14 @@ export default function RegisterNumber() {
     return (
         <div className="container-email">
             <i className='bx bx-arrow-back' onClick={handleClick} style={{ cursor: 'pointer' }}></i>
+
             <div className="container-top-email">
+            <img src="../../public/img/flecha1-craft.svg" alt="" onClick={handleClick} className='flecha1'/> 
                 <form onSubmit={handleSubmit}>
                     <h3>Nombre de usuario*</h3>
-                    <p>*Crea un nombre de usuario de minimo 5 y máximo 12 carácteres</p>
-                    <input type="text" placeholder="Nombre de usuario" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    <p className='gris'>*Crea un nombre de usuario de minimo 5 y máximo 12 carácteres</p>
+
+                    <input type="text" placeholder="" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     
                     <h3>Número de teléfono*</h3>
                     <div style={{ display: 'flex', gap: '10px' }}>
@@ -96,7 +99,7 @@ export default function RegisterNumber() {
                                 <option key={country.code} value={country.code}>{country.code} ({country.country})</option>
                             ))}
                         </select>
-                        <input className='number' type="tel" placeholder="Número de teléfono" value={phoneNumber} onChange={handlePhoneChange(setPhoneNumber)} required />
+                        <input className='number' type="tel" placeholder="" value={phoneNumber} onChange={handlePhoneChange(setPhoneNumber)} required />
                     </div>
                     
                     <h3>Confirma tu número de teléfono*</h3>
@@ -107,20 +110,20 @@ export default function RegisterNumber() {
                                 <option key={country.code} value={country.code}>{country.code} ({country.country})</option>
                             ))}
                         </select>
-                        <input className='number' type="tel" placeholder="Confirmar número de teléfono" value={confirmPhoneNumber} onChange={handlePhoneChange(setConfirmPhoneNumber)} required />
+                        <input className='number' type="tel" placeholder="" value={confirmPhoneNumber} onChange={handlePhoneChange(setConfirmPhoneNumber)} required />
                     </div>
 
                     <h3>Contraseña*</h3>
-                    <p>Recuerda crear una contraseña dificil de adivinar</p>
-                    <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <p className='gris'>Recuerda crear una contraseña dificil de adivinar</p>
+                    <input type="password" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     
                     <h3>Confirma tu contraseña*</h3>
-                    <input type="password" placeholder="Confirmar contraseña" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    <input type="password" placeholder="" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                     
                     <h3>Sexo</h3>
                     <div className="radio-buttons">
                         <select value={gender} onChange={(e) => setGender(e.target.value)} required>
-                            <option value="">Seleccionar</option>
+                            <option value=""></option>
                             <option value="male">Hombre</option>
                             <option value="female">Mujer</option>
                             <option value="other">Otro</option>
@@ -130,21 +133,21 @@ export default function RegisterNumber() {
                     <h3>Fecha de Nacimiento*</h3>
                     <div className="fecha-container">
                         <select value={day} onChange={(e) => setDay(e.target.value)}>
-                            <option value="">Día</option>
+                            <option value="">DD</option>
                             {days.map(d => (
                                 <option key={d} value={d}>{d}</option>
                             ))}
                         </select>
 
                         <select value={month} onChange={(e) => setMonth(e.target.value)}>
-                            <option value="">Mes</option>
+                            <option value="">MM</option>
                             {months.map((m, index) => (
                                 <option key={index} value={index + 1}>{m}</option>
                             ))}
                         </select>
 
                         <select value={year} onChange={(e) => setYear(e.target.value)}>
-                            <option value="">Año</option>
+                            <option value="">YYYY</option>
                             {years.map(y => (
                                 <option key={y} value={y}>{y}</option>
                             ))}
