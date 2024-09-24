@@ -1,5 +1,6 @@
 import '../styles/shopping.css';
 import { useState } from "react";
+import Flecha from '../components/flecha-back';
 
 export default function Compras() {
     const [items, setItems] = useState([
@@ -41,10 +42,7 @@ export default function Compras() {
     return (
         <div className='shopping-container'>
             <header className="header-category">
-                <div className="back-button">
-                    <i className="bx bx-arrow-back"></i>
-                    <h3>Compras realizadas</h3>
-                </div>
+                <Flecha/>
             </header>
             <section className="carrito-compras shopping">
                 <div className="cart-items">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/category.css';
+import Flecha from '../components/flecha-back';
 
 export default function Category() {
     const [selectedCategory, setSelectedCategory] = useState(null); // Estado para la categoría seleccionada
@@ -20,10 +21,7 @@ export default function Category() {
     return (
         <div className='category-container'>
             <header className="header-category">
-                <div className="back-button">
-                    <i className="bx bx-arrow-back"></i>
-                    <h3>Categorías</h3>
-                </div>
+                <Flecha/>
             </header>
             <section className="categories-cate">
                 <div className='category-box-cate'>

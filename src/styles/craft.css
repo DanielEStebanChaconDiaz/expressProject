@@ -29,13 +29,17 @@
 }
 
 .back-button-craft{
-    position: absolute;
     /* border: 1px solid red; */
     /* border: 1px solid green; */
     width:20%;
     height: 10vh;
+    position: absolute;
     display: flex;
-
+    
+}
+.back-button-craft i{
+    
+    top: 0;
 }
 
 

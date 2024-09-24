@@ -1,5 +1,6 @@
 import '../styles/favorite.css';
 import React, { useState } from 'react';
+import Flecha from '../components/flecha-back';
 
 export default function Favorite() {
     const [selectedCategory, setSelectedCategory] = useState(null); // Estado para la categoría seleccionada
@@ -34,10 +35,7 @@ export default function Favorite() {
     return (
         <div className='favorite-container'>
             <header className="header-category">
-                <div className="back-button">
-                    <i className="bx bx-arrow-back"></i>
-                    <h3>Tus artesanías favoritas</h3>
-                </div>
+                <Flecha/>
             </header>
 
             <section className="categories-cate">
