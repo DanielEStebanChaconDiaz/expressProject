@@ -13,6 +13,7 @@
     background-image: url('../../public/img/fondo-store.svg');
     background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .titulo-car {

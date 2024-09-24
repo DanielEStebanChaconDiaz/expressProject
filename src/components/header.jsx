@@ -1,9 +1,11 @@
-import Menu from '../components/menuHamburger';
 import { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom'; // Importa useLocation
+import Menu from '../components/menuHamburger';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const location = useLocation(); // Obtiene la ubicación actual
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -35,9 +37,12 @@ export default function Header() {
           <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
         </div>
       </div>
-      <button className="location-btn">
-        <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
-      </button>
+      {/* Condición para mostrar el botón de ubicación */}
+      {location.pathname !== '/profile' && (
+        <button className="location-btn">
+          <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
+        </button>
+      )}
       {isMenuOpen && (
         <div className="menu-overlay" ref={menuRef}>
           <Menu />

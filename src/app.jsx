@@ -12,7 +12,7 @@ import Category from './pages/category'
 import Craft from './pages/craft'
 import Favorite from './pages/favorite'
 import Compras from './pages/shopping'
-
+import Profile from './pages/profile';
 import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a HashRouter
 import InitLogin from './pages/initLogin'
 import InitPolitics from './pages/initPolitics'
@@ -39,6 +39,7 @@ export default function App() {
                 <Route path ="/craft" element={<Craft/>}/>
                 <Route path ="/favorite" element={<Favorite/>}/> 
                 <Route path ="/compras" element={<Compras/>}/> 
+                <Route path="/profile" element={<Profile/>}/>
             </Routes>
         </HashRouter>
     )

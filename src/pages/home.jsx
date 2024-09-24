@@ -1,6 +1,8 @@
 import '../styles/home.css';
 import { useState } from 'react';
 import Header from '../components/header';
+import Footer from '../components/footer';
+
 export default function Home() {
 
   const categories = [
@@ -38,24 +40,8 @@ export default function Home() {
           <p>¡Aprende cómo hacerlos en estos talleres educativos!</p>
           <img src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
         </section>
+              <Footer/>
 
-        <footer className="footer-nav">
-          <a href="/#/store" className="nav-item">
-            <img src="../../public/img/icon-store.svg" alt="Store" />
-          </a>
-          <a href="/#/offer" className="nav-item">
-            <img src="../../public/img/icon-offer.svg" alt="Offers" />
-          </a>
-          <a href="/#/home" className="nav-item1">
-            <img src="../../public/img/icon-home.svg" alt="Home" />
-          </a>
-          <a href="/#/car" className="nav-item">
-            <img src="../../public/img/icon-car.svg" alt="Car" />
-          </a>
-          <a href="#" className="nav-item">
-            <img src="../../public/img/icon-profile.svg" alt="Profile" />
-          </a>
-        </footer>
       </div>
 
       {/* Componente de menú hamburguesa */}
