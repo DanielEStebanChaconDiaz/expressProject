@@ -7,6 +7,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
+  
   return {
     plugins: [react()],
     server: {
@@ -17,5 +18,5 @@ export default defineConfig(({ mode }) => {
         cert: fs.readFileSync(path.resolve(__dirname, 'server/certificate.crt'))
       }
     },
-  }
+  };
 });

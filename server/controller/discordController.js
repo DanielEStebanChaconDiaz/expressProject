@@ -53,8 +53,8 @@ passport.deserializeUser(async (id, done) => {
 exports.initiateDiscordAuth = passport.authenticate('discord');
 
 exports.discordAuthCallback = passport.authenticate('discord', {
-    successRedirect: '/profile',
-    failureRedirect: '/login'
+    successRedirect: 'https://localhost:5000/#/home',
+    failureRedirect: '/'
 });
 
 exports.getUserProfile = (req, res) => {
