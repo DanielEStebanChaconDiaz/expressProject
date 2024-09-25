@@ -16,16 +16,20 @@ export default function Flecha() {
         "/taller": "Talleres educativos",
         "/settings": "Ajustes",
         "/atencion": "Atención al cliente",
-        "/Maki": "", // No mostrar título en la ruta "/Maki"
+        "/Maki": "",
+        "/cupon": "Canjear cupón",
     };
 
     const currentTitle = pageTitles[location.pathname];
+
+    // Inserta un salto de línea entre las palabras si hay más de una palabra
+    const formattedTitle = currentTitle?.split(' ').join('\n');
 
     return (
         <div className="back-button">
             <i className="bx bx-arrow-back" onClick={handleClick}></i>
             {/* Solo mostrar el h3 si currentTitle no está vacío */}
-            {currentTitle && <h3>{currentTitle}</h3>}
+            {formattedTitle && <h3 style={{ whiteSpace: 'pre-wrap' }}>{formattedTitle}</h3>}
         </div>
     );
 }
