@@ -36,6 +36,7 @@ export default function Favorite() {
         <div className='favorite-container'>
             <header className="header-category">
                 <Flecha/>
+                
             </header>
 
             <section className="categories-cate">

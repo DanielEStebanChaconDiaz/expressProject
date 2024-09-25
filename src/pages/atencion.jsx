@@ -1,10 +1,14 @@
 import '../styles/atencion.css'
 import Flecha from '../components/flecha-back'
+import Rombo from '../components/header-rombo'
+import FondoFlecha from '../components/fondo-flecha'
 
 export default function Atencion(){
     return(
         <div className='atencion-container'>
+            <FondoFlecha/>
             <Flecha/>
+            <Rombo/>
             <section className="faq-section">
                 <h3>Preguntas frecuentes</h3>
                 <div className="faq-item">¿Cómo compro en la app?</div>

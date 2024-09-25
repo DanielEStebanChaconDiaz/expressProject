@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import '../styles/settings.css';
 import Flecha from '../components/flecha-back';
 import { Switch } from '../components/switch';
+import Rombo from '../components/header-rombo';
+import FondoFlecha from '../components/fondo-flecha';
 
 export default function Settings() {
   const [notificationSettings, setNotificationSettings] = useState({
@@ -17,7 +19,9 @@ export default function Settings() {
 
   return (
     <div className='settings-container'>
-      <Flecha />
+            <FondoFlecha/>
+            <Flecha/>
+            <Rombo/>
       <h4>Global</h4>
       <section className="settings-section">
         <div className="settings-item">

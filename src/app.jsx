@@ -11,7 +11,7 @@ import Exito from './pages/exito_compra'
 import Category from './pages/category'
 import Craft from './pages/craft'
 import Favorite from './pages/favorite'
-import Compras from './pages/shopping'
+import Compras from './pages/compras'
 import Profile from './pages/profile';
 import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a HashRouter
 import InitLogin from './pages/initLogin'

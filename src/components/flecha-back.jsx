@@ -10,22 +10,22 @@ export default function Flecha() {
 
     // Mapea las rutas a sus respectivos títulos
     const pageTitles = {
-
         "/category": "Categorías",
         "/favorite": "Tus artesanías favoritas",
         "/compras": "Compras realizadas",
-        "/talleres": "Talleres educativos",
+        "/taller": "Talleres educativos",
         "/settings": "Ajustes",
         "/atencion": "Atención al cliente",
-
+        "/Maki": "", // No mostrar título en la ruta "/Maki"
     };
 
-    const currentTitle = pageTitles[location.pathname] || "Tus artesanías favoritas";
+    const currentTitle = pageTitles[location.pathname];
 
     return (
         <div className="back-button">
             <i className="bx bx-arrow-back" onClick={handleClick}></i>
-            <h3>{currentTitle}</h3>
+            {/* Solo mostrar el h3 si currentTitle no está vacío */}
+            {currentTitle && <h3>{currentTitle}</h3>}
         </div>
     );
 }

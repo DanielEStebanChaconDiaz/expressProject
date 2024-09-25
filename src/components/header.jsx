@@ -1,16 +1,21 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom'; // Importa useLocation
+import { useLocation, useNavigate } from 'react-router-dom'; // Importa useLocation y useNavigate
 import Menu from '../components/menuHamburger';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const location = useLocation(); // Obtiene la ubicación actual
+  const navigate = useNavigate(); // Para redirigir a la ruta "Home"
+
+  // Estado para la página activa
+  const [activePage, setActivePage] = useState('/home'); // Por defecto 'Home'
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
+  // Lógica para manejar el cierre del menú al hacer clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -23,6 +28,15 @@ export default function Header() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // Lógica para redirigir a "Home" por defecto si la ruta es '/'
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/home'); // Redirigir a la ruta "Home"
+    }
+    // Actualiza el estado de la página activa cada vez que cambie la ubicación
+    setActivePage(location.pathname);
+  }, [location, navigate]);
 
   return (
     <header className="header">
@@ -43,9 +57,10 @@ export default function Header() {
           <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
         </button>
       )}
+      {/* Muestra el menú si está abierto */}
       {isMenuOpen && (
         <div className="menu-overlay" ref={menuRef}>
-          <Menu />
+          <Menu activePage={activePage} />
         </div>
       )}
     </header>

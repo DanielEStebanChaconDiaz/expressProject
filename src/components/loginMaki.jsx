@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/loginMaki.css';
 import { useState } from 'react';
+import FondoFlecha from './fondo-flecha';
+import Flecha from './flecha-back';
 
 export default function Maki() {
     const navigate = useNavigate();
@@ -54,10 +56,8 @@ export default function Maki() {
 
     return (
         <div className="container-login">
-            <div className="back-button-maki">
-            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha2'/> 
-                   <i className="bx bx-arrow-back" onClick={handleClick}></i>
-            </div>
+            <FondoFlecha/>
+            <Flecha/>
             <div className="container-top-login">
                 <form onSubmit={handleSubmit} className='loginMaki'>
                     <h3>Nombre de usuario, celular o correo</h3>

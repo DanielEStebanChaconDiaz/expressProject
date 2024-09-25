@@ -1,6 +1,7 @@
 import '../styles/talleres.css'
 import Flecha from '../components/flecha-back'
-
+import Rombo from '../components/header-rombo';
+import FondoFlecha from '../components/fondo-flecha';
 export default function Talleres(){
     const talleres = [
         {
@@ -34,7 +35,9 @@ export default function Talleres(){
     ];
     return(
         <div className='talleres-container'>
+            <FondoFlecha/>
             <Flecha/>
+            <Rombo/>
             <section>
                 <div className="search-container-taller">
                     <img src="../../public/img/search-category.svg" alt="Buscar" className="search-icon-taller" />
