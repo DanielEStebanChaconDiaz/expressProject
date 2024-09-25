@@ -14,6 +14,8 @@ export default function Flecha() {
         "/category": "Categorías",
         "/favorite": "Tus artesanías favoritas",
         "/compras": "Compras realizadas",
+        "/talleres": "Talleres educativos",
+
     };
 
     const currentTitle = pageTitles[location.pathname] || "Tus artesanías favoritas";

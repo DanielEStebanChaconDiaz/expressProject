@@ -20,6 +20,8 @@ import Number from './pages/registerNumber';
 import MakiLogin from './pages/loginMaki';
 import ProductCard from './pages/productCard';
 import ProductCard2 from './pages/productCard2';
+import Talleres from './pages/talleres';
+
 export default function App() {
     return (
         <HashRouter> {/* Cambiado a HashRouter */}
@@ -44,6 +46,7 @@ export default function App() {
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/productCard" element={<ProductCard/>}/>
                 <Route path="/productCard2" element={<ProductCard2/>}/>
+                <Route path="/talleres" element={<Talleres/>}/>
             </Routes>
         </HashRouter>
     )
