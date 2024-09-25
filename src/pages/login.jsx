@@ -6,6 +6,11 @@ export default function Login() {
     const FacebookAuth = () => {
         window.location.href = 'https://localhost:3000/auth/facebook';
     };
+
+    const GoogleAuth = () => {
+        window.location.href = 'https://localhost:3000/auth/google';
+    };
+
     
 
     return (
@@ -17,7 +22,7 @@ export default function Login() {
             <button className="social-btn insta-btn">
                 <img src="../../public/img/instagram.svg" alt="" /> Inicia sesión con Instagram
             </button>
-            <button className="social-btn gmail-btn">
+            <button className="social-btn gmail-btn"onClick={GoogleAuth}>
                 <img src="../../public/img/gmail.svg" alt="" /> Inicia sesión con Gmail
             </button>
             <button className="social-btn mail-btn">
