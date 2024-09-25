@@ -1,22 +1,46 @@
 import '../styles/politics.css';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 export default function Politics() {
     const navigate = useNavigate();
     const [privacyAccepted, setPrivacyAccepted] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [promotionsAccepted, setPromotionsAccepted] = useState(false);
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const storedUserData = localStorage.getItem('userData');
+        if (storedUserData) {
+            setUserData(JSON.parse(storedUserData));
+        }
+    }, []);
 
     const handleClick = () => {
         navigate(-1);
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         if (privacyAccepted && termsAccepted) {
-            // Lógica de registro aquí
+            if (userData) {
+                try {
+                    const response = await axios.post('https://localhost:3000/api/usuarios/register', {
+                        ...userData,
+                        aceptaPromociones: promotionsAccepted
+                    });
+                    console.log('Registro exitoso:', response.data);
+                    localStorage.removeItem('userData'); // Limpiamos los datos del localStorage
+                    navigate('#/home'); // Redirigimos a #/home
+                } catch (err) {
+                    console.error('Error al registrar:', err.response);
+                    alert('Error al registrar: ' + (err.response?.data?.errores?.map(e => e.msg).join(', ') || 'Error desconocido'));
+                }
+            } else {
+                alert('No se encontraron datos de usuario.');
+            }
         } else {
             alert("Por favor, acepta los términos y condiciones.");
         }
@@ -56,7 +80,7 @@ export default function Politics() {
             </div>
             <div className="registrar">
                 <i className='bx bx-chevron-right bx-chevron-right1'></i>
-                <a href="#" onClick={handleRegister}>Registrarse</a>
+                <a href="#/home" onClick={handleRegister}>Registrarse</a>
             </div>
         </div>
     );
