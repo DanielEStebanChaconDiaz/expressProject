@@ -1,0 +1,73 @@
+.atencion-container{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../public/img/fondo-shopping.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+}
+
+.atencion-container p{
+    margin-left: 20px;
+    margin-top: 50px;
+    font-size: 18px;
+}
+
+.faq-section {
+    margin: 20px;
+    margin-top: 50px;
+  }
+  
+  .faq-section h3 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .faq-item {
+    background-color: #e3e3e3;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .support-section {
+    margin: 20px;
+    padding: 10px;
+    /* background-color: #e3e3e3; */
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .support-button1 {
+    display: flex;
+    align-items: center;
+    background-color: #e3e3e3;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    
+  }
+  
+  .support-button1 img {
+    margin-right: 8px;
+    width: 30px;
+  }
+  
+  .support-button2 {
+    display: flex;
+    align-items: center;
+    background-color: #e3e3e3;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    
+  }
+  
+  .support-button2 img {
+    margin-right: 8px;
+    width: 30px;
+  }

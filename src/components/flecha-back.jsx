@@ -16,6 +16,7 @@ export default function Flecha() {
         "/compras": "Compras realizadas",
         "/talleres": "Talleres educativos",
         "/settings": "Ajustes",
+        "/atencion": "Atención al cliente",
 
     };
 
