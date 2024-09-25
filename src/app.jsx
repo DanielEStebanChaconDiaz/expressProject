@@ -19,7 +19,7 @@ import InitPolitics from './pages/initPolitics'
 import Number from './pages/registerNumber';
 import MakiLogin from './pages/loginMaki';
 import ProductCard from './pages/productCard';
-
+import ProductCard2 from './pages/productCard2';
 export default function App() {
     return (
         <HashRouter> {/* Cambiado a HashRouter */}
@@ -43,6 +43,7 @@ export default function App() {
                 <Route path ="/compras" element={<Compras/>}/> 
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/productCard" element={<ProductCard/>}/>
+                <Route path="/productCard2" element={<ProductCard2/>}/>
             </Routes>
         </HashRouter>
     )
