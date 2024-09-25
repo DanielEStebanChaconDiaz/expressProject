@@ -15,6 +15,7 @@ export default function Flecha() {
         "/favorite": "Tus artesanías favoritas",
         "/compras": "Compras realizadas",
         "/talleres": "Talleres educativos",
+        "/settings": "Ajustes",
 
     };
 

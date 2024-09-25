@@ -21,6 +21,7 @@ import MakiLogin from './pages/loginMaki';
 import ProductCard from './pages/productCard';
 import ProductCard2 from './pages/productCard2';
 import Talleres from './pages/talleres';
+import Settings from './pages/settings';
 
 export default function App() {
     return (
@@ -47,6 +48,7 @@ export default function App() {
                 <Route path="/productCard" element={<ProductCard/>}/>
                 <Route path="/productCard2" element={<ProductCard2/>}/>
                 <Route path="/talleres" element={<Talleres/>}/>
+                <Route path="/settings" element={<Settings/>}/>
             </Routes>
         </HashRouter>
     )
