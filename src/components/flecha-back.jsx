@@ -18,18 +18,22 @@ export default function Flecha() {
         "/atencion": "Atención al cliente",
         "/Maki": "",
         "/cupon": "Canjear cupón",
+        "/comentario": "Comentarios a la app",
     };
 
     const currentTitle = pageTitles[location.pathname];
 
-    // Inserta un salto de línea entre las palabras si hay más de una palabra
-    const formattedTitle = currentTitle?.split(' ').join('\n');
+    // Inserta un salto de línea después de la primera palabra si hay más de una
+    const formattedTitle = currentTitle?.split(' ');
+    const titleWithLineBreak = formattedTitle && formattedTitle.length > 1 
+        ? `${formattedTitle[0]}\n${formattedTitle.slice(1).join(' ')}`
+        : currentTitle;
 
     return (
         <div className="back-button">
             <i className="bx bx-arrow-back" onClick={handleClick}></i>
             {/* Solo mostrar el h3 si currentTitle no está vacío */}
-            {formattedTitle && <h3 style={{ whiteSpace: 'pre-wrap' }}>{formattedTitle}</h3>}
+            {titleWithLineBreak && <h3 style={{ whiteSpace: 'pre-wrap' }}>{titleWithLineBreak}</h3>}
         </div>
     );
 }

@@ -24,7 +24,7 @@ import Talleres from './pages/talleres';
 import Settings from './pages/settings';
 import Atencion from './pages/atencion';
 import Cupon from './pages/cupon'
-
+import Comentario from './pages/comentarios'
 
 export default function App() {
     return (
@@ -54,6 +54,7 @@ export default function App() {
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/atencion" element={<Atencion/>}/>
                 <Route path="/cupon" element={<Cupon/>}/>
+                <Route path="/comentario" element={<Comentario/>}/>
             </Routes>
         </HashRouter>
     )
