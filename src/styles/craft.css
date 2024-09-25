@@ -35,6 +35,7 @@
     height: 10vh;
     position: absolute;
     display: flex;
+    z-index: 9999;
     
 }
 .back-button-craft i{

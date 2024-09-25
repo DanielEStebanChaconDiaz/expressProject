@@ -3,6 +3,7 @@
     height: 100vh;
     background-image: url(../../public/img/fondo-profile.svg);
     background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .profile-page {
