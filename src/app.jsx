@@ -48,7 +48,7 @@ export default function App() {
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/productCard" element={<ProductCard/>}/>
                 <Route path="/productCard2" element={<ProductCard2/>}/>
-                <Route path="/talleres" element={<Talleres/>}/>
+                <Route path="/taller" element={<Talleres/>}/>
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/atencion" element={<Atencion/>}/>
             </Routes>
