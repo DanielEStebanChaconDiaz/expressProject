@@ -6,6 +6,9 @@ export default function Login() {
     const FacebookAuth = () => {
         window.location.href = 'https://localhost:3000/auth/facebook';
     };
+    const DiscordAuth = () => {
+        window.location.href = 'https://localhost:3000/auth/discord';
+    };
     
 
     return (
@@ -14,7 +17,7 @@ export default function Login() {
             <button className="social-btn fb-btn" onClick={FacebookAuth}>
                 <img src="../../public/img/facebook.svg" alt="" /> Inicia Sesión con Facebook
             </button>
-            <button className="social-btn insta-btn">
+            <button className="social-btn insta-btn" onClick={DiscordAuth}>
                 <img src="../../public/img/instagram.svg" alt="" /> Inicia sesión con Instagram
             </button>
             <button className="social-btn gmail-btn">
