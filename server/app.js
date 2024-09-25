@@ -25,12 +25,13 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: ['http://localhost:5000/#/login', 'https://localhost:3000'], // Orígenes permitidos
+    origin: 'http://localhost:5000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
     optionsSuccessStatus: 200
 }));
+
 //app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
 require('dotenv').config();
 

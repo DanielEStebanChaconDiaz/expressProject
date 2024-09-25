@@ -7,10 +7,10 @@ router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }),
     (req, res) => {
-        res.redirect('/usersFacebook');
+        res.redirect('http://localhost:5000/#/home');
     }
 );
 
-router.get('/usersFacebook', pageController.users);
+router.get('http://localhost:5000/#/home', pageController.users);
 
 module.exports = router;
