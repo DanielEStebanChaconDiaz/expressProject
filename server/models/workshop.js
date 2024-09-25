@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const TallerSchema = new mongoose.Schema({
-  tiendaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Tienda', required: true },
   nombre: { type: String, required: true, index: true },
   descripcion: { type: String },
   publicoObjetivo: { type: String },
