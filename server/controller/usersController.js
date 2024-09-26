@@ -5,7 +5,26 @@ const { cloudinary, upload, uploadToCloudinary } = require('../config/cloudinary
 
 exports.registerUser = async (req, res) => {
     const { nombreUsuario, correoElectronico, contrasena, sexo, fechaNacimiento, tipo } = req.body;
+
     try {
+        // Verificar si el nombre de usuario ya existe
+        const existingUserByUsername = await usuarioService.obtenerUsuarioPorNombre(nombreUsuario);
+        if (existingUserByUsername) {
+            return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
+        }
+
+        // Verificar si el correo electrónico ya existe
+        const existingUserByEmail = await usuarioService.obtenerUsuarioPorCorreo(correoElectronico);
+        if (existingUserByEmail) {
+            return res.status(400).json({ message: 'El correo electrónico ya está en uso' });
+        }
+
+        // Verificar si el celular ya existe (si es necesario)
+        //const existingUserByPhone = await usuarioService.obtenerUsuarioPorCelular(req.body.celular);
+        //if (existingUserByPhone) {
+          //  return res.status(400).json({ message: 'El número de celular ya está en uso' });
+        //}
+
         const hashedPassword = await bcrypt.hash(contrasena, 10);
         const user = await usuarioService.crearUsuario({
             nombreUsuario,
@@ -15,6 +34,7 @@ exports.registerUser = async (req, res) => {
             fechaNacimiento,
             tipo
         });
+        
         res.status(201).json({ 
             message: 'Usuario registrado exitosamente', 
             user: new UserDTO(user)
@@ -23,7 +43,6 @@ exports.registerUser = async (req, res) => {
         res.status(500).json({ message: 'Error en el registro', error: error.message });
     }
 };
-
 exports.registerUserByPhone = async (req, res) => {
     const { nombreUsuario, celular, contrasena, sexo, fechaNacimiento, tipo } = req.body;
     try {
