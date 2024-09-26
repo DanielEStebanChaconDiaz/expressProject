@@ -5,7 +5,7 @@ import FondoFlecha from '../components/fondo-flecha';
 import QRCode from 'react-qr-code';
 
 export default function Documental() {
-    const valorCodigoQR = "https://www.youtube.com/watch?v=zWaymcVmJ-A"; // Reemplaza con tu URL real
+    const valorCodigoQR = "https://www.youtube.com/watch?v=_u3NH5yGZt0&list=PLSbDMtNBmYTtx23xKzeq756HGYRB11BCU"; // Reemplaza con tu URL real
 
     return (
         <div className='documental-container'>
