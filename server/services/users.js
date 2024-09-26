@@ -69,6 +69,29 @@ const obtenerUsuarioPorCorreo = async (correoElectronico) => {
 const obtenerUsuarioPorCelular = async (celular) => {
     return await Usuario.findOne({ celular });
 };
+const autenticarUsuario = async (contactInfo, contrasena) => {
+    let usuario;
+
+    // Verificar si el contactInfo es un email, teléfono o nombre de usuario
+    if (contactInfo.includes('@')) {
+        usuario = await Usuario.findOne({ correoElectronico: contactInfo });
+    } else if (/^\+?[\d\s-]{10,}$/.test(contactInfo)) {
+        usuario = await Usuario.findOne({ celular: contactInfo });
+    } else {
+        usuario = await Usuario.findOne({ nombreUsuario: contactInfo });
+    }
+
+    if (!usuario) {
+        return null;
+    }
+
+    const contrasenaValida = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (!contrasenaValida) {
+        return null;
+    }
+
+    return usuario;
+};
 
 module.exports = {
     crearUsuario,
@@ -82,4 +105,5 @@ module.exports = {
     obtenerUsuarioPorNombre,
     obtenerUsuarioPorCorreo,
     obtenerUsuarioPorCelular,
+    autenticarUsuario,
 };

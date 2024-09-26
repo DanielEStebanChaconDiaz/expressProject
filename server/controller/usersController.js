@@ -178,35 +178,49 @@ exports.agregarTiendaFavorita = async (req, res) => {
     }
 };
 
-exports.obtenerUsuarioLogueado = (req, res) => {
-    console.log('Session:', req.session);
-    console.log('Is authenticated:', req.isAuthenticated());
-    console.log('User:', req.user);
+exports.verificarYConfigurarSesion = async (req, res) => {
+    const { nombreUsuario, correoElectronico } = req.body;
 
-    if (!req.isAuthenticated()) {
-        return res.status(401).json({ 
-            mensaje: 'No autorizado',
-            debug: {
-                session: req.session,
-                isAuthenticated: req.isAuthenticated(),
-                user: req.user
-            }
+    try {
+        let usuario;
+
+        if (nombreUsuario) {
+            usuario = await usuarioService.obtenerUsuarioPorNombre(nombreUsuario);
+        } else if (correoElectronico) {
+            usuario = await usuarioService.obtenerUsuarioPorCorreo(correoElectronico);
+        }
+
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+
+        req.session.user = new UserDTO(usuario);
+
+        res.status(200).json({ 
+            message: 'Sesión configurada exitosamente', 
+            user: req.session.user
         });
+    } catch (error) {
+        res.status(500).json({ message: 'Error al verificar usuario y configurar sesión', error: error.message });
     }
-    
-    if (!req.user) {
-        return res.status(401).json({ 
-            mensaje: 'Usuario no encontrado en la sesión',
-            debug: {
-                session: req.session,
-                isAuthenticated: req.isAuthenticated(),
-                user: req.user
-            }
-        });
-    }
-    
-    res.status(200).json(new UserDTO(req.user));
 };
+
+exports.obtenerUsuarioLogueado = (req, res) => {
+    if (!req.session || !req.session.user) {
+        return res.status(401).json({ 
+            mensaje: 'No hay sesión activa',
+            debug: {
+                session: req.session,
+                user: req.session.user
+            }
+        });
+    }
+    
+    res.status(200).json(req.session.user);
+};
+
+
+
 
 exports.logout = (req, res) => {
     req.logout();

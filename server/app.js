@@ -11,6 +11,7 @@ const tiendaRoutes = require('./routes/shopRoutes');
 const tallerRoutes = require('./routes/workshopRoutes');
 const pedidoRoutes = require('./routes/orderRoutes');
 const productoRoutes = require('./routes/productRoutes');
+const authRoutes = require('./routes/authRoutes')
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -52,6 +53,7 @@ app.use(passport.session());
 app.use(facebookRoutes);
 app.use(googleRoutes);
 app.use(discordRoutes);
+app.use(authRoutes)
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/cupones', couponRoutes)
 app.use('/api/mensajes', messagesRoutes)
