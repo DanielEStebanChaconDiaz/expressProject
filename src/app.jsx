@@ -27,6 +27,7 @@ import Cupon from './pages/cupon'
 import Comentario from './pages/comentarios'
 import InfoTaller from './pages/taller-info'
 import Documental from './pages/documental';
+import Chat from './pages/chat'
 
 export default function App() {
     return (
@@ -59,6 +60,7 @@ export default function App() {
                 <Route path="/comentario" element={<Comentario/>}/>
                 <Route path="/info-taller" element={<InfoTaller/>}/>
                 <Route path="/documental" element={<Documental/>}/>
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </HashRouter>
     )

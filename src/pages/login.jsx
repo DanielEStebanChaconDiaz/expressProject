@@ -1,10 +1,17 @@
 import React from 'react';
-import axios from 'axios';
 import '../styles/login.css';
 
 export default function Login() {
     const FacebookAuth = () => {
         window.location.href = 'https://localhost:3000/auth/facebook';
+    };
+
+    const GoogleAuth = () => {
+        window.location.href = 'https://localhost:3000/auth/google';
+    };
+
+    const DiscordAuth = () => {
+        window.location.href = 'https://localhost:3000/auth/discord';
     };
     
 
@@ -14,10 +21,10 @@ export default function Login() {
             <button className="social-btn fb-btn" onClick={FacebookAuth}>
                 <img src="../../public/img/facebook.svg" alt="" /> Inicia Sesión con Facebook
             </button>
-            <button className="social-btn insta-btn">
+            <button className="social-btn insta-btn" onClick={DiscordAuth}>
                 <img src="../../public/img/instagram.svg" alt="" /> Inicia sesión con Instagram
             </button>
-            <button className="social-btn gmail-btn">
+            <button className="social-btn gmail-btn"onClick={GoogleAuth}>
                 <img src="../../public/img/gmail.svg" alt="" /> Inicia sesión con Gmail
             </button>
             <button className="social-btn mail-btn">

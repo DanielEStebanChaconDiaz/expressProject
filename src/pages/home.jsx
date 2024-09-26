@@ -1,9 +1,25 @@
 import '../styles/home.css';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import axios from 'axios';
 
 export default function Home() {
+  useEffect(() => {
+    const obtenerUsuarioLogueado = async () => {
+      try {
+        const response = await axios.get('https://localhost:3000/api/usuarios/me', { 
+          withCredentials: true 
+        });
+        const usuario = response.data;
+        console.log('Usuario logueado:', usuario);
+      } catch (error) {
+        console.error('Error al obtener el usuario logueado:', error);
+      }
+    };
+
+    obtenerUsuarioLogueado();
+  }, []); 
 
   const categories = [
     { name: 'Textilería', icon: '../../public/img/category1.svg' },

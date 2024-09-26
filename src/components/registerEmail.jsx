@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/registerEmail.css';
 import { useState } from 'react';
+import bcrypt from 'bcryptjs';
 
 export default function RegisterEmail() {
     const navigate = useNavigate();
@@ -8,7 +9,6 @@ export default function RegisterEmail() {
         navigate(-1);
     };
     
-
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [confirmEmail, setConfirmEmail] = useState('');
@@ -18,7 +18,7 @@ export default function RegisterEmail() {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [gender, setGender] = useState('');
-    const [error, setError] = useState(''); // Para manejar errores de validación
+    const [error, setError] = useState('');
 
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
     const months = [
@@ -30,41 +30,72 @@ export default function RegisterEmail() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    
+        // Validaciones existentes...
+        if (username.length < 5 || username.length > 12) {
+            setError('El nombre de usuario debe tener entre 5 y 12 caracteres.');
+            return;
+        }
+    
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError('El correo electrónico no es válido.');
+            return;
+        }
+    
+        if (password.length < 6) {
+            setError('La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }
+    
+        if (!['masculino', 'femenino', 'otro'].includes(gender)) {
+            setError('Sexo no válido.');
+            return;
+        }
 
-        // Validar que los correos sean iguales
+        // Convertir el mes a número
+        const monthNumber = months.indexOf(month) + 1;
+        if (monthNumber === 0) {
+            setError('Mes no válido.');
+            return;
+        }
+
+        // Validar y formatear la fecha de nacimiento
+        const formattedDay = day.toString().padStart(2, '0');
+        const formattedMonth = monthNumber.toString().padStart(2, '0');
+        const birthDateString = `${year}-${formattedMonth}-${formattedDay}`;
+        
+        // Crear un objeto Date y verificar si es válido
+        const birthDate = new Date(birthDateString);
+        if (isNaN(birthDate.getTime())) {
+            setError('La fecha de nacimiento no es válida.');
+            return;
+        }
+
         if (email !== confirmEmail) {
             setError('Los correos electrónicos no coinciden.');
             return;
         }
-
-        // Validar que las contraseñas sean iguales (opcional)
+    
         if (password !== confirmPassword) {
             setError('Las contraseñas no coinciden.');
             return;
         }
-
-        // Si todo está bien, guardar los datos en el localStorage
-        const formData = {
-            username,
-            email,
-            confirmEmail,
-            password,
-            confirmPassword,
-            gender,
-            birthDate: {
-                day,
-                month,
-                year,
-            }
+    
+        const hashedPassword = bcrypt.hashSync(password, 10);
+    
+        const userData = {
+            nombreUsuario: username,
+            correoElectronico: email,
+            contrasena: hashedPassword,
+            sexo: gender,
+            fechaNacimiento: birthDateString,
         };
-
-        localStorage.setItem('userData', JSON.stringify(formData));
-
-        // Limpiar el error (si lo había) y redirigir
+    
+        // Almacenar en localStorage
+        localStorage.setItem('userData', JSON.stringify(userData));
+    
+        console.log('Datos almacenados en localStorage');
         setError('');
-        console.log("Datos guardados:", formData);
-
-        // Redirigir a #/politics
         navigate('/politics');
     };
 
@@ -72,17 +103,17 @@ export default function RegisterEmail() {
         <div className="container-email">
             <i className='bx bx-arrow-back' onClick={handleClick} style={{ cursor: 'pointer' }}></i>
             <div className="container-top-email">
-            <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1'/> 
+                <img src="../../public/img/flecha1-craft.svg" alt="" className='flecha1' /> 
                 <form onSubmit={handleSubmit}>
                     <h3>Nombre de usuario*</h3>
-                    <p className='gris'>*Crea un nombre de usuario de minimo 5 y máximo 12 carácteres</p>
+                    <p className='gris'>*Crea un nombre de usuario de mínimo 5 y máximo 12 caracteres</p>
                     <input type="text" placeholder="" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     <h3>Correo electrónico*</h3>
                     <input type="email" placeholder="" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     <h3>Confirma tu correo*</h3>
                     <input type="email" placeholder="" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} required />
                     <h3>Contraseña*</h3>
-                    <p className='gris'>Recuerda crear una contraseña dificil de adivinar</p>
+                    <p className='gris'>Recuerda crear una contraseña difícil de adivinar</p>
                     <input type="password" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     <h3>Confirma tu contraseña*</h3>
                     <input type="password" placeholder="" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
@@ -90,9 +121,9 @@ export default function RegisterEmail() {
                     <div className="radio-buttons">
                         <select value={gender} onChange={(e) => setGender(e.target.value)} required>
                             <option value=""></option>
-                            <option value="male">Hombre</option>
-                            <option value="female">Mujer</option>
-                            <option value="other">Otro</option>
+                            <option value="masculino">Hombre</option>
+                            <option value="femenino">Mujer</option>
+                            <option value="otro">Otro</option>
                         </select>
                     </div>
                     <h3>Fecha de Nacimiento*</h3>
@@ -107,7 +138,7 @@ export default function RegisterEmail() {
                         <select value={month} onChange={(e) => setMonth(e.target.value)}>
                             <option value="">MM</option>
                             {months.map((m, index) => (
-                                <option key={index} value={index + 1}>{m}</option>
+                                <option key={index} value={m}>{m}</option>
                             ))}
                         </select>
 
@@ -118,7 +149,7 @@ export default function RegisterEmail() {
                             ))}
                         </select>
                     </div>
-                    {error && <p style={{ color: 'red' }}>{error}</p>} {/* Mostrar mensaje de error si lo hay */}
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
                     <div className="continuar">
                         <button type="submit">
                             <i className='bx bx-chevron-right'></i><p>Continuar</p>

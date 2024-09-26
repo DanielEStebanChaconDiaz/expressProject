@@ -1,14 +1,12 @@
-const socketIo = require('socket.io');
 const readline = require('readline');
 
-function setupChat(server) {
-    const io = socketIo(server);
-    
+function setupChat(io) {
     io.on('connection', (socket) => {
         console.log('Un cliente se ha conectado');
 
         socket.on('chat message', (msg) => {
             console.log('Mensaje recibido: ' + msg);
+            io.emit('chat message', msg); // Emitir el mensaje a todos los clientes
         });
     });
 
@@ -24,7 +22,7 @@ function setupChat(server) {
                 rl.close();
                 process.exit(0);
             } else {
-                io.emit('chat message', answer);
+                io.emit('chat message', 'Admin: ' + answer);
                 promptAdminInput();
             }
         });

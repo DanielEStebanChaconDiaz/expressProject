@@ -8,10 +8,10 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        res.redirect('/usersGoogle');
+        res.redirect('https://localhost:5000/#/home');
     }
 );
 
-router.get('/usersGoogle', pageController.users);
+router.get('https://localhost:5000/#/home', pageController.users);
 
 module.exports = router;

@@ -4,7 +4,6 @@ const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
-const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
 const couponRoutes = require('../server/routes/couponRoutes')
 const messagesRoutes = require('../server/routes/messageRoutes')
@@ -17,36 +16,31 @@ const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
+const cors = require('cors');
+const socketIo = require('socket.io');
 
 const app = express();
 const multer = require('multer');
-const setupChat = require('../server/services/chatBot'); // Importar el chatbot
-const cors = require('cors')
+const setupChat = require('../server/services/chatBot');
 
-
-app.use(cors({
-    origin: 'http://localhost:5000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    optionsSuccessStatus: 200
-}));
-
-//app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
 require('dotenv').config();
 
-
-
-
-
 connectMongoDB();
+
+app.use(cors({
+    origin: 'https://localhost:5000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
+
 app.use(express.json());
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -62,11 +56,6 @@ app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
 
-
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (err instanceof multer.MulterError) {
@@ -75,7 +64,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Error interno del servidor' });
 });
 
-
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
@@ -83,8 +71,16 @@ const sslOptions = {
 
 const server = https.createServer(sslOptions, app);
 
-// Configurar el chatbot
-setupChat(server);
+const io = socketIo(server, {
+    cors: {
+        origin: "https://localhost:5000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
+    }
+});
+
+setupChat(io);
 
 server.listen({
     host: process.env.EXPRESS_HOST || 'localhost',
