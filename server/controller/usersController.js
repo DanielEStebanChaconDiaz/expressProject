@@ -161,9 +161,32 @@ exports.agregarTiendaFavorita = async (req, res) => {
 };
 
 exports.obtenerUsuarioLogueado = (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({ mensaje: 'No hay usuario logueado' });
+    console.log('Session:', req.session);
+    console.log('Is authenticated:', req.isAuthenticated());
+    console.log('User:', req.user);
+
+    if (!req.isAuthenticated()) {
+        return res.status(401).json({ 
+            mensaje: 'No autorizado',
+            debug: {
+                session: req.session,
+                isAuthenticated: req.isAuthenticated(),
+                user: req.user
+            }
+        });
     }
+    
+    if (!req.user) {
+        return res.status(401).json({ 
+            mensaje: 'Usuario no encontrado en la sesión',
+            debug: {
+                session: req.session,
+                isAuthenticated: req.isAuthenticated(),
+                user: req.user
+            }
+        });
+    }
+    
     res.status(200).json(new UserDTO(req.user));
 };
 

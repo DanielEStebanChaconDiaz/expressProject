@@ -62,11 +62,6 @@ app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
 
-
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (err instanceof multer.MulterError) {
