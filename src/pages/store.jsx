@@ -1,9 +1,11 @@
 import '../styles/store.css'
 import Header from '../components/header';
 import Footer from '../components/footer';
-
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Store() {
+  const [response, setResponse] = useState(null); // Almacenamos la respuesta del API
   const talleres = [
     { nombre: 'Arte Abedail Aller Escalante', lugar: 'Cusco', imagen: '../../public/img/taller-ejemplo.svg'},
     { nombre: 'Aso. de artesanos Tinkuy', lugar: 'Huánuco', imagen: '../../public/img/taller-ejemplo.svg' },
@@ -12,9 +14,24 @@ export default function Store() {
     { nombre: 'Taller Sanabria Nuñez', lugar: 'Junín', imagen: '../../public/img/taller-ejemplo.svg' },
     { nombre: 'Lastenia Canayo', lugar: 'Ucayali', imagen: '../../public/img/taller-ejemplo.svg' },
   ];
+
+  useEffect(() => {
+    const fetchTalleres = async () => {
+      try {
+        const res = await axios.get('https://localhost:3000/api/talleres/');
+        setResponse(res); // Almacenamos la respuesta
+        console.log('Datos de talleres:', res.data);
+      } catch (error) {
+        console.error('Error al obtener los talleres:', error);
+      }
+    };
+
+    fetchTalleres();
+  }, []);
+
   return (
     <div className='store-container'>
-              <Header/>
+      <Header/>
 
       <section className="talleres-section">
         <div className='header-talleres'>
@@ -23,25 +40,23 @@ export default function Store() {
           <p>Tiendas de artesanías de todas partes del Perú</p>
         </div>
         <div className='img-ajustes'>
-          <img src="../../public/img/ajustes.svg" alt="" />
+          {/* Aseguramos que response y response.data existan antes de acceder a ellos */}
+          {response && response.data && <img src={response.data.imagen} alt="" />}
         </div>
         </div>
         <div className="talleres-grid">
           {talleres.map((taller, index) => (
             <div key={index} className="taller-card">
               <div className="taller-info">
-                <h3>{taller.nombre}</h3>
-                <p>{taller.lugar}</p>
+                <h3>{response.data[2].nombre}</h3>
+                <p>{response.data[0].lugar}</p>
               </div>
-              <img src={taller.imagen} alt={taller.nombre} />
+              <img src={response.data[0].imagen} alt={taller.nombre} />
             </div>
           ))}
         </div>
       </section>
       <Footer/>
     </div>
-
-
   );
 }
-

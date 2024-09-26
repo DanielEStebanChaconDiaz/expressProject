@@ -12,6 +12,7 @@ class TallerDTO {
       this.modalidad = taller.modalidad;
       this.lugar = taller.lugar;
       this.documental = taller.documental;
+      this.imagen = taller.imagen;
     }
   }
   
