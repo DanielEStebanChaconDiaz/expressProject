@@ -23,6 +23,7 @@ import ProductCard2 from './pages/productCard2';
 import Talleres from './pages/talleres';
 import Settings from './pages/settings';
 import Atencion from './pages/atencion';
+import Chat from './pages/chat'
 
 export default function App() {
     return (
@@ -51,6 +52,7 @@ export default function App() {
                 <Route path="/taller" element={<Talleres/>}/>
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/atencion" element={<Atencion/>}/>
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </HashRouter>
     )
