@@ -1,0 +1,71 @@
+/* modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .texto-confirm{
+    /* border: 1px solid red; */
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 2%;
+  }
+
+  .modal-content {
+    width: 230px;
+    height: 155px;
+    background-color: #D9D9D9;
+    padding: 12px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    align-items: center;
+  }
+  
+  .modal-button {
+    width: 100px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    display: flex;
+
+}
+
+.modal-button.confirm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    background-color: #3D3D3D;
+    color: white;
+  }
+  
+  .modal-button.cancel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #3D3D3D;
+    color: white;
+  }
+  
+  .modal-button.cancel img{
+    width:40px;
+    margin-right: 4px;
+  }
+  .modal-button.confirm img{
+    width:38px;
+    margin-right: 4px;
+  }

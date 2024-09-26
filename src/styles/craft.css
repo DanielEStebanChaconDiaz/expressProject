@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+  
+  
+.craft-container{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../public/img/fondo-craft.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.header-craft{
+    /* border: 1px solid red;  */
+    width: 100%;
+    display: flex;
+    
+}
+
+
+.header-craft i{
+    font-size: 30px;
+    width: 10%;
+    color: rgb(255, 255, 255);
+}
+
+.back-button-craft{
+    /* border: 1px solid red; */
+    /* border: 1px solid green; */
+    width:20%;
+    height: 10vh;
+    position: absolute;
+    display: flex;
+    z-index: 9999;
+    
+}
+.back-button-craft i{
+    
+    top: 0;
+}
+
+
+.header2{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1.8rem;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 8%;
+}
+
+.header2 h3{
+    /* border: 1px solid green; */
+    padding-left: 128px;
+    margin-right: 90px;
+    padding-top: 8px;
+}
+
+.icono-chat{
+    /* border: 1px solid red; */
+    width: 40px;
+    /* margin-left: 85%; */
+}
+
+ 
+.imagen-taller img{
+    width: 100%;
+    
+    
+}
+
+.titulo{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.titulo h3{
+    position: absolute;
+    font-size: 15px;
+    color:white;
+    margin-top: 6px;
+}
+
+.header-craft .bx{
+    margin-top: 27px;
+    z-index: 9999;
+}
+
+.flecha{
+    position: relative;
+    right: 64%;
+    /* border: 1px solid rgb(0, 255, 119); */
+    width: 100rem;   
+    /* margin-left: -5.9rem; */
+}
+
+.titulo img{
+    width: 180px;
+}
+
+.texto-craft p{
+    display: flex;
+    width: 90%;
+    text-align: center;
+    margin-left: 20px;
+    /* border: 1px solid red; */
+    color: white;
+    text-decoration: underline;
+}

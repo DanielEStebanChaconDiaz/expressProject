@@ -1,0 +1,156 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+  
+  
+.car-container {
+    width: 100%;
+    min-height: 95vh; 
+    background-image: url('../../public/img/fondo-store.svg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.titulo-car {
+    margin-left: 25px;
+    margin-top: 22px;
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.titulo2-car{
+    margin-left: 28px;
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.carrito-compras {
+    margin-top: 20px;
+  }
+  
+  .cart-items {
+    margin-top: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    background-color: #D9D9D9;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 22px;
+  }
+  
+  .item-image {
+    width: 100px;
+    height: auto;
+  }
+  
+.item-details{
+    width:  65%;
+    /* border: 1px solid red; */
+    font-size: 14px;
+    margin-left: 10px;
+}
+  
+.item-quantity{
+    margin-top: 8px;
+
+}
+  .item-quantity button {
+    width: 20px;
+    height: 20px;
+    background-color: #3D3D3D;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #fff;
+    margin-top: -10px
+  }
+  
+  .item-quantity span {
+    display: inline-block;
+    color: #fff;
+    background-color: #3D3D3D;
+    border-radius: 2px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+  
+  .remove-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .remove-button img{
+    width: 16px;
+    margin-bottom: 65px;
+    margin-right: 5px;
+  }
+  
+  .total-summary {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 7px;
+    
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 7px;
+
+}
+
+.cupon{
+    
+    margin-bottom: 10px;
+    padding: 10px; 
+    text-align: center;
+    background-color: #D9D9D9;
+    margin-left: 35px;
+    margin-right: 35px;
+    border-radius: 7px;
+  }
+
+.join{
+    border-radius: 7px;
+    background-color: #D9D9D9;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+    padding: 10px;
+
+}
+
+  .total {
+    margin-left: 25px;
+    margin-right: 25px;
+    background-color: #D9D9D9;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .checkout-button {
+    background-color: #3D3D3D;
+    color: white;
+    padding: 10px;
+    width: 35%;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border: none;
+  }
+  
