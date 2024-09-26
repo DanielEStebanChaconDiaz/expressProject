@@ -1,0 +1,57 @@
+.documental-container{
+    width: 100%;
+    height: 100vh;
+    background-image: url(../../public/img/fondo-documental.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.video-documental img{
+    width: 90%;
+    margin-left: 20px;
+    margin-bottom: 50px;
+    
+}
+
+
+.header-documental{
+    margin-top: 30px;
+    margin-left: 60px;
+    margin-bottom: 80px;
+    /* border: 1px solid red; */
+    font-size: 11px;
+    text-align: center;
+    width: 80%;
+    display: flex;
+    
+}
+
+.nombre-taller-documental{
+    margin-bottom: 30px;
+    width: 80%;
+    margin-left: 15px;
+    font-size: 11px;
+}
+.info-codigo{
+    margin-left: 15px;
+    /* border: 1px solid red; */
+    font-size: 14px;
+
+}
+
+.info-codigo h3{
+    margin-bottom: 5px;
+}
+
+.info-codigo h4{
+    margin-bottom: 40px;
+    width: 80%;
+    line-height: 1;
+}
+
+.codigo-qr{
+    /* border: 1px solid red; */
+    inset: 0;
+    margin: auto;
+    width: 40%;
+}
