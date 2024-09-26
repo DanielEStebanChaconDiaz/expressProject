@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const usuarioService = require('../services/users');
 const UserDTO = require('../dto/usersDto');
-const { cloudinary, upload, uploadToCloudinary } = require('../config/cloudinaryConfig');
+const { uploadToCloudinary } = require('../config/cloudinaryConfig');
 
 exports.registerUser = async (req, res) => {
     const { nombreUsuario, correoElectronico, contrasena, sexo, fechaNacimiento, tipo } = req.body;
@@ -15,9 +15,12 @@ exports.registerUser = async (req, res) => {
             fechaNacimiento,
             tipo
         });
+
+        req.session.user = new UserDTO(user);
+
         res.status(201).json({ 
             message: 'Usuario registrado exitosamente', 
-            user: new UserDTO(user)
+            user: req.session.user
         });
     } catch (error) {
         res.status(500).json({ message: 'Error en el registro', error: error.message });
@@ -36,9 +39,12 @@ exports.registerUserByPhone = async (req, res) => {
             fechaNacimiento,
             tipo
         });
+
+        req.session.user = new UserDTO(user);
+
         res.status(201).json({ 
             message: 'Usuario registrado exitosamente', 
-            user: new UserDTO(user)
+            user: req.session.user
         });
     } catch (error) {
         res.status(500).json({ message: 'Error en el registro', error: error.message });
@@ -83,9 +89,9 @@ exports.actualizarFotoPerfil = async (req, res) => {
     } catch (error) {
       res.status(500).json({ mensaje: 'Error al actualizar la foto de perfil', error: error.message });
     }
-  };
-  
-  exports.actualizarUsuario = async (req, res) => {
+};
+
+exports.actualizarUsuario = async (req, res) => {
     try {
       let datosActualizacion = req.body;
       
@@ -104,8 +110,7 @@ exports.actualizarFotoPerfil = async (req, res) => {
     } catch (error) {
       res.status(500).json({ mensaje: 'Error al actualizar el usuario', error: error.message });
     }
-  };
-  
+};
 
 exports.eliminarUsuario = async (req, res) => {
     try {
@@ -153,4 +158,16 @@ exports.agregarTiendaFavorita = async (req, res) => {
     } catch (error) {
         res.status(500).json({ mensaje: 'Error al agregar tienda favorita', error: error.message });
     }
+};
+
+exports.obtenerUsuarioLogueado = (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ mensaje: 'No hay usuario logueado' });
+    }
+    res.status(200).json(new UserDTO(req.user));
+};
+
+exports.logout = (req, res) => {
+    req.logout();
+    res.redirect('/');
 };

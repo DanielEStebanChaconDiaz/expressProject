@@ -25,7 +25,7 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: 'http://localhost:5000',
+    origin: 'https://localhost:5000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -46,7 +46,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
