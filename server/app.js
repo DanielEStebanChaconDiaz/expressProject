@@ -4,7 +4,6 @@ const session = require('express-session');
 const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
-const shopRoutes = require('../server/routes/shopRoutes')
 const usuarioRoutes = require('../server/routes/usersRoutes');
 const couponRoutes = require('../server/routes/couponRoutes')
 const messagesRoutes = require('../server/routes/messageRoutes')
@@ -25,7 +24,7 @@ const cors = require('cors')
 
 
 app.use(cors({
-    origin: 'http://localhost:5000',
+    origin: 'https://localhost:5000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
@@ -46,7 +45,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -61,11 +60,6 @@ app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
 app.use(bodyParser.json());
-
-
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
