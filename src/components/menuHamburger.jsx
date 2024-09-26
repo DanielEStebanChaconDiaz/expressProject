@@ -1,12 +1,47 @@
 import '../styles/menu.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+
 export default function Menu() {
+    const [usuario, setUsuario] = useState(null);
+
+    useEffect(() => {
+        const obtenerUsuarioLogueado = async () => {
+            try {
+                const response = await axios.get('https://localhost:3000/api/usuarios/me', {
+                    withCredentials: true
+                });
+                const usuarioData = response.data;
+                setUsuario(usuarioData);
+                console.log('Usuario logueado:', usuarioData);
+            } catch (error) {
+                console.error('Error al obtener el usuario logueado:', error);
+            }
+        };
+        obtenerUsuarioLogueado();
+    }, []);
+
+    // Función para obtener la URL de la foto de perfil
+    const obtenerFotoPerfil = () => {
+        if (usuario && usuario.fotoPerfil) {
+            // Si es una URL de Google, ajustamos el tamaño
+            if (usuario.fotoPerfil.includes('googleusercontent.com')) {
+                return usuario.fotoPerfil.replace('=s96-c', '=s200-c');
+            }
+            return usuario.fotoPerfil;
+        }
+        return "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png";
+    };
     return (
         <nav className='menu-container'>
             <ul>
                 <li>
                     <div className="profile">
-                        <img src="../../public/img/profile.svg" alt="" />
-                        <h1>SaraMartin9</h1>
+                        <img
+                            src={obtenerFotoPerfil()}
+                            alt="Perfil"
+                        />
+                        <h1>{usuario ? usuario.nombreUsuario : 'Cargando...'}</h1>
                     </div>
                 </li>
                 <li>
