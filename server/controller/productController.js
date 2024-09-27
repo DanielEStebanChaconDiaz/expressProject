@@ -9,6 +9,15 @@ class ControladorProducto {
       res.status(400).json({ mensaje: error.message });
     }
   }
+  
+  async obtenerProductosPorTienda(req, res) {
+    try {
+      const productos = await servicioProducto.obtenerProductosPorTienda(req.params.tiendaId);
+      res.json(productos);
+    } catch (error) {
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
 
   async obtenerProducto(req, res) {
     try {

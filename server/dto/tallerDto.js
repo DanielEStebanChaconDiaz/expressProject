@@ -1,5 +1,6 @@
 class TallerDTO {
     constructor(taller) {
+      this.id = taller._id;
       this.tiendaId = taller.tiendaId;
       this.nombre = taller.nombre;
       this.descripcion = taller.descripcion;
@@ -12,6 +13,7 @@ class TallerDTO {
       this.modalidad = taller.modalidad;
       this.lugar = taller.lugar;
       this.documental = taller.documental;
+      this.imagen = taller.imagen;
     }
   }
   

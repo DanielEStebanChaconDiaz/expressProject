@@ -7,6 +7,7 @@ const TiendaSchema = new mongoose.Schema({
   video: { type: String },
   qr: { type: String },
   productos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
+  imagen: { type: String }
 });
 
 const Tienda = mongoose.model('Tienda', TiendaSchema);
