@@ -20,5 +20,5 @@ router.post('/:userId/tiendas-favoritas', usuarioController.agregarTiendaFavorit
 router.post('/:id/foto-perfil', upload.single('fotoPerfil'), usuarioController.actualizarFotoPerfil); 
 router.put('/:id', upload.single('fotoPerfil'), actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario);
 router.post('/logout', usuarioController.logout);
-router.post('/verificar-sesion', usuarioController.verificarYConfigurarSesion);
+
 module.exports = router;
