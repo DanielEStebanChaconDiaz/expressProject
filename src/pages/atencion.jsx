@@ -2,7 +2,7 @@ import '../styles/atencion.css'
 import Flecha from '../components/flecha-back'
 import Rombo from '../components/header-rombo'
 import FondoFlecha from '../components/fondo-flecha'
-
+import { useNavigate } from 'react-router-dom'
 export default function Atencion() {
     const navigate = useNavigate();  // Hook para navegar entre rutas
 

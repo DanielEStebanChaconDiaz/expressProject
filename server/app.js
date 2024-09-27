@@ -39,16 +39,10 @@ app.use(express.json());
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
-<<<<<<< HEAD
     saveUninitialized: false,
     cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 24 horas
   }));
   
-=======
-    saveUninitialized: true,
-    cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
-}));
->>>>>>> origin/karen
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
