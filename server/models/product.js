@@ -80,6 +80,7 @@ ProductoSchema.pre('save', function (next) {
   next();
 });
 
+ProductoSchema.index({ nombre: 'text' });
 const Producto = mongoose.model('Producto', ProductoSchema);
 
 module.exports = Producto;

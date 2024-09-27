@@ -15,5 +15,6 @@ const TallerSchema = new mongoose.Schema({
   imagen: { type: String }
 });
 
+TallerSchema.index({ nombre: 'text' });
 const Taller = mongoose.model('Taller', TallerSchema);
 module.exports = Taller;

@@ -1,5 +1,5 @@
 const Producto = require('../models/product');
-const Tienda = require('../models/shop'); // Asegúrate de requerir el modelo de tienda
+const Tienda = require('../models/shop');
 const DTOProducto = require('../dto/productDto');
 
 class ServicioProducto {
@@ -59,6 +59,23 @@ class ServicioProducto {
 
   async obtenerProductosPorCategoriaYDescuento(categoria) {
     const productos = await Producto.find({ categoria, descuento: { $gt: 0 } }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async buscarPorNombre(nombre) {
+    const productos = await Producto.find({ 
+      $text: { 
+        $search: nombre,
+        $caseSensitive: false,
+        $diacriticSensitive: false
+      } 
+    }, { 
+      score: { $meta: "textScore" } 
+    })
+    .sort({ score: { $meta: "textScore" } })
+    .lean()
+    .exec();
+
     return productos.map(DTOProducto.desdeEntidad);
   }
 }

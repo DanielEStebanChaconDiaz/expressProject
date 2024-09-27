@@ -11,6 +11,7 @@ const tiendaRoutes = require('./routes/shopRoutes');
 const tallerRoutes = require('./routes/workshopRoutes');
 const pedidoRoutes = require('./routes/orderRoutes');
 const productoRoutes = require('./routes/productRoutes');
+const talleryproductoRoutes = require('./routes/talleryproductoRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -55,6 +56,7 @@ app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/talleryproductos', talleryproductoRoutes);
 app.use(bodyParser.json());
 
 app.use((err, req, res, next) => {
