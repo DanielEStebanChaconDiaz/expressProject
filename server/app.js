@@ -16,38 +16,39 @@ const https = require('https');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
+const cors = require('cors');
+const socketIo = require('socket.io');
 
 const app = express();
 const multer = require('multer');
-const setupChat = require('../server/services/chatBot'); // Importar el chatbot
-const cors = require('cors')
+const setupChat = require('../server/services/chatBot');
 
+require('dotenv').config();
+
+connectMongoDB();
 
 app.use(cors({
     origin: 'https://localhost:5000',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-    optionsSuccessStatus: 200
+    credentials: true
 }));
 
-//app.use(express.static(path.join(__dirname, '../public'))); // se activa para probar el chat bot en public
-require('dotenv').config();
-
-
-
-
-
-connectMongoDB();
 app.use(express.json());
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
+<<<<<<< HEAD
     saveUninitialized: false,
     cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 24 horas
   }));
   
+=======
+    saveUninitialized: true,
+    cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+}));
+>>>>>>> origin/karen
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(facebookRoutes);
@@ -70,7 +71,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Error interno del servidor' });
 });
 
-
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
@@ -78,8 +78,16 @@ const sslOptions = {
 
 const server = https.createServer(sslOptions, app);
 
-// Configurar el chatbot
-setupChat(server);
+const io = socketIo(server, {
+    cors: {
+        origin: "https://localhost:5000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
+    }
+});
+
+setupChat(io);
 
 server.listen({
     host: process.env.EXPRESS_HOST || 'localhost',

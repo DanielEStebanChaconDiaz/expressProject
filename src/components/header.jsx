@@ -12,6 +12,7 @@ export default function Header() {
     setIsMenuOpen((prevState) => !prevState);
   };
 
+  // Lógica para manejar el cierre del menú al hacer clic fuera de él
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -25,11 +26,14 @@ export default function Header() {
     };
   }, []);
 
-  const handleLocationClick = () => {
-    // Aquí puedes agregar la lógica para manejar el clic en el botón de ubicación
-    // Por ejemplo, navegar a una página de selección de ubicación
-    // navigate('/select-location');
-  };
+  // Lógica para redirigir a "Home" por defecto si la ruta es '/'
+  useEffect(() => {
+    if (location.pathname === '/') {
+      navigate('/home'); // Redirigir a la ruta "Home"
+    }
+    // Actualiza el estado de la página activa cada vez que cambie la ubicación
+    setActivePage(location.pathname);
+  }, [location, navigate]);
 
   return (
     <header className="header">
@@ -49,9 +53,10 @@ export default function Header() {
           <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
         </button>
       )}
+      {/* Muestra el menú si está abierto */}
       {isMenuOpen && (
         <div className="menu-overlay" ref={menuRef}>
-          <Menu />
+          <Menu activePage={activePage} />
         </div>
       )}
     </header>
