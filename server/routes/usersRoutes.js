@@ -6,7 +6,9 @@ const { upload } = require('../config/cloudinaryConfig');
 
 
 
+
 router.get('/me', usuarioController.obtenerUsuarioLogueado); 
+router.post('/login', usuarioController.login);
 
 router.post('/register', registerUserValidator(), validarDatos, usuarioController.registerUser);
 router.post('/register-phone', registerUserByPhoneValidator(), validarDatos, usuarioController.registerUserByPhone);

@@ -50,6 +50,7 @@
 }
 
 .back-button h3{
+  z-index: 9999;
     margin-left: 33%;
     width: 35%;
     text-align: center;

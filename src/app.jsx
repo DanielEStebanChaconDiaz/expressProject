@@ -1,5 +1,9 @@
-import './app.css'
-import Init from './pages/init'
+import React from 'react';
+import { HashRouter, Routes, Route } from "react-router-dom";
+import './app.css';
+
+// Importaciones de páginas
+import Init from './pages/init';
 import InitRegister from './pages/initRegister';
 import RegisterEmail from './pages/registerEmail';
 import Home from './pages/home'
@@ -11,11 +15,10 @@ import Exito from './pages/exito_compra'
 import Category from './pages/category'
 import Craft from './pages/craft'
 import Favorite from './pages/favorite'
-import Compras from './pages/shopping'
+import Compras from './pages/compras'
 import Profile from './pages/profile';
-import { HashRouter, Routes, Route } from "react-router-dom"; // Cambiado a HashRouter
-import InitLogin from './pages/initLogin'
-import InitPolitics from './pages/initPolitics'
+import InitLogin from './pages/initLogin';
+import InitPolitics from './pages/initPolitics';
 import Number from './pages/registerNumber';
 import MakiLogin from './pages/loginMaki';
 import ProductCard from './pages/productCard';
@@ -23,6 +26,11 @@ import ProductCard2 from './pages/productCard2';
 import Talleres from './pages/talleres';
 import Settings from './pages/settings';
 import Atencion from './pages/atencion';
+import Cupon from './pages/cupon'
+import Comentario from './pages/comentarios'
+import InfoTaller from './pages/taller-info'
+import Documental from './pages/documental';
+import Chat from './pages/chat'
 
 export default function App() {
     return (
@@ -51,6 +59,11 @@ export default function App() {
                 <Route path="/taller" element={<Talleres/>}/>
                 <Route path="/settings" element={<Settings/>}/>
                 <Route path="/atencion" element={<Atencion/>}/>
+                <Route path="/cupon" element={<Cupon/>}/>
+                <Route path="/comentario" element={<Comentario/>}/>
+                <Route path="/info-taller" element={<InfoTaller/>}/>
+                <Route path="/documental" element={<Documental/>}/>
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </HashRouter>
     )

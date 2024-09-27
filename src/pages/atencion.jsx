@@ -1,7 +1,8 @@
-import '../styles/atencion.css';
-import Flecha from '../components/flecha-back';
-import { useNavigate } from 'react-router-dom';  // Importa useNavigate
-
+import '../styles/atencion.css'
+import Flecha from '../components/flecha-back'
+import Rombo from '../components/header-rombo'
+import FondoFlecha from '../components/fondo-flecha'
+import { useNavigate } from 'react-router-dom'
 export default function Atencion() {
     const navigate = useNavigate();  // Hook para navegar entre rutas
 
@@ -11,7 +12,9 @@ export default function Atencion() {
 
     return (
         <div className='atencion-container'>
-            <Flecha />
+            <FondoFlecha/>
+            <Flecha/>
+            <Rombo/>
             <section className="faq-section">
                 <h3>Preguntas frecuentes</h3>
                 <div className="faq-item">¿Cómo compro en la app?</div>

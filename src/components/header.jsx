@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom'; // Importa useLocation
+import { useLocation, useNavigate } from 'react-router-dom';
 import Menu from '../components/menuHamburger';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const location = useLocation(); // Obtiene la ubicación actual
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
@@ -24,6 +25,12 @@ export default function Header() {
     };
   }, []);
 
+  const handleLocationClick = () => {
+    // Aquí puedes agregar la lógica para manejar el clic en el botón de ubicación
+    // Por ejemplo, navegar a una página de selección de ubicación
+    // navigate('/select-location');
+  };
+
   return (
     <header className="header">
       <div className="menu">
@@ -37,9 +44,8 @@ export default function Header() {
           <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
         </div>
       </div>
-      {/* Condición para mostrar el botón de ubicación */}
       {location.pathname !== '/profile' && (
-        <button className="location-btn">
+        <button className="location-btn" onClick={handleLocationClick}>
           <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
         </button>
       )}
