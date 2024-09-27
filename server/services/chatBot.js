@@ -6,7 +6,8 @@ function setupChat(io) {
 
         socket.on('chat message', (msg) => {
             console.log('Mensaje recibido: ' + msg);
-            io.emit('chat message', msg); // Emitir el mensaje a todos los clientes
+            // Emitir el mensaje a todos los clientes incluyendo el ID del remitente
+            io.emit('chat message', { text: msg, userId: socket.id }); // Asegúrate de que los mensajes de los usuarios tengan su ID
         });
     });
 
@@ -22,7 +23,7 @@ function setupChat(io) {
                 rl.close();
                 process.exit(0);
             } else {
-                io.emit('chat message', 'Admin: ' + answer);
+                io.emit('chat message', { text: answer, userId: 'admin' }); // Enviar como mensaje de admin
                 promptAdminInput();
             }
         });
