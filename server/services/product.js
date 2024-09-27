@@ -16,7 +16,7 @@ class ServicioProducto {
   }
 
   async obtenerProductosPorTienda(tiendaId) {
-    const productos = await Producto.find({ tiendaId: tiendaId }).lean().exec(); // No necesitas ObjectId aquí
+    const productos = await Producto.find({ tiendaId: tiendaId }).lean().exec();
     return productos.map(DTOProducto.desdeEntidad);
   }
   
@@ -44,6 +44,21 @@ class ServicioProducto {
 
   async obtenerTodosLosProductos(filtro = {}) {
     const productos = await Producto.find(filtro);
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosPorCategoria(categoria) {
+    const productos = await Producto.find({ categoria }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosConDescuento() {
+    const productos = await Producto.find({ descuento: { $gt: 0 } }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosPorCategoriaYDescuento(categoria) {
+    const productos = await Producto.find({ categoria, descuento: { $gt: 0 } }).lean().exec();
     return productos.map(DTOProducto.desdeEntidad);
   }
 }

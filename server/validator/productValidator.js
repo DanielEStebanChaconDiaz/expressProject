@@ -9,8 +9,21 @@ const validadorCrearProducto = [
   body('dimensiones').optional(),
   body('disponibilidad').isInt({ min: 0 }).withMessage('La disponibilidad debe ser un número entero no negativo'),
   body('descuento').optional().isFloat({ min: 0, max: 100 }).withMessage('El descuento debe ser un número entre 0 y 100'),
-  body('categoria').notEmpty().withMessage('La categoría es requerida'),
-  body('tipo').isIn(['bordado', 'ceramica', 'joyeria', 'textiles']).withMessage('Tipo de producto no válido')
+  body('categoria')
+    .notEmpty().withMessage('La categoría es requerida')
+    .isIn([
+      'Textileria', 
+      'Ceramica', 
+      'Joyería', 
+      'Talla en Piedra', 
+      'Talla en Madera', 
+      'Bordado', 
+      'Hojalatería', 
+      'Estampado', 
+      'Pintura Tradicional'
+    ]).withMessage('Categoría no válida'),
+  body('tipo')
+    .isIn(['bordado', 'ceramica', 'joyeria', 'textiles']).withMessage('Tipo de producto no válido')
 ];
 
 const validadorActualizarProducto = [

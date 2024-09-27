@@ -66,6 +66,34 @@ class ControladorProducto {
       res.status(500).json({ mensaje: error.message });
     }
   }
+
+  async obtenerProductosPorCategoria(req, res) {
+    try {
+      const productos = await servicioProducto.obtenerProductosPorCategoria(req.params.categoria);
+      res.json(productos);
+    } catch (error) {
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
+
+  async obtenerProductosConDescuento(req, res) {
+    try {
+      const productos = await servicioProducto.obtenerProductosConDescuento();
+      res.json(productos);
+    } catch (error) {
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
+  
+
+  async obtenerProductosPorCategoriaYDescuento(req, res) {
+    try {
+      const productos = await servicioProducto.obtenerProductosPorCategoriaYDescuento(req.params.categoria);
+      res.json(productos);
+    } catch (error) {
+      res.status(500).json({ mensaje: error.message });
+    }
+  }
 }
 
 module.exports = new ControladorProducto();
