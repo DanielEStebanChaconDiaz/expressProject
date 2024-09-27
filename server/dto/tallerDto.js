@@ -14,6 +14,7 @@ class TallerDTO {
       this.lugar = taller.lugar;
       this.documental = taller.documental;
       this.imagen = taller.imagen;
+      this.video = taller.video;
     }
   }
   

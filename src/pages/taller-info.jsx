@@ -1,15 +1,24 @@
 import '../styles/taller-info.css'
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useLocation } from 'react-router-dom';
+import Documental from './Documental';
 
 export default function InfoTaller(){
     const navigate = useNavigate();
+    const location = useLocation();
+    const taller = location.state?.taller;
+
     const handleClick = () => {
         navigate(-1);
     };
     const handleInscribirse = () => {
         alert('Inscripción completada');
-      };
+    };
+
+    // Si no hay datos del taller, muestra un mensaje de error
+    if (!taller) {
+        return <div>No se encontró información del taller.</div>;
+    }
+
     return(
         <div className='container-taller-info'>
             <header className="header-craft">
@@ -19,35 +28,32 @@ export default function InfoTaller(){
                 </div>
                 <div className="image-container">
                     <img 
-                    src="https://via.placeholder.com/400x300" 
-                    alt="Tapiz Chumpi Andino III" 
+                    src={taller.imagen || "https://via.placeholder.com/400x300"}
+                    alt={taller.nombre} 
                     className="product-image" 
                     />
                 </div>
             </header>
             <div className="taller-info-card">
-                <h2>Taller de cerámica artesanal</h2>
-                <p>
-                En este taller dado por los artesanos de <b>Cerámicas Tater Vera</b> aprenderán a usar la arcilla para crear cosas para el hogar con diseños típicos ayacuchanos.
-                </p>
-                <h3><b>Para el público en general</b></h3>
-                <p className='gris-letra'>*los niños menores de 8 años se recomienda que estén acompañados de un adulto</p>
+                <h2>{taller.nombre}</h2>
+                <p>{taller.descripcion}</p>
+                <h3><b>{taller.publicoObjetivo}</b></h3>
+                <p className='gris-letra'>{taller.notaPublicoObjetivo}</p>
 
-                <h4><b>Duración:</b> 2 meses</h4>
-                <h4><b>Fecha de inicio:</b> 8 de Julio</h4>
-                <h4><b>Horario:</b> 4 a 6 PM cada sábado</h4>
-                <h4><b>Materiales:</b> Materiales dados en clase</h4>
-                <h4><b>Modalidad:</b> Presencial</h4>
-                <h4><b>Lugar:</b> En el Ministerio de Cultura, Lima, Perú</h4>
-                {/* Botón para inscribirse */}
+                <h4><b>Duración:</b> {taller.duracion}</h4>
+                <h4><b>Fecha de inicio:</b> {taller.fechaInicio}</h4>
+                <h4><b>Horario:</b> {taller.horario}</h4>
+                <h4><b>Materiales:</b> {taller.materiales}</h4>
+                <h4><b>Modalidad:</b> {taller.modalidad}</h4>
+                <h4><b>Lugar:</b> {taller.lugar}</h4>
                 <div className='inscribir-taller'>
-
-                <button className="inscribirse-button" onClick={handleInscribirse}>
-                <img src="../../public/img/inscribir.svg" alt="" /> Inscribirse al taller
-                </button>
-                <p className="cupos-lim">*Cupos limitados</p>
+                    <button className="inscribirse-button" onClick={handleInscribirse}>
+                    <img src="../../public/img/inscribir.svg" alt="" /> Inscribirse al taller
+                    </button>
+                    <p className="cupos-lim">*Cupos limitados</p>
                 </div>
             </div>
+            <Documental taller={taller}/>
         </div>
     )
 }

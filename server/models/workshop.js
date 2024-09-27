@@ -12,7 +12,8 @@ const TallerSchema = new mongoose.Schema({
   modalidad: { type: String, enum: ['presencial', 'virtual'], required: true },
   lugar: { type: String },
   documental: { type: String },
-  imagen: { type: String }
+  imagen: { type: String },
+  video: { type: String}
 });
 
 const Taller = mongoose.model('Taller', TallerSchema);
