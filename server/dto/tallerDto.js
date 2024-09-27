@@ -1,5 +1,6 @@
 class TallerDTO {
     constructor(taller) {
+      this.id = taller._id;
       this.tiendaId = taller.tiendaId;
       this.nombre = taller.nombre;
       this.descripcion = taller.descripcion;

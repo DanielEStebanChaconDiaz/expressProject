@@ -15,6 +15,11 @@ class ServicioProducto {
     return DTOProducto.desdeEntidad(producto);
   }
 
+  async obtenerProductosPorTienda(tiendaId) {
+    const productos = await Producto.find({ tiendaId: tiendaId }).lean().exec(); // No necesitas ObjectId aquí
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+  
   async obtenerProductoPorId(id) {
     const producto = await Producto.findById(id);
     return producto ? DTOProducto.desdeEntidad(producto) : null;

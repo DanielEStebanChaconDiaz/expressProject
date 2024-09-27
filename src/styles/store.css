@@ -5,7 +5,9 @@
   box-sizing: border-box;
 
 }
-
+.taller-info p, .taller-info h3{
+  color: white !important;
+}
 
 .store-container {
   width: 100%;

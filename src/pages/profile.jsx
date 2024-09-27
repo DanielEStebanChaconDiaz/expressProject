@@ -43,14 +43,39 @@ export default function Profile(){
     fileInputRef.current.click();
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setUsuario(prev => ({ ...prev, fotoPerfil: reader.result }));
-      };
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('fotoPerfil', file);
+  
+      try {
+        const response = await axios.post('https://localhost:3000/api/usuarios/66f57cfb1e2318e4dcf57ba7/foto-perfil', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          },
+          withCredentials: true
+        });
+  
+        if (response.data && response.data.fotoPerfil) {
+          setUsuario(prev => ({ ...prev, fotoPerfil: response.data.fotoPerfil }));
+          console.log('Foto de perfil actualizada con éxito');
+        } else {
+          console.warn('La respuesta del servidor no contiene la URL de la foto de perfil');
+        }
+      } catch (error) {
+        console.error('Error al actualizar la foto de perfil:', error);
+        if (error.response) {
+          console.error('Respuesta del servidor:', error.response.status, error.response.data);
+          // Mostrar un mensaje de error al usuario basado en error.response.data
+        } else if (error.request) {
+          console.error('No se recibió respuesta del servidor');
+          // Mostrar un mensaje al usuario sobre problemas de conexión
+        } else {
+          console.error('Error al configurar la solicitud:', error.message);
+          // Mostrar un mensaje genérico de error al usuario
+        }
+      }
     }
   };
 

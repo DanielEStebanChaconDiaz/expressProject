@@ -22,4 +22,6 @@ router.delete('/:id', validadorObtenerProducto, manejarErroresValidacion, contro
 
 router.get('/', controladorProducto.obtenerTodosLosProductos);
 
+router.get('/tienda/:tiendaId', controladorProducto.obtenerProductosPorTienda);
+
 module.exports = router;
