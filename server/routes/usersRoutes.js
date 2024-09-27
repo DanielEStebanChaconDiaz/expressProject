@@ -4,12 +4,7 @@ const usuarioController = require('../controller/usersController');
 const { registerUserValidator, registerUserByPhoneValidator, actualizarUsuarioValidator, validarDatos } = require('../validator/usersValidator');
 const { upload } = require('../config/cloudinaryConfig');
 
-const ensureAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    res.status(401).json({ mensaje: 'No autorizado' });
-  };
+
 
 
 router.get('/me', usuarioController.obtenerUsuarioLogueado); 

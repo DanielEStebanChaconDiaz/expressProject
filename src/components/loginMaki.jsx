@@ -31,6 +31,8 @@ export default function Maki() {
       );
       if (response.data.success) {
         console.log("Sesión iniciada:", response.data.user);
+        // Store user data in localStorage or context if needed
+        localStorage.setItem('user', JSON.stringify(response.data.user));
         navigate("/home");
       } else {
         setError(

@@ -184,54 +184,56 @@ exports.obtenerUsuarioLogueado = (req, res) => {
     console.log('User:', req.user);
     console.log('Passport:', req._passport);
   
-    if (!req.isAuthenticated()) {
+    let user;
+  
+    if (req.isAuthenticated && req.isAuthenticated()) {
+      user = req.user;
+    } 
+    else if (req.session && req.session.user) {
+      user = req.session.user;
+    }
+  
+    if (!user) {
       return res.status(401).json({
         mensaje: 'No autorizado',
         debug: {
           session: req.session,
-          isAuthenticated: req.isAuthenticated(),
+          isAuthenticated: req.isAuthenticated ? req.isAuthenticated() : false,
           user: req.user,
           passport: req._passport
         }
       });
     }
   
-    if (!req.user) {
-      return res.status(401).json({
-        mensaje: 'Usuario no encontrado en la sesión',
-        debug: {
-          session: req.session,
-          isAuthenticated: req.isAuthenticated(),
-          user: req.user,
-          passport: req._passport
-        }
-      });
-    }
-  
-    res.status(200).json(new UserDTO(req.user));
+    res.status(200).json(new UserDTO(user));
   };
 
   exports.logout = (req, res) => {
-    req.logout((err) => {
-      if (err) {
-        console.error('Error during logout:', err);
-        return res.status(500).json({ mensaje: 'Error durante el cierre de sesión' });
-      }
+    if (req.session) {
       req.session.destroy((err) => {
         if (err) {
           console.error('Error destroying session:', err);
         }
-        res.clearCookie('connect.sid'); // Limpia la cookie de sesión
-        res.redirect('/');
       });
-    });
+    }
+  
+    if (req.logout) {
+      req.logout((err) => {
+        if (err) {
+          console.error('Error during Passport logout:', err);
+        }
+      });
+    }
+  
+    res.clearCookie('connect.sid');
+  
+    res.status(200).json({ message: 'Logout successful' });
   };
   
-exports.login = async (req, res) => {
+  exports.login = async (req, res) => {
     const { identifier, password } = req.body;
 
     try {
-        // Buscar usuario por nombre de usuario, correo electrónico o celular
         let user = await usuarioService.obtenerUsuarioPorNombre(identifier);
         if (!user) {
             user = await usuarioService.obtenerUsuarioPorCorreo(identifier);
@@ -244,16 +246,13 @@ exports.login = async (req, res) => {
             return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
         }
 
-        // Verificar la contraseña
         const isMatch = await bcrypt.compare(password, user.contrasena);
         if (!isMatch) {
             return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
         }
 
-        // Iniciar sesión
         req.session.user = new UserDTO(user);
 
-        // Devolver los datos del usuario
         res.status(200).json({ 
             success: true,
             message: 'Inicio de sesión exitoso',

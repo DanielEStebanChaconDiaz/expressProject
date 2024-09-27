@@ -40,8 +40,24 @@ export default function Menu() {
     navigate(path);
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://localhost:3000/api/usuarios/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      setUsuario(null);
+      navigate('/login'); // Redirect to login page after logout
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
+
   return (
-<nav className='menu-container'>
+    <nav className='menu-container'>
       <ul>
         <li>
           <div className="profile">
@@ -70,7 +86,7 @@ export default function Menu() {
         <li>
           <div className="favoritos">
             <img src="../../public/img/cupon.svg" alt="" />
-            <a href="#/cupon">Canjear cupon</a>
+            <a href="#/cupon">Canjear cupón</a>
           </div>
         </li>
         <div className="rombos">
@@ -91,11 +107,17 @@ export default function Menu() {
         <li>
           <div className="favoritos">
             <img src="../../public/img/headphones.svg" alt="" />
-            <a href="#/atencion">Atencion al cliente</a>
+            <a href="#/atencion">Atención al cliente</a>
+          </div>
+        </li>
+        <li>
+          <div className="favoritos" onClick={handleLogout}>
+            <img src="../../public/img/logout.svg" alt="" />
+            <span>Cerrar sesión</span>
           </div>
         </li>
         <div className="footer">
-          <p className="text1">Aplicacion potenciada por:</p>
+          <p className="text1">Aplicación potenciada por:</p>
           <img src="../../public/img/campuslands.png" alt="Logo" />
         </div>
       </ul>
