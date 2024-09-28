@@ -94,7 +94,7 @@ exports.actualizarFotoPerfil = async (req, res) => {
     } catch (error) {
       res.status(500).json({ mensaje: 'Error al actualizar la foto de perfil', error: error.message });
     }
-};
+  };
 
 exports.actualizarUsuario = async (req, res) => {
     try {

@@ -1,5 +1,8 @@
 class UserDTO {
   constructor(usuario) {
+    console.log('Usuario:', usuario);
+    
+    this._id = usuario._id || null;
     this.fotoPerfil = usuario.fotoPerfil || null;
     this.nombreUsuario = usuario.nombreUsuario || null;
     this.correoElectronico = usuario.correoElectronico || null;
