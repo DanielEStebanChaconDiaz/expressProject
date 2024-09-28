@@ -22,6 +22,7 @@ class UserDTO {
     this.googleId = usuario.googleId || null;
     this.discordId = usuario.discordId || null;
     this.providerData = usuario.providerData || {};
+    this.carrito = usuario.carrito || [];
   }
 }
 

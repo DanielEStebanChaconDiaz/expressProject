@@ -12,7 +12,6 @@ export default function Home() {
           withCredentials: true 
         });
         const usuario = response.data;
-        console.log('Usuario logueado:', usuario);
       } catch (error) {
         console.error('Error al obtener el usuario logueado:', error);
       }

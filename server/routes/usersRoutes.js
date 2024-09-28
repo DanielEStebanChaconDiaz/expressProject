@@ -19,5 +19,11 @@ router.post('/:userId/tiendas-favoritas', authMiddleware, usuarioController.agre
 router.post('/:id/foto-perfil', authMiddleware, upload.single('fotoPerfil'), usuarioController.actualizarFotoPerfil);
 router.put('/:id', authMiddleware, upload.single('fotoPerfil'), actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario);
 router.post('/logout', authMiddleware, usuarioController.logout);
+router.post('/carrito/agregar', authMiddleware, usuarioController.agregarAlCarrito);
+router.delete('/carrito/remover/:itemId', authMiddleware, usuarioController.removerDelCarrito);
+// router.get('/carrito', authMiddleware, usuarioController.obtenerCarrito);
+router.post('/carrito/aplicar-cupon', authMiddleware, usuarioController.aplicarCupon);
+router.post('/comprar', authMiddleware, usuarioController.realizarCompra);
+
 
 module.exports = router;

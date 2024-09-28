@@ -18,7 +18,6 @@ export default function Menu() {
         );
         const usuarioData = response.data;
         setUsuario(usuarioData);
-        console.log("Usuario logueado:", usuarioData);
       } catch (error) {
         console.error("Error al obtener el usuario logueado:", error);
       }

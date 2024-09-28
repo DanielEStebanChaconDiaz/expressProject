@@ -10,8 +10,16 @@ class CuponService {
     return await Cupon.findById(id);
   }
 
+  async obtenerCuponPorCodigo(codigoCupon) {
+    return await Cupon.findOne({ codigo: codigoCupon });
+  }  
+
   async listarCupones(filtros) {
     return await Cupon.find(filtros);
+  }
+
+  async marcarComoUsado(codigoCupon, usuarioId) {
+    return await Cupon.findOneAndUpdate({ codigo: codigoCupon }, { $set: { usuarioId } });
   }
 
   async actualizarCupon(id, cuponData) {

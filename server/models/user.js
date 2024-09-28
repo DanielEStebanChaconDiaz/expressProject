@@ -23,7 +23,11 @@ const UsuarioSchema = new mongoose.Schema({
   facebookId: { type: String, unique: true, sparse: true },
   googleId: { type: String, unique: true, sparse: true },
   discordId: { type: String, unique: true, sparse: true },
-  providerData: { type: mongoose.Schema.Types.Mixed }
+  providerData: { type: mongoose.Schema.Types.Mixed },
+  carrito: [{
+    producto: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
+    cantidad: { type: Number, default: 1 }
+  }]
 });
 
 UsuarioSchema.pre('validate', function(next) {
