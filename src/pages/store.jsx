@@ -37,6 +37,7 @@ export default function Store() {
       <section className="talleres-section">
         <div className='header-talleres'>
           <div className='texto-encabezado'>
+            <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
             <h2>Talleres y tiendas artesanales</h2>
             <p>Tiendas de artesanías de todas partes del Perú</p>
           </div>

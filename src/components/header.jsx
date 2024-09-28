@@ -44,7 +44,7 @@ export default function Header() {
           <input type="text" placeholder="Buscar producto o tienda..." className="search-bar" />
         </div>
       </div>
-      {location.pathname !== '/profile' && (
+      {location.pathname !== '/profile' && location.pathname !== '/store' && location.pathname !== '/offer' && location.pathname !== '/car' &&(
         <button className="location-btn" onClick={handleLocationClick}>
           <img src="../../public/img/ubication.svg" alt="Ubicación" /> Ubicación de entrega actual
         </button>

@@ -1,6 +1,6 @@
 import '../styles/taller-info.css'
 import { useNavigate, useLocation } from 'react-router-dom';
-import Documental from './Documental';
+import Documental from './documental';
 
 export default function InfoTaller(){
     const navigate = useNavigate();

@@ -70,8 +70,11 @@ export default function Car() {
 
 
       <section className="carrito-compras">
+      <div className='texto-encabezado'>
+        <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
         <h2 className="titulo-car">Tu carrito de compras</h2>
         <p className="titulo2-car">Revisa aquí los productos que añadiste a tu carrito</p>
+      </div>
 
         {/* Lista de productos */}
         <div className="cart-items">
