@@ -1,5 +1,5 @@
 const Producto = require('../models/product');
-const Tienda = require('../models/shop'); // Asegúrate de requerir el modelo de tienda
+const Tienda = require('../models/shop');
 const DTOProducto = require('../dto/productDto');
 
 class ServicioProducto {
@@ -16,7 +16,7 @@ class ServicioProducto {
   }
 
   async obtenerProductosPorTienda(tiendaId) {
-    const productos = await Producto.find({ tiendaId: tiendaId }).lean().exec(); // No necesitas ObjectId aquí
+    const productos = await Producto.find({ tiendaId: tiendaId }).lean().exec();
     return productos.map(DTOProducto.desdeEntidad);
   }
   
@@ -44,6 +44,38 @@ class ServicioProducto {
 
   async obtenerTodosLosProductos(filtro = {}) {
     const productos = await Producto.find(filtro);
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosPorCategoria(categoria) {
+    const productos = await Producto.find({ categoria }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosConDescuento() {
+    const productos = await Producto.find({ descuento: { $gt: 0 } }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async obtenerProductosPorCategoriaYDescuento(categoria) {
+    const productos = await Producto.find({ categoria, descuento: { $gt: 0 } }).lean().exec();
+    return productos.map(DTOProducto.desdeEntidad);
+  }
+
+  async buscarPorNombre(nombre) {
+    const productos = await Producto.find({ 
+      $text: { 
+        $search: nombre,
+        $caseSensitive: false,
+        $diacriticSensitive: false
+      } 
+    }, { 
+      score: { $meta: "textScore" } 
+    })
+    .sort({ score: { $meta: "textScore" } })
+    .lean()
+    .exec();
+
     return productos.map(DTOProducto.desdeEntidad);
   }
 }

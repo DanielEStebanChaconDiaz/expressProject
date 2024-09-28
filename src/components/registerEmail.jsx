@@ -31,7 +31,7 @@ export default function RegisterEmail() {
     const handleSubmit = (e) => {
         e.preventDefault();
     
-        // Validaciones existentes...
+        // Validaciones
         if (username.length < 5 || username.length > 12) {
             setError('El nombre de usuario debe tener entre 5 y 12 caracteres.');
             return;
@@ -52,19 +52,16 @@ export default function RegisterEmail() {
             return;
         }
 
-        // Convertir el mes a número
         const monthNumber = months.indexOf(month) + 1;
         if (monthNumber === 0) {
             setError('Mes no válido.');
             return;
         }
 
-        // Validar y formatear la fecha de nacimiento
         const formattedDay = day.toString().padStart(2, '0');
         const formattedMonth = monthNumber.toString().padStart(2, '0');
         const birthDateString = `${year}-${formattedMonth}-${formattedDay}`;
         
-        // Crear un objeto Date y verificar si es válido
         const birthDate = new Date(birthDateString);
         if (isNaN(birthDate.getTime())) {
             setError('La fecha de nacimiento no es válida.');
@@ -81,20 +78,16 @@ export default function RegisterEmail() {
             return;
         }
     
-        const hashedPassword = bcrypt.hashSync(password, 10);
     
         const userData = {
             nombreUsuario: username,
             correoElectronico: email,
-            contrasena: hashedPassword,
+            contrasena: password,
             sexo: gender,
             fechaNacimiento: birthDateString,
         };
     
-        // Almacenar en localStorage
         localStorage.setItem('userData', JSON.stringify(userData));
-    
-        console.log('Datos almacenados en localStorage');
         setError('');
         navigate('/politics');
     };
@@ -107,16 +100,16 @@ export default function RegisterEmail() {
                 <form onSubmit={handleSubmit}>
                     <h3>Nombre de usuario*</h3>
                     <p className='gris'>*Crea un nombre de usuario de mínimo 5 y máximo 12 caracteres</p>
-                    <input type="text" placeholder="" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} required />
                     <h3>Correo electrónico*</h3>
-                    <input type="email" placeholder="" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                     <h3>Confirma tu correo*</h3>
-                    <input type="email" placeholder="" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} required />
+                    <input type="email" value={confirmEmail} onChange={(e) => setConfirmEmail(e.target.value)} required />
                     <h3>Contraseña*</h3>
                     <p className='gris'>Recuerda crear una contraseña difícil de adivinar</p>
-                    <input type="password" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     <h3>Confirma tu contraseña*</h3>
-                    <input type="password" placeholder="" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                     <h3>Sexo</h3>
                     <div className="radio-buttons">
                         <select value={gender} onChange={(e) => setGender(e.target.value)} required>
@@ -134,14 +127,12 @@ export default function RegisterEmail() {
                                 <option key={d} value={d}>{d}</option>
                             ))}
                         </select>
-
                         <select value={month} onChange={(e) => setMonth(e.target.value)}>
                             <option value="">MM</option>
                             {months.map((m, index) => (
                                 <option key={index} value={m}>{m}</option>
                             ))}
                         </select>
-
                         <select value={year} onChange={(e) => setYear(e.target.value)}>
                             <option value="">YYYY</option>
                             {years.map(y => (

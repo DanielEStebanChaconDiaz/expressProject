@@ -3,24 +3,21 @@ const router = express.Router();
 const usuarioController = require('../controller/usersController');
 const { registerUserValidator, registerUserByPhoneValidator, actualizarUsuarioValidator, validarDatos } = require('../validator/usersValidator');
 const { upload } = require('../config/cloudinaryConfig');
+const authMiddleware = require('../utils/authMiddleware');
 
-
-
-
-router.get('/me', usuarioController.obtenerUsuarioLogueado); 
+router.get('/me', authMiddleware, usuarioController.obtenerUsuarioLogueado);
 router.post('/login', usuarioController.login);
-
 router.post('/register', registerUserValidator(), validarDatos, usuarioController.registerUser);
 router.post('/register-phone', registerUserByPhoneValidator(), validarDatos, usuarioController.registerUserByPhone);
-router.get('/', usuarioController.obtenerUsuarios); 
-router.get('/:id', usuarioController.obtenerUsuarioPorId); 
-router.put('/:id', actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario); 
-router.delete('/:id', usuarioController.eliminarUsuario); 
-router.post('/:userId/productos-favoritos', usuarioController.agregarProductoFavorito); 
-router.post('/:userId/talleres-favoritos', usuarioController.agregarTallerFavorito); 
-router.post('/:userId/tiendas-favoritas', usuarioController.agregarTiendaFavorita); 
-router.post('/:id/foto-perfil', upload.single('fotoPerfil'), usuarioController.actualizarFotoPerfil); 
-router.put('/:id', upload.single('fotoPerfil'), actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario);
-router.post('/logout', usuarioController.logout);
+router.get('/', authMiddleware, usuarioController.obtenerUsuarios);
+router.get('/:id', authMiddleware, usuarioController.obtenerUsuarioPorId);
+router.put('/:id', authMiddleware, actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario);
+router.delete('/:id', authMiddleware, usuarioController.eliminarUsuario);
+router.post('/:userId/productos-favoritos', authMiddleware, usuarioController.agregarProductoFavorito);
+router.post('/:userId/talleres-favoritos', authMiddleware, usuarioController.agregarTallerFavorito);
+router.post('/:userId/tiendas-favoritas', authMiddleware, usuarioController.agregarTiendaFavorita);
+router.post('/:id/foto-perfil', authMiddleware, upload.single('fotoPerfil'), usuarioController.actualizarFotoPerfil);
+router.put('/:id', authMiddleware, upload.single('fotoPerfil'), actualizarUsuarioValidator(), validarDatos, usuarioController.actualizarUsuario);
+router.post('/logout', authMiddleware, usuarioController.logout);
 
 module.exports = router;
