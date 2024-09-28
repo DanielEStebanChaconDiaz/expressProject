@@ -1,10 +1,7 @@
-
-
 .random-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    /* border: 1px solid red;  */
 }
 
 .random-header {
@@ -15,37 +12,34 @@
     justify-content: center;
 }
 
-/* .random-header h1 {
-    font-size: 1.25rem;
-    font-weight: 600;
-} */
-
 .random-main {
     flex: 1;
-    overflow-y: auto;
     padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 4rem;
+    word-wrap: break-word; 
+    white-space: pre-wrap; 
+    overflow-wrap: break-word; 
+    height: 80vh;
+    overflow-y: auto;
 }
 
 .random-message {
     padding: 12px;
     max-width: 80%;
+    display: inline-block; /* Permite que el contenedor crezca */
+   
 }
 
 .user-random-message { 
     align-self: flex-end;
-    border-top-left-radius: 0;
     background-color: #D9D9D9;
-    
 }
 
 .workshop-random-message {
     background-color: #3D3D3D;
     color: white;
-    border-top-right-radius: 0;
-    align-self: flex-start;
 }
 
 .random-footer {
@@ -68,27 +62,18 @@
     padding: 0;
     position: absolute;
     background-color: #D9D9D9;
-    border-radius:6px;
+    border-radius: 6px;
 }
 
 .random-input {
     flex: 1;
     background: transparent;
     color: black;
-    width: 90%;
     border: none;
-    position: absolute;
-    left: 0;
-    background-color: #D9D9D9;
-    
 }
 
 .random-input::placeholder {
     color: #8C8C8C;
-    left: 0.8rem;
-    position: absolute;
-    border: none;
-
 }
 
 .random-send-button {
@@ -103,33 +88,20 @@
     position: absolute;
     right: 0.7rem;
 }
-.random-send-button img{
+
+.random-send-button img {
     object-fit: contain;
     height: 1.4rem;
-    background-color: #D9D9D9;
 }
-.random-send-button{
-    border: none; 
-    outline: none; 
-}
-.random-input {
-    outline: none; 
-  }
-  
-  .random-input:focus {
-    border: none; 
-    outline: none; 
-  }
-  
-  .back-button-chat{    
+
+.back-button-chat {    
     height: 4.8rem;
     left: -2.3rem;
-    /* border: 1px solid rgb(0, 17, 255); */
     display: flex;
     position: absolute;
 }
-.back-button-chat i{
-    /* border: 1px solid red; */
+
+.back-button-chat i {
     color: white;
     font-size: 1.8rem;
     width: 2rem;
@@ -138,70 +110,128 @@
     top: 0;
     margin-left: 2.4rem;
     margin-top: 1.5rem;
-    font-weight:100;
-  }
-  .back-button-chat img{
-    object-fit: contain;
-    height: 4.7rem;
-    /* border: 1px solid red; */
+    font-weight: 100;
+}
 
-  }
 .random-header-chat {
     display: flex;
     align-items: center;
-    /* border: 1px solid red; */
+}
 
-  }
-.random-header-chat img{
+.random-header-chat img {
     object-fit: contain;
     height: 2.3rem;
 }
-.random-header-chat h4{
+
+.random-header-chat h4 {
     margin-left: 0.34rem;
 }
 
-/*prueba*/
-.random-main{
-    scrollbar-width: none;
-    gap: 3rem;
+.random-main {
+    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
 }
-.random-message{
-        max-width: 600px;
-        height: 3rem;
-        position: relative; 
-}
-.workshop-random-message::before {
-        content:'';
-        position: absolute;
-        top: 44px;
-        width: 20px;
-        height: 20px;
-        clip-path: polygon(0 0, 100% 0, 0 100%);
-        background-color: #3D3D3D;
-        left: 0;
-        border-radius: 5px;
 
-    }
-    /* Permitir que el texto se ajuste en varias líneas */
-    .user-random-message,
-.workshop-random-message{
-    width: 230px;
-    border-radius: 2px;
-}
-    .user-random-message::before {
-        content: '';
-        
-        position: absolute;
-        top: 44px; /* Mantén la misma posición vertical */
-        width: 20px;
-        height: 20px;
-        clip-path: polygon(100% 0, 0 0, 100% 100%); /* Cambia el clip-path para que apunte hacia la derecha */
-        background-color: #D9D9D9;
-        right: 0; 
-        border-bottom-left-radius: 45px;
-        border-bottom-right-radius: 45px;
-        border-top-right-radius: 40px;
-        border-bottom-left-radius: 45px;
-       
-    }
+.user-random-message {
     
+    width: auto; /* Permitir que el ancho se ajuste automáticamente */
+    display: inline-block; /* Permitir que el contenedor crezca */
+    border-radius: 5px 5px 0 5px;
+}
+
+
+.workshop-random-message {
+    border-radius: 5px 5px 5px 0;
+ 
+    width: auto; /* Permitir que el ancho se ajuste automáticamente */
+    display: inline-block; /* Permitir que el contenedor crezca */
+}
+/* Opcional: Estilos para las flechas de los mensajes */
+.workshop-random-message::before,
+.user-random-message::before {
+    content: '';
+    position: absolute;
+    top: 44px; /* Ajusta según el diseño */
+    width: 20px;
+    height: 20px;
+}
+
+.workshop-random-message::before {
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    background-color: #3D3D3D;
+    left: 0;
+}
+
+.user-random-message::before {
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    background-color: #D9D9D9;
+    right: 0; 
+}
+
+/*triangulos*/
+.random-message {
+    padding: 12px;
+    max-width: 80%;
+    display: inline-block; /* Permite que el contenedor crezca */
+   
+    position: relative; /* Necesario para posicionar el triángulo */
+}
+
+.user-random-message {
+    align-self: flex-end;
+    background-color: #D9D9D9;
+    border: 1px solid red;
+    position: relative;
+}
+
+.workshop-random-message {
+    background-color: #3D3D3D;
+    color: white;
+    position: relative;
+}
+
+/* .user-random-message::before {
+    content: '';
+    position: absolute;
+    right: 0px; 
+    width: 0;
+    height: 0;
+    border-left: 10px solid #D9D9D9;
+    border-right: 15px solid #D9D9D9;
+    border-bottom: 20px solid #D9D9D9;
+    bottom: 0;
+}
+
+.workshop-random-message::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0; 
+    width: 0;
+    height: 0;
+    border-left: 10px solid #3D3D3D;
+    border-right: 15px solid #3D3D3D;
+    border-bottom: 20px solid #3D3D3D; 
+} */
+
+
+.triangle-user {
+    right: 0; /* Ajusta según el diseño */
+    border-left: 10px solid #D9D9D9; 
+    border-right: 15px solid #D9D9D9; 
+    border-bottom: 20px solid #D9D9D9; /* Color del triángulo del usuario */
+    bottom: 0;
+    border: 1px solid red;
+    position: absolute;
+
+}
+
+.triangle-workshop {
+    left: 0; /* Ajusta según el diseño */
+    border-left: 10px solid #3D3D3D;
+    border: 1px solid red;
+    border-right: 15px solid #3D3D3D;
+    border-bottom: 20px solid #3D3D3D; /* Color del triángulo del taller */
+    bottom: 0;
+    position: absolute;
+
+}
