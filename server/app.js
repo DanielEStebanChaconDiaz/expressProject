@@ -19,7 +19,7 @@ const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
 const cors = require('cors');
 const socketIo = require('socket.io');
-
+const updateSessionUser = require('../server/utils/updateMiddleware');
 const app = express();
 const multer = require('multer');
 const setupChat = require('../server/services/chatBot');
@@ -46,6 +46,7 @@ app.use(session({
   
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(updateSessionUser);
 app.use(facebookRoutes);
 app.use(googleRoutes);
 app.use(discordRoutes);
@@ -66,6 +67,7 @@ app.use((err, req, res, next) => {
     }
     res.status(500).json({ message: 'Error interno del servidor' });
 });
+
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
