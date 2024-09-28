@@ -62,8 +62,7 @@ export default function Home() {
           </div>
           <div className='caja-talleres-mes'>
           <img className='taller-ejemplo' src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
-          <img className='taller-ejemplo' src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
-          <img className='taller-ejemplo' src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
+     
           </div>
         </section>
               <Footer/>

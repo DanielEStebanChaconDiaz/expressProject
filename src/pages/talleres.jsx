@@ -51,7 +51,7 @@ export default function Talleres() {
               onClick={() => handleTallerClick(taller)}
             >
               <img src={taller.imagen} alt={taller.nombre} className="taller-imagen" />
-              <div className="taller-info">
+              <div className="taller-info-page">
                 <h3>{taller.nombre}</h3>
                 <a href="#" className="taller-publico">{taller.publicoObjetivo}</a>
                 <p>{taller.descripcion}</p>
