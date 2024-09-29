@@ -343,15 +343,34 @@ exports.agregarAlCarrito = async (req, res) => {
 exports.removerDelCarrito = async (req, res) => {
   try {
     const { itemId } = req.params;
-    if (!req.session.cart) {
-      return res.status(404).json({ mensaje: 'Carrito no encontrado' });
+    let userId;
+    if (req.user && req.user._id) {
+      userId = req.user._id;
+    } else if (req.session && req.session.user && req.session.user._id) {
+      userId = req.session.user._id;
+    } else {
+      return res.status(401).json({ mensaje: 'Usuario no autenticado' });
     }
-    req.session.cart = req.session.cart.filter(item => item.itemId.toString() !== itemId);
-    res.status(200).json({ mensaje: 'Item removido del carrito', carrito: req.session.cart });
+
+    const usuario = await Usuario.findById(userId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    usuario.carrito = usuario.carrito.filter(item => item.producto.toString() !== itemId);
+    await usuario.save();
+
+    const usuarioPopulado = await Usuario.findById(userId).populate('carrito.producto');
+
+    res.status(200).json({
+      mensaje: 'Item removido del carrito',
+      carrito: usuarioPopulado.carrito
+    });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al remover del carrito', error: error.message });
   }
 };
+
 
 exports.aplicarCupon = async (req, res) => {
   try {
