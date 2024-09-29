@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "../styles/car.css";
-import Confirmacion from './confirmacion_compra'
+import Confirmacion from './confirmacion_compra';
 import Header from '../components/header';
 import Footer from "../components/footer";
 import axios from 'axios';
@@ -23,16 +23,25 @@ export default function Car() {
     try {
       setLoading(true);
 
-      // Obtener el carrito de la sesión almacenada del usuario
       const response = await axios.get('https://localhost:3000/api/usuarios/me', {
         withCredentials: true
       });
       
       const { carrito } = response.data;  // Asume que la sesión contiene el carrito en el objeto carrito
-
       console.log('Carrito de la sesión:', carrito);
-      setItems(carrito || []);  // Si no hay carrito, establece un array vacío
-      calcularTotal(carrito || []);  // Calcula el total del carrito
+
+      const productosDetalles = await Promise.all(carrito.map(async (item) => {
+        const productoResponse = await axios.get(`https://localhost:3000/api/productos/${item.producto}`, {
+          withCredentials: true
+        });
+        return {
+          ...item,
+          producto: productoResponse.data // Agregar los detalles del producto
+        };
+      }));
+
+      setItems(productosDetalles || []);  // Si no hay carrito, establece un array vacío
+      calcularTotal(productosDetalles || []);  // Calcula el total del carrito
       setError(null);
     } catch (error) {
       console.error('Error al obtener el carrito de la sesión:', error);
