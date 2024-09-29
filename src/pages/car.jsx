@@ -27,7 +27,7 @@ export default function Car() {
         withCredentials: true
       });
       
-      const { carrito } = response.data;  // Asume que la sesión contiene el carrito en el objeto carrito
+      const { carrito } = response.data;
       console.log('Carrito de la sesión:', carrito);
 
       const productosDetalles = await Promise.all(carrito.map(async (item) => {
@@ -36,12 +36,12 @@ export default function Car() {
         });
         return {
           ...item,
-          producto: productoResponse.data // Agregar los detalles del producto
+          producto: productoResponse.data
         };
       }));
 
-      setItems(productosDetalles || []);  // Si no hay carrito, establece un array vacío
-      calcularTotal(productosDetalles || []);  // Calcula el total del carrito
+      setItems(productosDetalles || []);
+      calcularTotal(productosDetalles || []);
       setError(null);
     } catch (error) {
       console.error('Error al obtener el carrito de la sesión:', error);
@@ -93,30 +93,32 @@ export default function Car() {
       }, {
         withCredentials: true
       });
-      setItems(response.data.carrito);
-      calcularTotal(response.data.carrito);
+      if (response.data.carrito) {
+        setItems(response.data.carrito);
+        calcularTotal(response.data.carrito);
+      } else {
+        await fetchCarrito();
+      }
       setCupon('');
     } catch (error) {
       console.error('Error al aplicar cupón:', error);
-      setError('Error al aplicar el cupón. Por favor, verifica el código e intenta de nuevo.');
     }
   };
 
-  const handleCheckoutClick = async () => {
-    try {
-      await axios.post('https://localhost:3000/api/usuarios/comprar', {}, {
-        withCredentials: true
-      });
-      setIsModalOpen(true);
-      fetchCarrito();
-    } catch (error) {
-      console.error('Error al realizar la compra:', error);
-      setError('Error al procesar la compra. Por favor, intenta de nuevo más tarde.');
-    }
+  const handleCheckoutClick = () => {
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const onCompraExitosa = () => {
+    // Reiniciar el carrito, subtotal y total
+    setItems([]);
+    setSubtotal(0);
+    setTotal(0);
+    closeModal();
   };
 
   return (
@@ -189,7 +191,11 @@ export default function Car() {
         )}
 
         {isModalOpen && (
-          <Confirmacion closeModal={closeModal} />
+          <Confirmacion 
+            closeModal={closeModal} 
+            total={total}
+            onCompraExitosa={onCompraExitosa}
+          />
         )}
       </section>
       <Footer />

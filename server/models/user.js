@@ -14,7 +14,12 @@ const UsuarioSchema = new mongoose.Schema({
     tipo: { type: String },
     detalles: { type: String }
   }],
-  productosComprados: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Pedido' }],
+  productosComprados: [{
+    item: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
+    tipo: String,
+    cantidad: Number,
+    precioUnitario: Number
+  }],
   talleresSuscritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Taller' }],
   tiendaFavoritas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tienda' }],
   productosFavoritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Producto' }],
