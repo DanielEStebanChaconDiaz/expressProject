@@ -40,6 +40,17 @@ const ProductoSchema = new mongoose.Schema({
   categoria: {
     type: String,
     required: true,
+    enum: [
+      'Textileria', 
+      'Ceramica', 
+      'Joyería', 
+      'Talla en Piedra', 
+      'Talla en Madera', 
+      'Bordado', 
+      'Hojalatería', 
+      'Estampado', 
+      'Pintura Tradicional'
+    ],
     index: true
   },
   tipo: {
@@ -53,28 +64,23 @@ const ProductoSchema = new mongoose.Schema({
   toObject: { virtuals: true }
 });
 
-
 ProductoSchema.index({ categoria: 1, tipo: 1, precio: 1 });
-
-
 ProductoSchema.index({ nombre: 'text', descripcion: 'text' });
-
 
 ProductoSchema.virtual('precioConDescuento').get(function () {
   return this.precio * (1 - this.descuento / 100);
 });
 
-
 ProductoSchema.statics.busquedaAvanzada = function (criterios) {
   return this.find(criterios).lean().exec();
 };
-
 
 ProductoSchema.pre('save', function (next) {
   this.updatedAt = new Date();
   next();
 });
 
+ProductoSchema.index({ nombre: 'text' });
 const Producto = mongoose.model('Producto', ProductoSchema);
 
 module.exports = Producto;

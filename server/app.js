@@ -11,6 +11,7 @@ const tiendaRoutes = require('./routes/shopRoutes');
 const tallerRoutes = require('./routes/workshopRoutes');
 const pedidoRoutes = require('./routes/orderRoutes');
 const productoRoutes = require('./routes/productRoutes');
+const talleryproductoRoutes = require('./routes/talleryproductoRoutes');
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
@@ -18,7 +19,7 @@ const bodyParser = require('body-parser');
 const discordRoutes = require('./routes/discordRoutes');
 const cors = require('cors');
 const socketIo = require('socket.io');
-
+const updateSessionUser = require('../server/utils/updateMiddleware');
 const app = express();
 const multer = require('multer');
 const setupChat = require('../server/services/chatBot');
@@ -45,6 +46,7 @@ app.use(session({
   
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(updateSessionUser);
 app.use(facebookRoutes);
 app.use(googleRoutes);
 app.use(discordRoutes);
@@ -55,6 +57,7 @@ app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
 app.use('/api/productos', productoRoutes);
+app.use('/api/talleryproductos', talleryproductoRoutes);
 app.use(bodyParser.json());
 
 app.use((err, req, res, next) => {
@@ -64,6 +67,7 @@ app.use((err, req, res, next) => {
     }
     res.status(500).json({ message: 'Error interno del servidor' });
 });
+
 
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),

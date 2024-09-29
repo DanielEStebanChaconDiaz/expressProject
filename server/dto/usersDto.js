@@ -1,5 +1,8 @@
 class UserDTO {
   constructor(usuario) {
+    console.log('Usuario:', usuario);
+    
+    this._id = usuario._id || null;
     this.fotoPerfil = usuario.fotoPerfil || null;
     this.nombreUsuario = usuario.nombreUsuario || null;
     this.correoElectronico = usuario.correoElectronico || null;
@@ -19,6 +22,7 @@ class UserDTO {
     this.googleId = usuario.googleId || null;
     this.discordId = usuario.discordId || null;
     this.providerData = usuario.providerData || {};
+    this.carrito = usuario.carrito || [];
   }
 }
 

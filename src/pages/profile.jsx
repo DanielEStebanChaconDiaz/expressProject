@@ -1,14 +1,18 @@
 import '../styles/profile.css'
 import Header from '../components/header'
 import Footer from '../components/footer'
-import editIcon from '../../public/img/edit-profile.svg';  // Imagen de edición
+import editIcon from '../../public/img/edit-profile.svg';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-export default function Profile(){
+export default function Profile() {
   const [usuario, setUsuario] = useState(null);
   const [editMode, setEditMode] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+
+  const defaultProfilePic = 'https://res.cloudinary.com/tu-cloud-name/image/upload/v1234567890/default-profile.png'; // Asegúrate de reemplazar esto con tu URL real de Cloudinary
 
   useEffect(() => {
     const obtenerUsuarioLogueado = async () => {
@@ -17,10 +21,16 @@ export default function Profile(){
           withCredentials: true
         });
         const usuarioData = response.data;
+        console.log('Datos del usuario recibidos:', usuarioData);
+        if (!usuarioData || !usuarioData._id) {
+          throw new Error('La respuesta del servidor no incluye el ID del usuario');
+        }
         setUsuario(usuarioData);
-        console.log('Usuario logueado:', usuarioData);
       } catch (error) {
         console.error('Error al obtener el usuario logueado:', error);
+        setError('No se pudo cargar la información del usuario. Por favor, inicie sesión nuevamente.');
+      } finally {
+        setLoading(false);
       }
     };
     obtenerUsuarioLogueado();
@@ -34,52 +44,91 @@ export default function Profile(){
     setUsuario(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleBlur = (field) => {
+  const handleBlur = async (field) => {
     setEditMode(prev => ({ ...prev, [field]: false }));
-    // Aquí deberías enviar una solicitud al servidor para actualizar los datos
-  };
-
-  const handleImageClick = () => {
-    fileInputRef.current.click();
-  };
-
-  const handleImageChange = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('fotoPerfil', file);
-  
+    if (usuario && usuario._id) {
       try {
-        const response = await axios.post('https://localhost:3000/api/usuarios/66f57cfb1e2318e4dcf57ba7/foto-perfil', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
+        await axios.put(`https://localhost:3000/api/usuarios/${usuario._id}`, { [field]: usuario[field] }, {
           withCredentials: true
         });
-  
-        if (response.data && response.data.fotoPerfil) {
-          setUsuario(prev => ({ ...prev, fotoPerfil: response.data.fotoPerfil }));
-          console.log('Foto de perfil actualizada con éxito');
-        } else {
-          console.warn('La respuesta del servidor no contiene la URL de la foto de perfil');
-        }
+        console.log(`Campo ${field} actualizado con éxito`);
       } catch (error) {
-        console.error('Error al actualizar la foto de perfil:', error);
-        if (error.response) {
-          console.error('Respuesta del servidor:', error.response.status, error.response.data);
-          // Mostrar un mensaje de error al usuario basado en error.response.data
-        } else if (error.request) {
-          console.error('No se recibió respuesta del servidor');
-          // Mostrar un mensaje al usuario sobre problemas de conexión
-        } else {
-          console.error('Error al configurar la solicitud:', error.message);
-          // Mostrar un mensaje genérico de error al usuario
-        }
+        console.error(`Error al actualizar el campo ${field}:`, error);
+        setError(`No se pudo actualizar ${field}. Por favor, intente nuevamente.`);
       }
     }
   };
 
-  return(
+  const handleImageClick = () => {
+    fileInputRef.current && fileInputRef.current.click();
+  };
+
+  const handleImageChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) {
+      console.error('No se seleccionó ningún archivo');
+      return;
+    }
+    if (!usuario || !usuario._id) {
+      console.error('No se pudo obtener el ID del usuario');
+      setError('No se pudo identificar al usuario. Por favor, inicie sesión nuevamente.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('fotoPerfil', file);
+
+    try {
+      const response = await axios.post(`https://localhost:3000/api/usuarios/${usuario._id}/foto-perfil`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials: true
+      });
+
+      if (response.data && response.data.fotoPerfil) {
+        // Verificar que la URL de Cloudinary sea válida
+        if (isValidCloudinaryUrl(response.data.fotoPerfil)) {
+          setUsuario(prev => ({ ...prev, fotoPerfil: response.data.fotoPerfil }));
+          console.log('Foto de perfil actualizada con éxito');
+        } else {
+          throw new Error('La URL de la foto de perfil no es válida');
+        }
+      } else {
+        throw new Error('La respuesta del servidor no contiene la URL de la foto de perfil');
+      }
+    } catch (error) {
+      console.error('Error al actualizar la foto de perfil:', error);
+      setError('No se pudo actualizar la foto de perfil. Por favor, intente nuevamente.');
+    }
+  };
+
+  const isValidCloudinaryUrl = (url) => {
+    // Verifica que la URL sea una URL válida de Cloudinary
+    const cloudinaryPattern = /^https:\/\/res\.cloudinary\.com\/.*\/image\/upload\/.+/;
+    return cloudinaryPattern.test(url);
+  };
+
+  const getProfilePicUrl = () => {
+    if (usuario && usuario.fotoPerfil && isValidCloudinaryUrl(usuario.fotoPerfil)) {
+      return usuario.fotoPerfil;
+    }
+    return defaultProfilePic;
+  };
+
+  if (loading) {
+    return <div>Cargando información del usuario...</div>;
+  }
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (!usuario || !usuario._id) {
+    return <div>No se pudo cargar la información del usuario. Por favor, inicie sesión.</div>;
+  }
+
+  return (
     <div className='profile-container'>
       <Header/>
       <main>
@@ -87,7 +136,7 @@ export default function Profile(){
           <div className="profile-picture">
             <h3>Foto de perfil</h3>
             <img 
-              src={usuario && usuario.fotoPerfil ? usuario.fotoPerfil : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'} 
+              src={getProfilePicUrl()}
               alt="Perfil" 
               className='foto-profile' 
               onClick={handleImageClick}
@@ -110,7 +159,7 @@ export default function Profile(){
               <div className="info-content">
                 <input 
                   type="text" 
-                  value={usuario && usuario.nombreUsuario} 
+                  value={usuario.nombreUsuario || ''}
                   readOnly={!editMode.nombreUsuario}
                   onChange={(e) => handleChange('nombreUsuario', e.target.value)}
                   onBlur={() => handleBlur('nombreUsuario')}
@@ -130,7 +179,7 @@ export default function Profile(){
               <div className="info-content">
                 <input 
                   type="email" 
-                  value={usuario && usuario.correoElectronico ? usuario.correoElectronico : ''} 
+                  value={usuario.correoElectronico || ''}
                   readOnly={!editMode.correoElectronico}
                   onChange={(e) => handleChange('correoElectronico', e.target.value)}
                   onBlur={() => handleBlur('correoElectronico')}
@@ -151,8 +200,8 @@ export default function Profile(){
                 <input type="tel" value="+1" className='telefono' readOnly />
                 <input 
                   type="tel" 
-                  placeholder={usuario && usuario.celular ? usuario.celular : 'Agregar su numero de telefono'} 
-                  value={usuario && usuario.celular ? usuario.celular : ''}
+                  placeholder="Agregar su numero de telefono"
+                  value={usuario.celular || ''}
                   readOnly={!editMode.celular}
                   onChange={(e) => handleChange('celular', e.target.value)}
                   onBlur={() => handleBlur('celular')}
@@ -172,7 +221,7 @@ export default function Profile(){
               <div className="info-content">
                 <input 
                   type="text" 
-                  value={usuario && usuario.sexo ? usuario.sexo : ''} 
+                  value={usuario.sexo || ''}
                   readOnly={!editMode.sexo}
                   onChange={(e) => handleChange('sexo', e.target.value)}
                   onBlur={() => handleBlur('sexo')}
@@ -184,10 +233,15 @@ export default function Profile(){
                   className="icon-image" 
                   onClick={() => handleEdit('sexo')}
                 />
+              </div>
+            </div>
+
+            <div className="info-item">
               <label>Fecha de nacimiento:</label>
+              <div className="info-content">
                 <input 
                   type="date" 
-                  value={usuario && usuario.fechaNacimiento ? usuario.fechaNacimiento : ''} 
+                  value={usuario.fechaNacimiento ? new Date(usuario.fechaNacimiento).toISOString().split('T')[0] : ''}
                   readOnly={!editMode.fechaNacimiento}
                   onChange={(e) => handleChange('fechaNacimiento', e.target.value)}
                   onBlur={() => handleBlur('fechaNacimiento')}
@@ -210,8 +264,7 @@ export default function Profile(){
           </div>
         </div>
       </main>
-
       <Footer/>
     </div>
-  )
+  );
 }

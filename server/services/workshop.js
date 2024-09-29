@@ -1,5 +1,6 @@
 const Taller = require('../models/workshop');
 const Tienda = require('../models/shop');
+const TallerDTO = require('../dto/tallerDto')
 class TallerService {
   async getAll() {
     return await Taller.find();
@@ -34,6 +35,23 @@ class TallerService {
     }
     
     return null;
+  }
+
+  async buscarPorNombre(nombre) {
+    const talleres = await Taller.find({ 
+      $text: { 
+        $search: nombre,
+        $caseSensitive: false,
+        $diacriticSensitive: false
+      } 
+    }, { 
+      score: { $meta: "textScore" } 
+    })
+    .sort({ score: { $meta: "textScore" } })
+    .lean()
+    .exec();
+
+    return talleres.map(taller => new TallerDTO(taller));
   }
 }
 

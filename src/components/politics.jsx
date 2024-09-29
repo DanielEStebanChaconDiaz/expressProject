@@ -26,22 +26,31 @@ export default function Politics() {
     if (privacyAccepted && termsAccepted) {
       if (userData) {
         try {
-          const response = await axios.post(
-            "https://localhost:3000/api/usuarios/register",
-            {
-              ...userData,
-              aceptaPromociones: promotionsAccepted,
-            }
-          );
+          const endpoint = userData.celular 
+            ? "https://localhost:3000/api/usuarios/register-phone"
+            : "https://localhost:3000/api/usuarios/register";
+
+          const response = await axios.post(endpoint, {
+            ...userData,
+            aceptaPromociones: promotionsAccepted,
+          }, {
+            withCredentials: true
+          });
+
           console.log("Registro exitoso:", response.data);
+          
+          // Guardar los datos del usuario en el localStorage
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          
+          // Limpiar los datos temporales del registro
           localStorage.removeItem("userData");
+          
           navigate("/home");
         } catch (err) {
           console.error("Error al registrar:", err.response);
           alert(
             "Error al registrar: " +
-              (err.response?.data?.errores?.map((e) => e.msg).join(", ") ||
-                "Error desconocido")
+              (err.response?.data?.message || "Error desconocido")
           );
         }
       } else {
