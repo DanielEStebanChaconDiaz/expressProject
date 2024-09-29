@@ -380,21 +380,34 @@ exports.aplicarCupon = async (req, res) => {
       return res.status(400).json({ mensaje: 'Cupón inválido o expirado' });
     }
 
-    if (!req.session.cart || req.session.cart.length === 0) {
+    let userId;
+    if (req.user && req.user._id) {
+      userId = req.user._id;
+    } else if (req.session && req.session.user && req.session.user._id) {
+      userId = req.session.user._id;
+    } else {
+      return res.status(401).json({ mensaje: 'Usuario no autenticado' });
+    }
+
+    const usuario = await Usuario.findById(userId).populate('carrito.producto');
+    if (!usuario || !usuario.carrito || usuario.carrito.length === 0) {
       return res.status(400).json({ mensaje: 'El carrito está vacío' });
     }
 
     let cuponAplicado = false;
-    req.session.cart = req.session.cart.map(item => {
-      if ((cupon.productoId && cupon.productoId.toString() === item.itemId.toString() && item.tipo === 'producto') ||
-        (cupon.tallerId && cupon.tallerId.toString() === item.itemId.toString() && item.tipo === 'taller') ||
-        (!cupon.productoId && !cupon.tallerId)) {
+    usuario.carrito = usuario.carrito.map(item => {
+      if ((cupon.productoId && cupon.productoId.toString() === item.producto._id.toString()) ||
+          (!cupon.productoId)) {
         if (cupon.tipo === 'porcentaje') {
-          item.descuento = (item.precio * cupon.descuento) / 100;
+          item.descuento = (item.producto.precio * cupon.descuento) / 100;
+          item.precioConDescuento = item.producto.precio - item.descuento;
         } else if (cupon.tipo === '2x1' && item.cantidad > 1) {
           item.cantidad -= 1;
+          item.precioConDescuento = item.producto.precio;
         }
         cuponAplicado = true;
+      } else {
+        item.precioConDescuento = item.producto.precio;
       }
       return item;
     });
@@ -403,10 +416,12 @@ exports.aplicarCupon = async (req, res) => {
       return res.status(400).json({ mensaje: 'El cupón no es aplicable a ningún item en el carrito' });
     }
 
+    await usuario.save();
+
     // Eliminar el cupón inmediatamente después de su uso
     await cuponService.eliminarCupon(cupon._id);
 
-    res.status(200).json({ mensaje: 'Cupón aplicado exitosamente', carrito: req.session.cart });
+    res.status(200).json({ mensaje: 'Cupón aplicado exitosamente', carrito: usuario.carrito });
   } catch (error) {
     res.status(500).json({ mensaje: 'Error al aplicar el cupón', error: error.message });
   }
@@ -414,36 +429,41 @@ exports.aplicarCupon = async (req, res) => {
 
 exports.realizarCompra = async (req, res) => {
   try {
-    if (!req.session.cart || req.session.cart.length === 0) {
+    let userId;
+    if (req.user && req.user._id) {
+      userId = req.user._id;
+    } else if (req.session && req.session.user && req.session.user._id) {
+      userId = req.session.user._id;
+    } else {
+      return res.status(401).json({ mensaje: 'Usuario no autenticado' });
+    }
+
+    const usuario = await Usuario.findById(userId).populate('carrito.producto');
+    if (!usuario || !usuario.carrito || usuario.carrito.length === 0) {
       return res.status(400).json({ mensaje: 'El carrito está vacío' });
     }
 
-    const usuario = await usuarioService.obtenerUsuarioPorId(req.user._id);
-    if (!usuario) {
-      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
-    }
-
-    const productosComprados = req.session.cart.map(producto => ({
-      item: producto.itemId,
-      tipo: producto.tipo,
-      cantidad: producto.cantidad,
-      precioUnitario: producto.precio - producto.descuento
+    const productosComprados = usuario.carrito.map(item => ({
+      item: item.producto._id,
+      tipo: item.producto.tipo,
+      cantidad: item.cantidad,
+      precioUnitario: item.precioConDescuento || item.producto.precio
     }));
 
     usuario.productosComprados = usuario.productosComprados || [];
     usuario.productosComprados.push(...productosComprados);
 
-    await usuario.save();
-
     // Limpiar el carrito
-    req.session.cart = [];
+    usuario.carrito = [];
+
+    await usuario.save();
 
     res.status(200).json({ mensaje: 'Compra realizada exitosamente', itemsComprados: productosComprados });
   } catch (error) {
+    console.error('Error al realizar la compra:', error);
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
 };
-
 
 
 
