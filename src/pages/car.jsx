@@ -27,7 +27,7 @@ export default function Car() {
         withCredentials: true
       });
       
-      const { carrito } = response.data;
+      const { carrito } = response.data;  // Asume que la sesión contiene el carrito en el objeto carrito
       console.log('Carrito de la sesión:', carrito);
 
       const productosDetalles = await Promise.all(carrito.map(async (item) => {
@@ -36,12 +36,12 @@ export default function Car() {
         });
         return {
           ...item,
-          producto: productoResponse.data
+          producto: productoResponse.data // Agregar los detalles del producto
         };
       }));
 
-      setItems(productosDetalles || []);
-      calcularTotal(productosDetalles || []);
+      setItems(productosDetalles || []);  // Si no hay carrito, establece un array vacío
+      calcularTotal(productosDetalles || []);  // Calcula el total del carrito
       setError(null);
     } catch (error) {
       console.error('Error al obtener el carrito de la sesión:', error);
