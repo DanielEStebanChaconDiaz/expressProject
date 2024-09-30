@@ -1,3 +1,4 @@
+// Importación de módulos y servicios necesarios
 const bcrypt = require('bcrypt');
 const usuarioService = require('../services/users');
 const productoService = require('../services/product');
@@ -8,20 +9,31 @@ const Usuario = require('../models/user');
 const Producto = require('../models/product');
 const mongoose = require('mongoose');
 
+/**
+ * Registra un nuevo usuario en el sistema.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.registerUser = async (req, res) => {
   const { nombreUsuario, correoElectronico, contrasena, sexo, fechaNacimiento, tipo } = req.body;
 
   try {
+    // Verificar si el nombre de usuario ya está en uso
     const existingUserByUsername = await usuarioService.obtenerUsuarioPorNombre(nombreUsuario);
     if (existingUserByUsername) {
       return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
     }
+
+    // Verificar si el correo electrónico ya está en uso
     const existingUserByEmail = await usuarioService.obtenerUsuarioPorCorreo(correoElectronico);
     if (existingUserByEmail) {
       return res.status(400).json({ message: 'El correo electrónico ya está en uso' });
     }
 
+    // Hash de la contraseña antes de almacenarla
     const hashedPassword = await bcrypt.hash(contrasena, 10);
+    
+    // Crear el usuario en la base de datos
     const user = await usuarioService.crearUsuario({
       nombreUsuario,
       correoElectronico,
@@ -43,16 +55,25 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+/**
+ * Registra un nuevo usuario usando su número de celular.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.registerUserByPhone = async (req, res) => {
   const { nombreUsuario, celular, contrasena, sexo, fechaNacimiento, tipo } = req.body;
 
   try {
+    // Verificar si el número de celular ya está en uso
     const existingUserByPhone = await usuarioService.obtenerUsuarioPorCelular(req.body.celular);
     if (existingUserByPhone) {
       return res.status(400).json({ message: 'El número de celular ya está en uso' });
     }
 
+    // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(contrasena, 10);
+    
+    // Crear el usuario
     const user = await usuarioService.crearUsuario({
       nombreUsuario,
       celular,
@@ -74,6 +95,11 @@ exports.registerUserByPhone = async (req, res) => {
   }
 };
 
+/**
+ * Obtiene la lista de todos los usuarios registrados.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.obtenerUsuarios = async (req, res) => {
   try {
     const usuarios = await usuarioService.obtenerUsuarios();
@@ -83,6 +109,11 @@ exports.obtenerUsuarios = async (req, res) => {
   }
 };
 
+/**
+ * Obtiene un usuario específico por su ID.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.obtenerUsuarioPorId = async (req, res) => {
   try {
     const usuario = await usuarioService.obtenerUsuarioPorId(req.params.id);
@@ -95,12 +126,19 @@ exports.obtenerUsuarioPorId = async (req, res) => {
   }
 };
 
+/**
+ * Actualiza la foto de perfil del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.actualizarFotoPerfil = async (req, res) => {
   try {
+    // Verificar si se ha subido una imagen
     if (!req.file) {
       return res.status(400).json({ message: 'No se ha subido ninguna imagen' });
     }
 
+    // Subir la imagen a Cloudinary
     const uploadResult = await uploadToCloudinary(req.file);
     const usuarioActualizado = await usuarioService.actualizarUsuario(req.params.id, { fotoPerfil: uploadResult.secure_url });
 
@@ -114,10 +152,16 @@ exports.actualizarFotoPerfil = async (req, res) => {
   }
 };
 
+/**
+ * Actualiza los datos del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.actualizarUsuario = async (req, res) => {
   try {
     let datosActualizacion = req.body;
 
+    // Si hay un archivo, se sube y se actualiza el campo fotoPerfil
     if (req.file) {
       const uploadResult = await uploadToCloudinary(req.file);
       datosActualizacion.fotoPerfil = uploadResult.secure_url;
@@ -135,6 +179,11 @@ exports.actualizarUsuario = async (req, res) => {
   }
 };
 
+/**
+ * Elimina un usuario por su ID.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.eliminarUsuario = async (req, res) => {
   try {
     const usuarioEliminado = await usuarioService.eliminarUsuario(req.params.id);
@@ -147,6 +196,11 @@ exports.eliminarUsuario = async (req, res) => {
   }
 };
 
+/**
+ * Agrega un producto a la lista de favoritos del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.agregarProductoFavorito = async (req, res) => {
   try {
     const usuario = await usuarioService.agregarProductoFavorito(req.params.userId, req.body.productoId);
@@ -159,6 +213,11 @@ exports.agregarProductoFavorito = async (req, res) => {
   }
 };
 
+/**
+ * Agrega un taller a la lista de favoritos del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.agregarTallerFavorito = async (req, res) => {
   try {
     const usuario = await usuarioService.agregarTallerFavorito(req.params.userId, req.body.tallerId);
@@ -171,6 +230,11 @@ exports.agregarTallerFavorito = async (req, res) => {
   }
 };
 
+/**
+ * Agrega una tienda a la lista de favoritas del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.agregarTiendaFavorita = async (req, res) => {
   try {
     const usuario = await usuarioService.agregarTiendaFavorita(req.params.userId, req.body.tiendaId);
@@ -183,18 +247,17 @@ exports.agregarTiendaFavorita = async (req, res) => {
   }
 };
 
+/**
+ * Obtiene el usuario actualmente logueado.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.obtenerUsuarioLogueado = (req, res) => {
-  // console.log('Session:', req.session);
-  // console.log('Is authenticated:', req.isAuthenticated());
-  // console.log('User:', req.user);
-  // console.log('Passport:', req._passport);
-
   let user;
 
   if (req.isAuthenticated && req.isAuthenticated()) {
     user = req.user;
-  }
-  else if (req.session && req.session.user) {
+  } else if (req.session && req.session.user) {
     user = req.session.user;
   }
 
@@ -213,6 +276,11 @@ exports.obtenerUsuarioLogueado = (req, res) => {
   res.status(200).json(new UserDTO(user));
 };
 
+/**
+ * Cierra la sesión del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.logout = (req, res) => {
   if (req.session) {
     req.session.destroy((err) => {
@@ -232,9 +300,14 @@ exports.logout = (req, res) => {
 
   res.clearCookie('connect.sid');
 
-  res.status(200).json({ message: 'Logout successful' });
+  res.status(200).json({ message: 'Logout exitoso' });
 };
 
+/**
+ * Inicia sesión de un usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.login = async (req, res) => {
   const { identifier, password } = req.body;
 
@@ -266,12 +339,16 @@ exports.login = async (req, res) => {
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error en el inicio de sesión', error: error.message });
   }
-}
+};
 
+/**
+ * Agrega un producto al carrito del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.agregarAlCarrito = async (req, res) => {
   try {
     const { productoId, cantidad } = req.body;
-    console.log('Datos recibidos:', { productoId, cantidad });
 
     // Verificar si el usuario está autenticado
     let userId;
@@ -283,14 +360,10 @@ exports.agregarAlCarrito = async (req, res) => {
       return res.status(401).json({ mensaje: 'Usuario no autenticado' });
     }
 
-    console.log('ID de usuario:', userId);
-
     const usuario = await Usuario.findById(userId);
     if (!usuario) {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
-
-    console.log('Usuario encontrado:', usuario);
 
     // Verificar que productoId sea un ObjectId válido
     if (!mongoose.Types.ObjectId.isValid(productoId)) {
@@ -298,8 +371,6 @@ exports.agregarAlCarrito = async (req, res) => {
     }
 
     const producto = await Producto.findById(productoId);
-    console.log('Producto encontrado:', producto);
-
     if (!producto) {
       return res.status(404).json({ mensaje: 'Producto no encontrado', productoId });
     }
@@ -330,16 +401,18 @@ exports.agregarAlCarrito = async (req, res) => {
       carrito: usuarioPopulado.carrito
     });
   } catch (error) {
-    console.error('Error al agregar al carrito:', error);
     res.status(500).json({
       mensaje: 'Error al agregar al carrito',
-      error: error.message,
-      stack: error.stack // Incluir el stack trace para depuración
+      error: error.message
     });
   }
 };
 
-
+/**
+ * Remueve un item del carrito del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.removerDelCarrito = async (req, res) => {
   try {
     const { itemId } = req.params;
@@ -357,6 +430,7 @@ exports.removerDelCarrito = async (req, res) => {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
 
+    // Filtrar el carrito para eliminar el item
     usuario.carrito = usuario.carrito.filter(item => item.producto.toString() !== itemId);
     await usuario.save();
 
@@ -371,11 +445,17 @@ exports.removerDelCarrito = async (req, res) => {
   }
 };
 
-
+/**
+ * Aplica un cupón al carrito del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.aplicarCupon = async (req, res) => {
   try {
     const { codigoCupon } = req.body;
     const cupon = await cuponService.obtenerCuponPorCodigo(codigoCupon);
+    
+    // Validar si el cupón existe y no ha expirado
     if (!cupon || new Date() > cupon.fechaExpiracion) {
       return res.status(400).json({ mensaje: 'Cupón inválido o expirado' });
     }
@@ -396,6 +476,7 @@ exports.aplicarCupon = async (req, res) => {
 
     let cuponAplicado = false;
     usuario.carrito = usuario.carrito.map(item => {
+      // Aplicar el descuento si es aplicable
       if ((cupon.productoId && cupon.productoId.toString() === item.producto._id.toString()) ||
           (!cupon.productoId)) {
         if (cupon.tipo === 'porcentaje') {
@@ -427,6 +508,11 @@ exports.aplicarCupon = async (req, res) => {
   }
 };
 
+/**
+ * Realiza la compra de los productos en el carrito del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
 exports.realizarCompra = async (req, res) => {
   try {
     let userId;
@@ -460,13 +546,6 @@ exports.realizarCompra = async (req, res) => {
 
     res.status(200).json({ mensaje: 'Compra realizada exitosamente', itemsComprados: productosComprados });
   } catch (error) {
-    console.error('Error al realizar la compra:', error);
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
 };
-
-
-
-
-
-
