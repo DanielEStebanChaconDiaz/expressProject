@@ -8,32 +8,36 @@ export default function Flecha() {
     navigate(-1);
   };
 
-    // Mapea las rutas a sus respectivos títulos
-    const pageTitles = {
-        "/category": "Categorías",
-        "/favorite": "Tus artesanías favoritas",
-        "/compras": "Compras realizadas",
-        "/taller": "Talleres educativos",
-        "/settings": "Ajustes",
-        "/atencion": "Atención al cliente",
-        "/Maki": "",
-        "/cupon": "Canjear cupón",
-        "/comentario": "Comentarios a la app",
-    };
+  // Mapea las rutas a sus respectivos títulos
+  const pageTitles = {
+    "/category": "Categorías",
+    "/favorite": "Tus artesanías favoritas",
+    "/compras": "Compras realizadas",
+    "/taller": "Talleres educativos",
+    "/settings": "Ajustes",
+    "/atencion": "Atención al cliente",
+    "/Maki": "",
+    "/cupon": "Canjear cupón",
+    "/comentario": "Comentarios a la app",
+  };
 
-    const currentTitle = pageTitles[location.pathname];
+  const currentTitle = pageTitles[location.pathname];
 
-    // Inserta un salto de línea después de la primera palabra si hay más de una
-    const formattedTitle = currentTitle?.split(' ');
-    const titleWithLineBreak = formattedTitle && formattedTitle.length > 1 
-        ? `${formattedTitle[0]}\n${formattedTitle.slice(1).join(' ')}`
-        : currentTitle;
+  // Verifica el número de palabras y formatea el título
+  const formattedTitle = currentTitle?.split(' ');
+  let titleWithLineBreak;
 
-    return (
-        <div className="back-button">
-            <i className="bx bx-arrow-back" onClick={handleClick}></i>
-            {/* Solo mostrar el h3 si currentTitle no está vacío */}
-            {titleWithLineBreak && <h3 style={{ whiteSpace: 'pre-wrap' }}>{titleWithLineBreak}</h3>}
-        </div>
-    );
+  if (formattedTitle && formattedTitle.length > 3) {
+    titleWithLineBreak = `${formattedTitle[0]}\n${formattedTitle.slice(1).join(' ')}`;
+  } else {
+    titleWithLineBreak = currentTitle;
+  }
+
+  return (
+    <div className="back-button">
+      <i className="bx bx-arrow-back" onClick={handleClick}></i>
+      {/* Solo mostrar el h3 si currentTitle no está vacío */}
+      {titleWithLineBreak && <h3 style={{ whiteSpace: 'pre-wrap' }}>{titleWithLineBreak}</h3>}
+    </div>
+  );
 }

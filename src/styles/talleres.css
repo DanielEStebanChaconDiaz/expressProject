@@ -110,13 +110,11 @@
   }
 
   .container-rombo img{
-    width: 30%;
+    width: 20%;
   }
   .container-rombo{
     /* border: 1px solid red; */
     display: flex;
     justify-content: center;
-    position: absolute;
-    top: 0;
-    left: 21%;
+    margin-top: -55px;
   }

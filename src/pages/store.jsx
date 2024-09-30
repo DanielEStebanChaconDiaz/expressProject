@@ -42,7 +42,7 @@ export default function Store() {
             <p>Tiendas de artesanías de todas partes del Perú</p>
           </div>
           <div className='img-ajustes'>
-            {headerImage && <img src='../../public/img/ajustes.svg' alt="Header" />}
+            {headerImage && <a href="#/settings"><img src="../../public/img/ajustes.svg" alt="" /></a> }
           </div>
         </div>
         <div className="talleres-grid">

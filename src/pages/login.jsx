@@ -22,7 +22,7 @@ export default function Login() {
                 <img src="../../public/img/facebook.svg" alt="" /> Inicia Sesión con Facebook
             </button>
             <button className="social-btn insta-btn" onClick={DiscordAuth}>
-                <img src="../../public/img/instagram.svg" alt="" /> Inicia sesión con Instagram
+                <img src="../../public/img/discord.png" alt="" /> Inicia sesión con Discord
             </button>
             <button className="social-btn gmail-btn"onClick={GoogleAuth}>
                 <img src="../../public/img/gmail.svg" alt="" /> Inicia sesión con Gmail

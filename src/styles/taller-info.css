@@ -15,8 +15,9 @@
   
   .taller-info-card h2 {
     color: white;
-    position: absolute;
-    top:36.2%;
+    
+    margin-top: -40px;
+    margin-bottom: 20px;
     font-size: 16px;
     
   }

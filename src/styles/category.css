@@ -73,7 +73,7 @@
     grid-template-columns: repeat(10, 0.5fr); /* Puedes ajustar el número de columnas */
     margin-left: 10px;
     overflow-x: auto; /* Activa el scroll horizontal si es necesario */
-    overflow-y: hidden;
+
     margin-bottom: 27px;
     margin-top: 10px;
     scrollbar-width: none;
@@ -101,7 +101,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 2fr));
   gap: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-left: 30px;
 }
 

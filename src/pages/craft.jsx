@@ -55,13 +55,14 @@ export default function Craft() {
             </section>
             <div className='header2'>
                 <h3>Artesanias</h3>
-                <img src="../../public/img/icon-chat.svg" alt="" className='icono-chat' />
+                <a href="#/chat"><img src="../../public/img/icon-chat.svg" alt="" className='icono-chat' /></a>
+                
             </div>
             <div className="search-container-cate">
                 <img src="../../public/img/search-category.svg" alt="Buscar" className="search-icon-cate" />
                 <input type="text" placeholder="Buscar producto o palabra clave..." className="search-bar-cate" />
                 <div className='img-ajustes-cate'>
-                    <img src="../../public/img/ajustes.svg" alt="" />
+                <a href="#/settings"><img src="../../public/img/ajustes.svg" alt="" /></a> 
                 </div>
             </div>
             <div className="products-grid">
