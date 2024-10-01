@@ -2,15 +2,16 @@
     width: 100%;
     height: 100vh;
     background-image: url(../../public/img/fondo-productCard.svg);
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
+
 }
 
 .taller-info-card {
     padding: 0;
     margin-left: 18px;
     margin-right: 20px;
-    margin-top: 70px;
+    margin-top: 73px;
   }
   
   .taller-info-card h2 {
@@ -80,14 +81,15 @@
     display: flex;
     align-items:center ;
     height: 8vh;
+    margin-bottom: 100px;
     /* border: 1px solid red */
   }
   .image-container {
     width: 400px;
-    height: 300px;
+    height: 273px;
   }
   .image-container img{
     width: 500px;
-    height: 319px;
+    height: 295px;
     object-fit: cover;
   }

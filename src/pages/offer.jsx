@@ -20,6 +20,7 @@ export default function Offer() {
         try {
             const response = await axios.get('https://localhost:3000/api/productos/descuento');
             setProductos(response.data);
+            setCategoriaSeleccionada(''); // Establecer 'Todos' como la categoría seleccionada
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }
@@ -39,7 +40,7 @@ export default function Offer() {
         try {
             const response = await axios.get(url);
             setProductos(response.data);
-            setCategoriaSeleccionada(categoria);
+            setCategoriaSeleccionada(categoria); // Actualizar la categoría seleccionada
         } catch (error) {
             console.error('Error al obtener los productos de la categoría:', error);
         }
@@ -63,7 +64,7 @@ export default function Offer() {
                     <div className="categorias-tabs">
                         <button 
                             className={`categoria-tab ${categoriaSeleccionada === '' ? 'active' : ''}`} 
-                            onClick={fetchProductos}
+                            onClick={fetchProductos} // Cambia el estado al hacer clic
                         >
                             Todos
                         </button>
