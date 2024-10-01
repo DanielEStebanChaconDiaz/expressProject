@@ -23,23 +23,55 @@
     overflow-wrap: break-word; 
     height: 80vh;
     overflow-y: auto;
+    scrollbar-width: none;
+    padding-bottom: 20px;
 }
 
 .random-message {
     padding: 12px;
     max-width: 80%;
-    display: inline-block; /* Permite que el contenedor crezca */
-   
+    position: relative;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -20px;
 }
 
 .user-random-message { 
     align-self: flex-end;
     background-color: #D9D9D9;
+    border-radius: 5px 5px 0 5px;
 }
 
 .workshop-random-message {
     background-color: #3D3D3D;
     color: white;
+    border-radius: 5px 5px 5px 0;
+}
+
+.random-message-content {
+    position: relative;
+    z-index: 1;
+}
+
+.user-random-message::after,
+.workshop-random-message::after {
+    content: '';
+    position: absolute;
+    bottom: -15px; 
+    width: 30px; 
+    height: 30px; 
+    background-color: inherit;
+    z-index: 0;
+}
+
+.user-random-message::after {
+    right: 0;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.workshop-random-message::after {
+    left: 0;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
 .random-footer {
@@ -66,10 +98,16 @@
 }
 
 .random-input {
+    width: 90%;
     flex: 1;
     background: transparent;
     color: black;
+
     border: none;
+}
+
+.random-input:focus{
+    outline: none;
 }
 
 .random-input::placeholder {
@@ -125,113 +163,4 @@
 
 .random-header-chat h4 {
     margin-left: 0.34rem;
-}
-
-.random-main {
-    scrollbar-width: none; /* Ocultar scrollbar en Firefox */
-}
-
-.user-random-message {
-    
-    width: auto; /* Permitir que el ancho se ajuste automáticamente */
-    display: inline-block; /* Permitir que el contenedor crezca */
-    border-radius: 5px 5px 0 5px;
-}
-
-
-.workshop-random-message {
-    border-radius: 5px 5px 5px 0;
- 
-    width: auto; /* Permitir que el ancho se ajuste automáticamente */
-    display: inline-block; /* Permitir que el contenedor crezca */
-}
-/* Opcional: Estilos para las flechas de los mensajes */
-.workshop-random-message::before,
-.user-random-message::before {
-    content: '';
-    position: absolute;
-    top: 44px; /* Ajusta según el diseño */
-    width: 20px;
-    height: 20px;
-}
-
-.workshop-random-message::before {
-    clip-path: polygon(0 0, 100% 0, 0 100%);
-    background-color: #3D3D3D;
-    left: 0;
-}
-
-.user-random-message::before {
-    clip-path: polygon(100% 0, 0 0, 100% 100%);
-    background-color: #D9D9D9;
-    right: 0; 
-}
-
-/*triangulos*/
-.random-message {
-    padding: 12px;
-    max-width: 80%;
-    display: inline-block; /* Permite que el contenedor crezca */
-   
-    position: relative; /* Necesario para posicionar el triángulo */
-}
-
-.user-random-message {
-    align-self: flex-end;
-    background-color: #D9D9D9;
-    border: 1px solid red;
-    position: relative;
-}
-
-.workshop-random-message {
-    background-color: #3D3D3D;
-    color: white;
-    position: relative;
-}
-
-/* .user-random-message::before {
-    content: '';
-    position: absolute;
-    right: 0px; 
-    width: 0;
-    height: 0;
-    border-left: 10px solid #D9D9D9;
-    border-right: 15px solid #D9D9D9;
-    border-bottom: 20px solid #D9D9D9;
-    bottom: 0;
-}
-
-.workshop-random-message::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0; 
-    width: 0;
-    height: 0;
-    border-left: 10px solid #3D3D3D;
-    border-right: 15px solid #3D3D3D;
-    border-bottom: 20px solid #3D3D3D; 
-} */
-
-
-.triangle-user {
-    right: 0; /* Ajusta según el diseño */
-    border-left: 10px solid #D9D9D9; 
-    border-right: 15px solid #D9D9D9; 
-    border-bottom: 20px solid #D9D9D9; /* Color del triángulo del usuario */
-    bottom: 0;
-    border: 1px solid red;
-    position: absolute;
-
-}
-
-.triangle-workshop {
-    left: 0; /* Ajusta según el diseño */
-    border-left: 10px solid #3D3D3D;
-    border: 1px solid red;
-    border-right: 15px solid #3D3D3D;
-    border-bottom: 20px solid #3D3D3D; /* Color del triángulo del taller */
-    bottom: 0;
-    position: absolute;
-
 }

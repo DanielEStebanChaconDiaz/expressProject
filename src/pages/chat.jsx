@@ -70,9 +70,10 @@ export default function Chat() {
             <main className="random-main">
                 {messages.map((msg, index) => (
                     <div key={index} className={`random-message ${msg.class}`}>
+                    <div className="random-message-content">
                         {msg.text}
-                        <div className={`triangle ${msg.class === 'user-random-message' ? 'triangle-user' : 'triangle-workshop'}`}></div>
                     </div>
+                </div>
                 ))}
             </main>
 
