@@ -4,12 +4,21 @@ import '../styles/productCard.css';
 import heartIcon from '../../public/img/heart.svg';
 import cartIcon from '../../public/img/carrito.svg';
 import axios from 'axios'
+import '../styles/productCard.css';
+import heartIcon from '../../public/img/heart.svg';  // Ícono de corazón vacío
+import heartCompleteIcon from '../../public/img/heart-complete.svg';  // Ícono de corazón lleno
+import cartIcon from '../../public/img/carrito.svg';  
+import { useNavigate } from 'react-router-dom';
 
 export default function ProductCard() {
+    
     const [userId, setUserId] = useState(null); // Estado para almacenar el userId
     const location = useLocation();
-    const navigate = useNavigate();
     const { producto } = location.state || {};
+    const navigate = useNavigate();
+    
+    // Estado para manejar el ícono del corazón
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const handleClick = () => {
         navigate(-1);
