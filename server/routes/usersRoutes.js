@@ -22,7 +22,7 @@ router.post('/logout', authMiddleware, usuarioController.logout);
 router.post('/carrito/agregar', authMiddleware, usuarioController.agregarAlCarrito);
 router.delete('/carrito/remover/:itemId', authMiddleware, usuarioController.removerDelCarrito);
 // router.get('/carrito', authMiddleware, usuarioController.obtenerCarrito);
-router.post('/carrito/canjear-cupon', authMiddleware, usuarioController.canjearCupon);
+router.post('/carrito/canjear-cupon', authMiddleware, usuarioController.aplicarCupon);
 router.post('/carrito/usar-cupon', authMiddleware, usuarioController.usarCupon);
 router.post('/comprar', authMiddleware, usuarioController.realizarCompra);
 

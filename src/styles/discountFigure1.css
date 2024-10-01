@@ -6,9 +6,9 @@
     justify-content: center;
     color: white;
     z-index: 1; 
-    margin-top: -130px;
+    margin-top: -120px;
     margin-bottom: 50px;
-    margin-left: -35px;
+    margin-left: -15px;
     transform: rotate(20deg);
 }
 
@@ -20,8 +20,8 @@
 
 .container-discountFigure1 p {
     color: white;
-    bottom: 4px;
-    left: -7px;
+    bottom: 25px;
+    left: 18px;
     display: flex;
     width: 50%;
     height: 40%;
