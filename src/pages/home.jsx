@@ -1,10 +1,13 @@
 import '../styles/home.css';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import axios from 'axios';
 
 export default function Home() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const obtenerUsuarioLogueado = async () => {
       try {
@@ -33,6 +36,10 @@ export default function Home() {
     { name: 'Pintura tradicional', icon: '../../public/img/category10.svg' },
   ];
 
+  const handleCategoryClick = (categoryName) => {
+    navigate(`/category?selected=${encodeURIComponent(categoryName)}`);
+  };
+
   return (
     <>
       <div className="App">
@@ -42,7 +49,11 @@ export default function Home() {
           <h3>Categorias</h3>
           <div className='category-box'>
             {categories.map((category, index) => (
-              <div key={index} className="category-item">
+              <div 
+                key={index} 
+                className="category-item" 
+                onClick={() => handleCategoryClick(category.name)}
+              >
                 <img src={category.icon} alt={category.name} className="category-icon" />
                 <span>{category.name}</span>
               </div>
@@ -55,11 +66,9 @@ export default function Home() {
           <p>¡Aprende cómo hacerlos en estos talleres educativos!</p>
           <img src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
         </section>
-              <Footer/>
 
+        <Footer/>
       </div>
-
-      {/* Componente de menú hamburguesa */}
     </>
   );
 }
