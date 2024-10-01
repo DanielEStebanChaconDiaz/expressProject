@@ -32,7 +32,7 @@ exports.registerUser = async (req, res) => {
 
     // Hash de la contraseña antes de almacenarla
     const hashedPassword = await bcrypt.hash(contrasena, 10);
-    
+
     // Crear el usuario en la base de datos
     const user = await usuarioService.crearUsuario({
       nombreUsuario,
@@ -72,7 +72,7 @@ exports.registerUserByPhone = async (req, res) => {
 
     // Hash de la contraseña
     const hashedPassword = await bcrypt.hash(contrasena, 10);
-    
+
     // Crear el usuario
     const user = await usuarioService.crearUsuario({
       nombreUsuario,
@@ -489,7 +489,7 @@ exports.usarCupon = async (req, res) => {
   try {
     const { codigoCupon } = req.body;
     const cupon = await cuponService.obtenerCuponPorCodigo(codigoCupon);
-    
+
     // Validar si el cupón existe y no ha expirado
     if (!cupon || new Date() > cupon.fechaExpiracion) {
       return res.status(400).json({ mensaje: 'Cupón inválido o expirado' });
@@ -517,9 +517,9 @@ exports.usarCupon = async (req, res) => {
     let descuentoTotal = 0;
     let carritoActualizado = usuario.carrito.map(item => {
       const itemCopy = { ...item.toObject() };
-     
+
       if ((cupon.productoId && cupon.productoId.toString() === itemCopy.producto._id.toString()) ||
-          (!cupon.productoId)) {
+        (!cupon.productoId)) {
         if (cupon.tipo === 'porcentaje') {
           const descuentoItem = (itemCopy.producto.precio * itemCopy.cantidad * cupon.descuento) / 100;
           itemCopy.descuento = descuentoItem;
@@ -539,7 +539,7 @@ exports.usarCupon = async (req, res) => {
     usuario.cuponesAsignados = usuario.cuponesAsignados.filter(
       cuponId => cuponId.toString() !== cupon._id.toString()
     );
-    
+
     // Actualizar el carrito y guardar los cambios en el usuario
     usuario.carrito = carritoActualizado;
     await usuario.save();
@@ -554,9 +554,9 @@ exports.usarCupon = async (req, res) => {
     });
   } catch (error) {
     console.error('Error al aplicar y eliminar el cupón:', error);
-    res.status(500).json({ 
-      mensaje: 'Error al aplicar y eliminar el cupón', 
-      error: error.message 
+    res.status(500).json({
+      mensaje: 'Error al aplicar y eliminar el cupón',
+      error: error.message
     });
   }
 };
@@ -627,6 +627,33 @@ exports.realizarCompra = async (req, res) => {
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
 };
+exports.eliminarProductoFavorito = async (req, res) => {
+  try {
+    const { userId, productoId } = req.params;
+
+    const usuario = await Usuario.findById(userId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    usuario.productosFavoritos = usuario.productosFavoritos.filter(
+      id => id.toString() !== productoId
+    );
+
+    await usuario.save();
+
+    res.status(200).json({
+      mensaje: 'Producto eliminado de favoritos',
+      productosFavoritos: usuario.productosFavoritos
+    });
+  } catch (error) {
+    res.status(500).json({
+      mensaje: 'Error al eliminar el producto de favoritos',
+      error: error.message
+    });
+  }
+}; 
+
 
 
 
