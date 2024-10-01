@@ -1,19 +1,35 @@
 import '../styles/favorite.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Flecha from '../components/flecha-back';
+import axios from 'axios';
 
 export default function Favorite() {
     const [selectedCategory, setSelectedCategory] = useState(null); // Estado para la categoría seleccionada
+    const [favorites, setFavorites] = useState([]); // Estado para los productos favoritos
 
-    // Estado para los productos favoritos
-    const [favorites, setFavorites] = useState([
-        { id: 1, name: 'Tapiz Chumpi Andino III', price: 'S/.600', artisan: 'Taller Awaq Ayllus', img: '../../public/img/category-ejemplo.svg' },
-        { id: 2, name: 'Chullo Andino', price: 'S/.250', artisan: 'Nación Q’ero', img: '../../public/img/category-ejemplo.svg' },
-        { id: 3, name: 'Pechera de Chompe Kené', price: 'S/.350', artisan: 'Shinan Imabo', img: '../../public/img/category-ejemplo.svg' },
-        { id: 4, name: 'Cartuchera Flores I', price: 'S/.30', artisan: 'Taller Awaq Ayllus', img: '../../public/img/category-ejemplo.svg' }
-    ]);
+    // Función para obtener el usuario logueado
+    const obtenerUsuarioLogueado = async () => {
+        try {
+            const response = await axios.get('https://localhost:3000/api/usuarios/me', {
+                withCredentials: true
+            });
+            console.log(response.data)
+            return response.data; // Devolver los datos del usuario
+        } catch (error) {
+            console.error('Error al obtener el usuario logueado:', error);
+            return null;
+        }
+    };
 
-    // Función para eliminar un producto de favoritos
+    useEffect(() => {
+        // Obtener el ID del usuario y luego los productos favoritos
+        const fetchData = async () => {
+            const usuario = await obtenerUsuarioLogueado();
+            console.log('usuario:', usuario)
+        };
+        fetchData();
+    }, []);
+
     const handleRemoveFavorite = (id) => {
         // Filtrar productos para quitar el que coincide con el id
         setFavorites(favorites.filter(favorite => favorite.id !== id));
@@ -35,8 +51,7 @@ export default function Favorite() {
     return (
         <div className='favorite-container'>
             <header className="header-category">
-                <Flecha/>
-                
+                <Flecha />
             </header>
 
             <section className="categories-cate">
@@ -58,11 +73,11 @@ export default function Favorite() {
                 {favorites.map((favorite) => (
                     <div key={favorite.id} className="product-card-favorite">
                         {/* Botón de cerrar (X) que elimina el producto */}
-                        <button 
-                            className="close-button" 
+                        <button
+                            className="close-button"
                             onClick={() => handleRemoveFavorite(favorite.id)}
-                        >×</button> 
-                        
+                        >×</button>
+
                         <img src={favorite.img} alt={favorite.name} />
                         <div className="product-info-favorite">
                             <h5>{favorite.name}</h5>

@@ -61,13 +61,28 @@ export default function Car() {
   };
 
   const handleQuantityChange = async (id, change) => {
+    // Buscar el producto actual en el carrito
+    const item = items.find(item => item.producto.id === id);
+  
+    // Verificar si la nueva cantidad sería 0 o menor
+    const nuevaCantidad = item.cantidad + change;
+    
+    // Si la nueva cantidad es 0, eliminamos el producto
+    if (nuevaCantidad <= 0) {
+      handleRemove(id);
+      return;
+    }
+  
     try {
+      // Si la cantidad es mayor a 0, actualizamos el carrito
       const response = await axios.post('https://localhost:3000/api/usuarios/carrito/agregar', {
         productoId: id,
         cantidad: change
       }, {
         withCredentials: true
       });
+  
+      // Actualizamos los items del carrito y el total
       setItems(response.data.carrito);
       calcularTotal(response.data.carrito);
     } catch (error) {
@@ -75,8 +90,9 @@ export default function Car() {
       setError('Error al actualizar el carrito. Por favor, intenta de nuevo.');
     }
   };
-
+  
   const handleRemove = async (id) => {
+    console.log(id);
     try {
       const response = await axios.delete(`https://localhost:3000/api/usuarios/carrito/remover/${id}`, {
         withCredentials: true
@@ -88,6 +104,7 @@ export default function Car() {
       setError('Error al eliminar el item del carrito. Por favor, intenta de nuevo.');
     }
   };
+  
 
   const aplicarCupon = async () => {
     try {
@@ -96,16 +113,15 @@ export default function Car() {
       }, {
         withCredentials: true
       });
-  
       if (response.data.carrito) {
         setItems(response.data.carrito);
-        calcularTotal(response.data.carrito, response.data.descuentoTotal);
+        calcularTotal(response.data.carrito);
+      } else {
+        await fetchCarrito();
       }
-  
       setCupon('');
     } catch (error) {
       console.error('Error al aplicar cupón:', error);
-      setError('Error al aplicar el cupón. Por favor, intenta de nuevo.');
     }
   };
 
@@ -160,9 +176,10 @@ export default function Car() {
                   <h5>{item.producto.tamaño}</h5>
                   <h5>{item.producto.vendedor}</h5>
                   <div className="item-quantity">
-                    <button onClick={() => handleQuantityChange(item.producto._id, -1)}>-</button>
+                    <button onClick={() => handleQuantityChange(item.producto.id, -1)}>-</button>
                     <span>{item.cantidad}</span>
-                    <button onClick={() => handleQuantityChange(item.producto._id, 1)}>+</button>
+                    {console.log('producto: ',item.producto)}
+                    <button onClick={() => handleQuantityChange(item.producto.id, 1)}>+</button>
                   </div>
                 </div>
                 <button onClick={() => handleRemove(item.producto._id)} className="remove-button">

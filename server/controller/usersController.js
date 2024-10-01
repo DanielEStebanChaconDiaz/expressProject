@@ -430,7 +430,6 @@ exports.removerDelCarrito = async (req, res) => {
       return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
 
-    // Filtrar el carrito para eliminar el item
     usuario.carrito = usuario.carrito.filter(item => item.producto.toString() !== itemId);
     await usuario.save();
 
@@ -446,7 +445,7 @@ exports.removerDelCarrito = async (req, res) => {
 };
 
 
-exports.canjearCupon = async (req, res) => {
+exports.aplicarCupon = async (req, res) => {
   try {
     const { codigoCupon } = req.body;
     const cupon = await cuponService.obtenerCuponPorCodigo(codigoCupon);
@@ -617,15 +616,14 @@ exports.realizarCompra = async (req, res) => {
     usuario.productosComprados = usuario.productosComprados || [];
     usuario.productosComprados.push(...productosComprados);
 
+    // Limpiar el carrito
     usuario.carrito = [];
 
     await usuario.save();
 
-    res.status(200).json({ 
-      mensaje: 'Compra realizada exitosamente', 
-      itemsComprados: productosComprados 
-    });
+    res.status(200).json({ mensaje: 'Compra realizada exitosamente', itemsComprados: productosComprados });
   } catch (error) {
+    console.error('Error al realizar la compra:', error);
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
 };

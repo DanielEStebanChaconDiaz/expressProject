@@ -34,16 +34,12 @@ const UsuarioSchema = new mongoose.Schema({
     tipo: { type: String },
     detalles: { type: String }
   }],
-  
-  // Productos comprados por el usuario
   productosComprados: [{
     item: { type: mongoose.Schema.Types.ObjectId, ref: 'Producto' },
     tipo: String,
     cantidad: Number,
     precioUnitario: Number
   }],
-  
-  // Talleres a los que el usuario está suscrito
   talleresSuscritos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Taller' }],
   
   // Tiendas favoritas del usuario
