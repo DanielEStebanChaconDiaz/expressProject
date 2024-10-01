@@ -626,6 +626,28 @@ exports.realizarCompra = async (req, res) => {
     console.error('Error al realizar la compra:', error);
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
+
+  /**
+ * Elimina la lista de favoritos del usuario.
+ * @param {Object} req - El objeto de solicitud HTTP.
+ * @param {Object} res - El objeto de respuesta HTTP.
+ */
+  exports.eliminarProductosFavoritos = async (req, res) => {
+    const { usuarioId } = req.body; 
+
+    try {
+      const usuarioActualizado = await usuarioService.eliminarListaDeFavoritos(usuarioId);
+
+      if (!usuarioActualizado) {
+        return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+      }
+
+      return res.status(200).json({ mensaje: 'Lista de favoritos eliminada con éxito', usuario: new UserDTO(usuarioActualizado) });
+    } catch (error) {
+      return res.status(500).json({ mensaje: 'Error al eliminar la lista de favoritos', error: error.message });
+    }
+  };
+
 };
 exports.eliminarProductoFavorito = async (req, res) => {
   try {
@@ -653,9 +675,5 @@ exports.eliminarProductoFavorito = async (req, res) => {
     });
   }
 }; 
-
-
-
-
 
 
