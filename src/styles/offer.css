@@ -68,6 +68,8 @@
 }
 
 .producto-card {
+    width: 100%;
+    height: 10rem;
     display: flex;
     flex-direction: column;
     background-color: #000;
@@ -77,6 +79,7 @@
 }
 
 .producto-card img {
+    height: 6.5rem;
   object-fit: cover;
     width: 100%;
     border-radius: 7px 7px 0 0;
@@ -86,7 +89,7 @@
 .producto-info h3 {
     
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: -4px;
     margin-left: 7px;
     color: #ccc;
 }

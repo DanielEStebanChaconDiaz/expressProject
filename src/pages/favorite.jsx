@@ -4,26 +4,25 @@ import Flecha from '../components/flecha-back';
 import axios from 'axios';
 
 export default function Favorite() {
-    const [selectedCategory, setSelectedCategory] = useState(null); // Estado para la categoría seleccionada
-    const [favorites, setFavorites] = useState([]); // Estado para los productos favoritos
-    const [userId, setUserId] = useState(null); // Estado para almacenar el ID del usuario logueado
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [allFavorites, setAllFavorites] = useState([]);
+    const [displayedFavorites, setDisplayedFavorites] = useState([]);
+    const [userId, setUserId] = useState(null);
 
-    // Función para obtener el usuario logueado
     const obtenerUsuarioLogueado = async () => {
         try {
             const response = await axios.get('https://localhost:3000/api/usuarios/me', {
                 withCredentials: true
             });
             console.log(response.data);
-            setUserId(response.data._id); // Guardar el ID del usuario
-            return response.data; // Devolver los datos del usuario
+            setUserId(response.data._id);
+            return response.data;
         } catch (error) {
             console.error('Error al obtener el usuario logueado:', error);
             return null;
         }
     };
 
-    // Función para obtener los productos favoritos usando los IDs
     const obtenerProductosFavoritos = async (productosFavoritos) => {
         try {
             const productos = await Promise.all(
@@ -32,38 +31,66 @@ export default function Favorite() {
                     return response.data;
                 })
             );
-            setFavorites(productos); // Guardar los productos en el estado
+            setAllFavorites(productos);
+            setDisplayedFavorites(productos);
         } catch (error) {
             console.error('Error al obtener productos favoritos:', error);
         }
     };
 
     useEffect(() => {
-        // Obtener el ID del usuario y luego los productos favoritos
         const fetchData = async () => {
             const usuario = await obtenerUsuarioLogueado();
             if (usuario && usuario.productosFavoritos) {
                 console.log('Productos favoritos:', usuario.productosFavoritos);
-                obtenerProductosFavoritos(usuario.productosFavoritos); // Llamar a la función para obtener los productos
+                obtenerProductosFavoritos(usuario.productosFavoritos);
             }
         };
         fetchData();
     }, []);
 
-    // Función para eliminar un producto de favoritos tanto en el frontend como en el backend
     const handleRemoveFavorite = async (idProducto) => {
         try {
-            // Hacer el fetch al backend para eliminar el producto de favoritos usando POST
             await axios.post(`https://localhost:3000/api/usuarios/${userId}/productos-favoritos`, {
-                idProducto // Enviar el ID del producto en el cuerpo de la solicitud
+                idProducto
             }, {
                 withCredentials: true
             });
 
-            // Actualizar el estado eliminando el ObjectId del producto de favoritos
-            setFavorites(favorites.filter(favorite => favorite._id !== idProducto));
+            const updatedFavorites = allFavorites.filter(favorite => favorite._id !== idProducto);
+            setAllFavorites(updatedFavorites);
+            setDisplayedFavorites(updatedFavorites);
         } catch (error) {
             console.error('Error al eliminar el producto de favoritos:', error);
+        }
+    };
+
+    const filterByCategory = (categoria) => {
+        if (categoria === null) {
+            setDisplayedFavorites(allFavorites);
+            setSelectedCategory(null);
+        } else {
+            const categoriaNormalizada = categoria
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-')
+                .trim()
+                .toLowerCase();
+
+            const filteredFavorites = allFavorites.filter(producto => 
+                producto.categoria.toLowerCase() === categoriaNormalizada
+            );
+            setDisplayedFavorites(filteredFavorites);
+            setSelectedCategory(categoria);
+        }
+    };
+
+    const handleCategoryClick = (categoryName) => {
+        if (categoryName === selectedCategory) {
+            filterByCategory(null);
+        } else {
+            filterByCategory(categoryName);
         }
     };
 
@@ -91,8 +118,8 @@ export default function Favorite() {
                     {categories.map((category, index) => (
                         <div
                             key={index}
-                            className={`category-item-cate ${selectedCategory === category.name ? 'selected' : ''}`} // Clase para categoría seleccionada
-                            onClick={() => setSelectedCategory(category.name)} // Cambiar estado al hacer clic
+                            className={`category-item-cate ${selectedCategory === category.name ? 'selected' : ''}`}
+                            onClick={() => handleCategoryClick(category.name)}
                         >
                             <img src={category.icon} alt={category.name} className="category-icon-cate" />
                             <span>{category.name}</span>
@@ -102,12 +129,11 @@ export default function Favorite() {
             </section>
 
             <div className="products-grid-favorite">
-                {favorites.map((favorite) => (
+                {displayedFavorites.map((favorite) => (
                     <div key={favorite._id} className="product-card-favorite">
-                        {/* Botón de cerrar (X) que elimina el producto */}
                         <button
                             className="close-button"
-                            onClick={() => handleRemoveFavorite(favorite._id)} // Cambiar a favorite._id
+                            onClick={() => handleRemoveFavorite(favorite._id)}
                         >×</button>
 
                         <img src={favorite.imagen} alt={favorite.nombre} />

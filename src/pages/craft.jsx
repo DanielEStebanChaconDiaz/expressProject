@@ -8,7 +8,6 @@ export default function Craft() {
     const { state } = useLocation();
     const { taller } = state || {};
     const [productos, setProductos] = useState([]);
-    const [carrito, setCarrito] = useState([]);
     const [mensaje, setMensaje] = useState('');
     const [busqueda, setBusqueda] = useState('');
 
@@ -37,39 +36,6 @@ export default function Craft() {
         }
     };
 
-    const agregarAlCarrito = async (producto) => {
-        try {
-            console.log('Intentando agregar al carrito:', producto);
-            const productoId = producto._id || producto.id;
-            if (!productoId) {
-                throw new Error('ID de producto no encontrado');
-            }
-            const response = await axios.post('https://localhost:3000/api/usuarios/carrito/agregar', {
-                productoId: productoId,
-                cantidad: 1
-            }, {
-                withCredentials: true
-            });
-            console.log('Respuesta al agregar al carrito:', response.data);
-            setCarrito(response.data.carrito);
-            setMensaje('Producto añadido al carrito');
-        } catch (error) {
-            console.error('Error al agregar al carrito:', error.response ? error.response.data : error);
-            if (error.response) {
-                if (error.response.status === 401) {
-                    setMensaje('Debes iniciar sesión para agregar productos al carrito');
-                    // Aquí podrías redirigir al usuario a la página de login
-                    // navigate('/login');
-                } else {
-                    setMensaje(error.response.data.mensaje || 'Error al agregar al carrito');
-                }
-            } else {
-                setMensaje('Error de conexión. Por favor, intenta de nuevo.');
-            }
-        }
-        setTimeout(() => setMensaje(''), 3000);
-    };
-
     const handleSearch = (event) => {
         setBusqueda(event.target.value);
     };
@@ -77,6 +43,10 @@ export default function Craft() {
     const productosFiltrados = productos.filter(producto =>
         producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
     );
+
+    const handleProductClick = (producto) => {
+        navigate('/productCard', { state: { producto } });
+    };
 
     return (
         <div className='craft-container'>
@@ -101,7 +71,6 @@ export default function Craft() {
             <div className='header2'>
                 <h3>Artesanias</h3>
                 <a href="#/chat"><img src="../../public/img/icon-chat.svg" alt="" className='icono-chat' /></a>
-                
             </div>
             <div className="search-container-cate">
                 <img src="../../public/img/search-category.svg" alt="Buscar" className="search-icon-cate" />
@@ -122,18 +91,12 @@ export default function Craft() {
             <div className="products-grid">
                 {productosFiltrados.length > 0 ? (
                     productosFiltrados.map((producto) => (
-                        <div key={producto._id || producto.id} className="product-card">
+                        <div key={producto._id || producto.id} className="product-card" onClick={() => handleProductClick(producto)}>
                             <img src={producto.imagen || "../../public/img/category-ejemplo.svg"} alt={producto.nombre} />
                             <div className="product-info">
                                 <h5>{producto.nombre}</h5>
                                 <h6>S/.{producto.precio}</h6>
                                 <p>{taller?.nombre}</p>
-                                <button
-                                    onClick={() => agregarAlCarrito(producto)}
-                                    className="add-to-cart-btn"
-                                >
-                                    🛒 Agregar al carrito
-                                </button>
                             </div>
                         </div>
                     ))

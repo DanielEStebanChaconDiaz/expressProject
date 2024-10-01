@@ -1,39 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/productCard.css';
 import heartIcon from '../../public/img/heart.svg';
 import cartIcon from '../../public/img/carrito.svg';
-import axios from 'axios'
+import axios from 'axios';
+import '../styles/productCard.css';
+import heartCompleteIcon from '../../public/img/heart-complete.svg';  // Ícono de corazón lleno
 
 export default function ProductCard() {
-    const [userId, setUserId] = useState(null); // Estado para almacenar el userId
+    const [userId, setUserId] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
-    const { producto } = location.state || {};
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [mensaje, setMensaje] = useState('');
 
     const handleClick = () => {
         navigate(-1);
     };
 
-    // Función para obtener el usuario logueado y guardar su userId
     const obtenerUsuarioLogueado = async () => {
         try {
             const response = await axios.get('https://localhost:3000/api/usuarios/me', {
                 withCredentials: true
             });
-            console.log(response.data)
-            setUserId(response.data._id); // Almacenar el userId
+            console.log(response.data);
+            setUserId(response.data._id);
         } catch (error) {
             console.error('Error al obtener el usuario logueado:', error);
         }
     };
 
-    // Llama a la función al cargar el componente
-    React.useEffect(() => {
+    useEffect(() => {
         obtenerUsuarioLogueado();
     }, []);
 
-    // Función para manejar el clic en el icono de favorito
     const handleFavoriteClick = async () => {
         if (!userId) {
             console.error('No se ha obtenido el userId');
@@ -46,10 +46,43 @@ export default function ProductCard() {
             }, {
                 withCredentials: true
             });
+            setIsFavorite(!isFavorite);
             console.log('Producto agregado a favoritos');
         } catch (error) {
             console.error('Error al agregar producto a favoritos:', error);
         }
+    };
+
+    const agregarAlCarrito = async () => {
+        try {
+            console.log('Intentando agregar al carrito:', producto);
+            const productoId = producto._id || producto.id;
+            if (!productoId) {
+                throw new Error('ID de producto no encontrado');
+            }
+            const response = await axios.post('https://localhost:3000/api/usuarios/carrito/agregar', {
+                productoId: productoId,
+                cantidad: 1
+            }, {
+                withCredentials: true
+            });
+            console.log('Respuesta al agregar al carrito:', response.data);
+            setMensaje('Producto añadido al carrito');
+        } catch (error) {
+            console.error('Error al agregar al carrito:', error.response ? error.response.data : error);
+            if (error.response) {
+                if (error.response.status === 401) {
+                    setMensaje('Debes iniciar sesión para agregar productos al carrito');
+                    // Aquí podrías redirigir al usuario a la página de login
+                    // navigate('/login');
+                } else {
+                    setMensaje(error.response.data.mensaje || 'Error al agregar al carrito');
+                }
+            } else {
+                setMensaje('Error de conexión. Por favor, intenta de nuevo.');
+            }
+        }
+        setTimeout(() => setMensaje(''), 3000);
     };
 
     if (!producto) {
@@ -83,10 +116,10 @@ export default function ProductCard() {
                             <p className="product-taller-card">{producto.tienda}</p>
                         </div>
                         <img 
-                            src={heartIcon} 
+                            src={isFavorite ? heartCompleteIcon : heartIcon} 
                             alt="Favorito" 
                             className="favorite-icon" 
-                            onClick={handleFavoriteClick} // Añadido el evento onClick
+                            onClick={handleFavoriteClick}
                         />
                     </div>
 
@@ -100,7 +133,9 @@ export default function ProductCard() {
                         <p className="shipping-info-card">Cuenta con envío hacia tu ubicación</p>
                     </div>
 
-                    <button className="add-to-cart">
+                    {mensaje && <div className="mensaje">{mensaje}</div>}
+
+                    <button className="add-to-cart" onClick={agregarAlCarrito}>
                         <img src={cartIcon} alt="Carrito" className="cart-icon" /> Añadir a mi carrito de compras
                     </button>
                 </div>
