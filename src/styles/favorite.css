@@ -44,8 +44,8 @@
     color: white;
     border-radius: 8px;
     text-align: center;
-    width: 149px;
-    height: 170px;
+    width: 179px;
+    height: 180px;
     margin-bottom: 10px;
   }
   
@@ -55,7 +55,8 @@
   
     /* border: 1px solid red; */
     position: absolute;
-    width: 150px;
+    width: 179px;
+    height: 100px;
     
   }
   
@@ -63,13 +64,13 @@
     color: white;
     margin-left: 10px;
     bottom: 45px;
-    font-size: 12px;
+    font-size: 16px;
     position: absolute;
   
   }
   
   .product-info-favorite h6 {
-    font-size: 12px;
+    font-size: 14px;
     position: absolute;
     bottom: 23px;
     color: white;

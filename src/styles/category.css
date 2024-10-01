@@ -51,6 +51,7 @@
 .categories-cate {
     display: flex;
     flex-direction: column;
+    margin-top: 2.5%;
   }
   
 
@@ -110,7 +111,7 @@
   background-color: black;
   color: white;
   border-radius: 8px;
-  text-align: center;
+
   width: 160px;
   height: 155px;
   margin-bottom: 10px;
@@ -125,16 +126,15 @@
   width: 160px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  height: 90px;
+  height: 60px;
 }
 
 .product-info h5 {
   color: white;
-  margin-left: 10px;
+  width: 100%;
   bottom: 45px;
   font-size: 12px;
   position: absolute;
-
 }
 
 .product-info h6 {
@@ -174,7 +174,7 @@
   flex-direction: row;
   position: relative;
   margin: 0 30px;
-  margin-bottom: 25px;
+  margin-bottom: 1px;
 }
 
 .search-icon-cate {

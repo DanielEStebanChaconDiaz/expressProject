@@ -39,6 +39,7 @@
 .user-random-message { 
     align-self: flex-end;
     background-color: #D9D9D9;
+    color: white;
     border-radius: 5px 5px 0 5px;
 }
 
@@ -163,4 +164,8 @@
 
 .random-header-chat h4 {
     margin-left: 0.34rem;
+}
+
+.workshop-random-message .random-message-content{
+    color: white;
 }
