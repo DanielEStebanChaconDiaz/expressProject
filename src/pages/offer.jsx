@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/offer.css'
+import '../styles/offer.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import DiscountFigure1 from '../components/DiscountFigure1';
 import DiscountFigure2 from '../components/DiscountFigure2';
 
-
-export default function Offer(){
+export default function Offer() {
     const [productos, setProductos] = useState([]);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
     
@@ -19,6 +18,7 @@ export default function Offer(){
         try {
             const response = await axios.get('https://localhost:3000/api/productos/descuento');
             setProductos(response.data);
+            setCategoriaSeleccionada(''); // Establecer 'Todos' como la categoría seleccionada
         } catch (error) {
             console.error('Error al obtener los productos:', error);
         }
@@ -38,7 +38,7 @@ export default function Offer(){
         try {
             const response = await axios.get(url);
             setProductos(response.data);
-            setCategoriaSeleccionada(categoria);
+            setCategoriaSeleccionada(categoria); // Actualizar la categoría seleccionada
         } catch (error) {
             console.error('Error al obtener los productos de la categoría:', error);
         }
@@ -46,22 +46,22 @@ export default function Offer(){
 
     const categorias = ['Textilería', 'Cerámica', 'Joyería', 'Talla en piedra', 'Talla en madera', 'Bordado', 'Joyeria', 'Hojalatería', 'Estampado', 'Pintura Tradicional'];
 
-    return(
+    return (
         <div className='offer-container'>
             <Header/>
 
             <section className="promociones-section">
-            <div className='texto-encabezado'>
-                <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
-                <h2>Descuentos y promociones</h2>
-                <p>En cientos de artesanías</p>
-            </div>
+                <div className='texto-encabezado'>
+                    <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
+                    <h2>Descuentos y promociones</h2>
+                    <p>En cientos de artesanías</p>
+                </div>
                 
                 <div className="categorias-carrusel">
                     <div className="categorias-tabs">
                         <button 
                             className={`categoria-tab ${categoriaSeleccionada === '' ? 'active' : ''}`} 
-                            onClick={fetchProductos}
+                            onClick={fetchProductos} // Cambia el estado al hacer clic
                         >
                             Todos
                         </button>
