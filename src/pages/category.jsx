@@ -1,9 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/category.css';
 import Flecha from '../components/flecha-back';
 
 export default function Category() {
-    const [selectedCategory, setSelectedCategory] = useState(null); // Estado para la categoría seleccionada
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [productos, setProductos] = useState([]);
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const selected = params.get('selected');
+        if (selected) {
+            setSelectedCategory(decodeURIComponent(selected));
+            fetchCategoria(decodeURIComponent(selected));
+        } else {
+            fetchProductos();
+        }
+    }, [location]);
+
+    const fetchProductos = async () => {
+        try {
+            const response = await axios.get('https://localhost:3000/api/productos');
+            setProductos(response.data);
+        } catch (error) {
+            console.error('Error al obtener los productos:', error);
+        }
+    };
+
+    const fetchCategoria = async (categoria) => {
+        const categoriaNormalizada = categoria
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-')
+            .trim();
+
+        const url = `https://localhost:3000/api/productos/categoria/${categoriaNormalizada}`;
+        console.log('URL de filtración:', url);
+
+        try {
+            const response = await axios.get(url);
+            setProductos(response.data);
+            setSelectedCategory(categoria);
+        } catch (error) {
+            console.error('Error al obtener los productos de la categoría:', error);
+        }
+    };
+
+    const handleProductClick = (producto) => {
+        navigate('/productCard', { state: { producto } });
+    };
 
     const categories = [
         { name: 'Textilería', icon: '../../public/img/category1.svg' },
@@ -22,15 +71,14 @@ export default function Category() {
         <div className='category-container'>
             <header className="header-category">
                 <Flecha/>
-                
             </header>
             <section className="categories-cate">
                 <div className='category-box-cate'>
                     {categories.map((category, index) => (
                         <div
                             key={index}
-                            className={`category-item-cate ${selectedCategory === category.name ? 'selected' : ''}`} // Clase para categoría seleccionada
-                            onClick={() => setSelectedCategory(category.name)} // Cambiar estado al hacer clic
+                            className={`category-item-cate ${selectedCategory === category.name ? 'selected' : ''}`}
+                            onClick={() => fetchCategoria(category.name)}
                         >
                             <img src={category.icon} alt={category.name} className="category-icon-cate" />
                             <span>{category.name}</span>
@@ -46,56 +94,20 @@ export default function Category() {
                 </div>
             </div>
             <div className="products-grid">
-                <div className="product-card">
-                    <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                <div className="product-card">
-                <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                <div className="product-card">
-                <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                <div className="product-card">
-                <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                <div className="product-card">
-                <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                <div className="product-card">
-                <img src="../../public/img/category-ejemplo.svg" alt="Producto 1" />
-                    <div className="product-info">
-                        <h5>Tapiz Chumpi Andino III</h5>
-                        <h6>S/.600</h6>
-                        <p>Taller Awaq Ayllus</p>
-                    </div>
-                </div>
-                
-                {/* Agrega más productos aquí */}
+                {productos.length > 0 ? (
+                    productos.map((producto, index) => (
+                        <div key={index} className="product-card" onClick={() => handleProductClick(producto)}>
+                            <img src={producto.imagen || "../../public/img/category-ejemplo.svg"} alt={producto.nombre} />
+                            <div className="product-info">
+                                <h5>{producto.nombre}</h5>
+                                <h6>S/.{producto.precio}</h6>
+                                <p>{producto.tienda}</p>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>No se encontraron productos para esta categoría.</p>
+                )}
             </div>
         </div>
     );
