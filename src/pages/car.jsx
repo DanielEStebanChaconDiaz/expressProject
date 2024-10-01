@@ -50,9 +50,12 @@ export default function Car() {
       setLoading(false);
     }
   };
-
-  const calcularTotal = (carrito) => {
-    const nuevoSubtotal = carrito.reduce((sum, item) => sum + item.producto.precio * item.cantidad, 0);
+  const calcularTotal = (carrito, descuentoTotal = 0) => {
+    const nuevoSubtotal = carrito.reduce((sum, item) => {
+      const precioItem = item.precioConDescuento || item.producto.precio;
+      return sum + (precioItem * item.cantidad);
+    }, 0);
+    
     setSubtotal(nuevoSubtotal);
     setTotal(nuevoSubtotal + shipping);
   };
@@ -88,20 +91,21 @@ export default function Car() {
 
   const aplicarCupon = async () => {
     try {
-      const response = await axios.post('https://localhost:3000/api/usuarios/carrito/aplicar-cupon', {
+      const response = await axios.post('https://localhost:3000/api/usuarios/carrito/usar-cupon', {
         codigoCupon: cupon
       }, {
         withCredentials: true
       });
+  
       if (response.data.carrito) {
         setItems(response.data.carrito);
-        calcularTotal(response.data.carrito);
-      } else {
-        await fetchCarrito();
+        calcularTotal(response.data.carrito, response.data.descuentoTotal);
       }
+  
       setCupon('');
     } catch (error) {
       console.error('Error al aplicar cupón:', error);
+      setError('Error al aplicar el cupón. Por favor, intenta de nuevo.');
     }
   };
 
@@ -139,7 +143,17 @@ export default function Car() {
                 <img src={item.producto.imagen} alt={item.producto.nombre} className="item-image" />
                 <div className="item-details">
                   <h5>{item.producto.nombre}</h5>
-                  <h5>S/{item.producto.precio}</h5>
+                  <h5 className="precio-original">
+                    S/{item.producto.precio.toFixed(2)}
+                  </h5>
+
+                  {/* Mostrar precio con descuento si existe */}
+                  {item.precioConDescuento && (
+                    <h5 className="precio-con-descuento">
+                      Precio con descuento: S/{item.precioConDescuento.toFixed(2)}
+                    </h5>
+                  )}
+                  
                   <h5>{item.producto.tamaño}</h5>
                   <h5>{item.producto.vendedor}</h5>
                   <div className="item-quantity">
