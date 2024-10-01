@@ -372,7 +372,47 @@ exports.removerDelCarrito = async (req, res) => {
 };
 
 
-exports.aplicarCupon = async (req, res) => {
+exports.canjearCupon = async (req, res) => {
+  try {
+    const { codigoCupon } = req.body;
+    const cupon = await cuponService.obtenerCuponPorCodigo(codigoCupon);
+
+    if (!cupon || new Date() > cupon.fechaExpiracion) {
+      return res.status(400).json({ mensaje: 'Cupón inválido o expirado' });
+    }
+
+    let userId;
+    if (req.user && req.user._id) {
+      userId = req.user._id;
+    } else if (req.session && req.session.user && req.session.user._id) {
+      userId = req.session.user._id;
+    } else {
+      return res.status(401).json({ mensaje: 'Usuario no autenticado' });
+    }
+
+    const usuario = await Usuario.findById(userId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    // Si el cupón ya está asociado a un usuario, no permitir canjearlo de nuevo
+    if (cupon.usuarioId) {
+      return res.status(400).json({ mensaje: 'El cupón ya ha sido canjeado por otro usuario' });
+    }
+
+    // Asociar el cupón al usuario
+    cupon.usuarioId = userId;
+    usuario.cuponesAsignados.push(cupon._id);
+    await cupon.save();
+    await usuario.save();
+
+    res.status(200).json({ mensaje: 'Cupón canjeado exitosamente' });
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al canjear el cupón', error: error.message });
+  }
+};
+
+exports.usarCupon = async (req, res) => {
   try {
     const { codigoCupon } = req.body;
     const cupon = await cuponService.obtenerCuponPorCodigo(codigoCupon);
@@ -390,43 +430,80 @@ exports.aplicarCupon = async (req, res) => {
     }
 
     const usuario = await Usuario.findById(userId).populate('carrito.producto');
-    if (!usuario || !usuario.carrito || usuario.carrito.length === 0) {
-      return res.status(400).json({ mensaje: 'El carrito está vacío' });
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
     }
 
-    let cuponAplicado = false;
-    usuario.carrito = usuario.carrito.map(item => {
-      if ((cupon.productoId && cupon.productoId.toString() === item.producto._id.toString()) ||
+    // Verificar que el cupón esté asociado al usuario actual
+    if (cupon.usuarioId && cupon.usuarioId.toString() !== userId.toString()) {
+      return res.status(400).json({ mensaje: 'El cupón no está asociado a este usuario' });
+    }
+
+    let descuentoTotal = 0;
+    let carritoActualizado = usuario.carrito.map(item => {
+      const itemCopy = { ...item.toObject() };
+     
+      if ((cupon.productoId && cupon.productoId.toString() === itemCopy.producto._id.toString()) ||
           (!cupon.productoId)) {
         if (cupon.tipo === 'porcentaje') {
-          item.descuento = (item.producto.precio * cupon.descuento) / 100;
-          item.precioConDescuento = item.producto.precio - item.descuento;
-        } else if (cupon.tipo === '2x1' && item.cantidad > 1) {
-          item.cantidad -= 1;
-          item.precioConDescuento = item.producto.precio;
+          const descuentoItem = (itemCopy.producto.precio * itemCopy.cantidad * cupon.descuento) / 100;
+          itemCopy.descuento = descuentoItem;
+          itemCopy.precioConDescuento = itemCopy.producto.precio - (descuentoItem / itemCopy.cantidad);
+          descuentoTotal += descuentoItem;
+        } else if (cupon.tipo === '2x1' && itemCopy.cantidad > 1) {
+          const descuentoItem = Math.floor(itemCopy.cantidad / 2) * itemCopy.producto.precio;
+          itemCopy.descuento = descuentoItem;
+          itemCopy.precioConDescuento = itemCopy.producto.precio - (descuentoItem / itemCopy.cantidad);
+          descuentoTotal += descuentoItem;
         }
-        cuponAplicado = true;
-      } else {
-        item.precioConDescuento = item.producto.precio;
       }
-      return item;
+      return itemCopy;
     });
 
-    if (!cuponAplicado) {
-      return res.status(400).json({ mensaje: 'El cupón no es aplicable a ningún item en el carrito' });
-    }
-
+    // Eliminar el cupón de la lista de cupones asignados al usuario
+    usuario.cuponesAsignados = usuario.cuponesAsignados.filter(
+      cuponId => cuponId.toString() !== cupon._id.toString()
+    );
+    
+    // Actualizar el carrito y guardar los cambios en el usuario
+    usuario.carrito = carritoActualizado;
     await usuario.save();
 
-    // Eliminar el cupón inmediatamente después de su uso
+    // Eliminar el cupón de la colección de cupones
     await cuponService.eliminarCupon(cupon._id);
 
-    res.status(200).json({ mensaje: 'Cupón aplicado exitosamente', carrito: usuario.carrito });
+    res.status(200).json({
+      mensaje: 'Cupón aplicado y eliminado exitosamente',
+      carrito: carritoActualizado,
+      descuentoTotal
+    });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al aplicar el cupón', error: error.message });
+    console.error('Error al aplicar y eliminar el cupón:', error);
+    res.status(500).json({ 
+      mensaje: 'Error al aplicar y eliminar el cupón', 
+      error: error.message 
+    });
   }
 };
 
+
+exports.obtenerCuponesUsuario = async (req, res) => {
+  try {
+    let userId;
+    if (req.user && req.user._id) {
+      userId = req.user._id;
+    } else if (req.session && req.session.user && req.session.user._id) {
+      userId = req.session.user._id;
+    } else {
+      return res.status(401).json({ mensaje: 'Usuario no autenticado' });
+    }
+
+    const cupones = await cuponService.obtenerCuponesPorUsuario(userId);
+    res.status(200).json({ cupones });
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al obtener cupones', error: error.message });
+  }
+};
 exports.realizarCompra = async (req, res) => {
   try {
     let userId;
@@ -443,28 +520,40 @@ exports.realizarCompra = async (req, res) => {
       return res.status(400).json({ mensaje: 'El carrito está vacío' });
     }
 
-    const productosComprados = usuario.carrito.map(item => ({
-      item: item.producto._id,
-      tipo: item.producto.tipo,
-      cantidad: item.cantidad,
-      precioUnitario: item.precioConDescuento || item.producto.precio
-    }));
+    const productosComprados = usuario.carrito.map(item => {
+      let precioFinal;
+      if (item.descuento) {
+        precioFinal = item.precioConDescuento;
+      } else {
+        precioFinal = item.producto.precio;
+      }
+
+      return {
+        item: item.producto._id,
+        tipo: item.producto.tipo,
+        cantidad: item.cantidad,
+        precioUnitario: precioFinal,
+        descuentoAplicado: item.descuento ? item.descuento / item.cantidad : 0,
+        precioOriginal: item.producto.precio
+      };
+    });
 
     usuario.productosComprados = usuario.productosComprados || [];
     usuario.productosComprados.push(...productosComprados);
 
-    // Limpiar el carrito
     usuario.carrito = [];
 
     await usuario.save();
 
-    res.status(200).json({ mensaje: 'Compra realizada exitosamente', itemsComprados: productosComprados });
+    res.status(200).json({ 
+      mensaje: 'Compra realizada exitosamente', 
+      itemsComprados: productosComprados 
+    });
   } catch (error) {
     console.error('Error al realizar la compra:', error);
     res.status(500).json({ mensaje: 'Error al realizar la compra', error: error.message });
   }
 };
-
 
 
 

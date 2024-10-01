@@ -29,6 +29,9 @@ class CuponService {
   async eliminarCupon(id) {
     return await Cupon.findByIdAndDelete(id);
   }
+  async obtenerCuponesPorUsuario(userId) {
+    return await Cupon.find({ usuarioId: userId, fechaExpiracion: { $gt: new Date() } });
+  };
 }
 
 module.exports = new CuponService();
