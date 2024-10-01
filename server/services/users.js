@@ -117,6 +117,19 @@ const obtenerUsuarioPorCelular = async (celular) => {
     return await Usuario.findOne({ celular });
 };
 
+const eliminarListaDeFavoritos = async (usuarioId) => {
+    try {
+        return await Usuario.findByIdAndUpdate(
+            usuarioId,
+            { productosFavoritos: [] },
+            { new: true } 
+        );
+    } catch (error) {
+        console.error('Error al eliminar la lista de favoritos:', error);
+        throw error; 
+    }
+};
+
 // Exporta las funciones de manejo de usuarios
 module.exports = {
     crearUsuario,
@@ -130,4 +143,5 @@ module.exports = {
     obtenerUsuarioPorNombre,
     obtenerUsuarioPorCorreo,
     obtenerUsuarioPorCelular,
+    eliminarListaDeFavoritos
 };

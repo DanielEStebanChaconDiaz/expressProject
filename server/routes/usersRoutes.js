@@ -25,5 +25,6 @@ router.delete('/carrito/remover/:itemId', authMiddleware, usuarioController.remo
 router.post('/carrito/canjear-cupon', authMiddleware, usuarioController.aplicarCupon);
 router.post('/carrito/usar-cupon', authMiddleware, usuarioController.usarCupon);
 router.post('/comprar', authMiddleware, usuarioController.realizarCompra);
+router.post('/limpiar-favoritos',authMiddleware,usuarioController.eliminarProductosFavoritos)
 
 module.exports = router;
