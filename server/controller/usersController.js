@@ -649,4 +649,31 @@ exports.realizarCompra = async (req, res) => {
   };
 
 };
+exports.eliminarProductoFavorito = async (req, res) => {
+  try {
+    const { userId, productoId } = req.params;
+
+    const usuario = await Usuario.findById(userId);
+    if (!usuario) {
+      return res.status(404).json({ mensaje: 'Usuario no encontrado' });
+    }
+
+    usuario.productosFavoritos = usuario.productosFavoritos.filter(
+      id => id.toString() !== productoId
+    );
+
+    await usuario.save();
+
+    res.status(200).json({
+      mensaje: 'Producto eliminado de favoritos',
+      productosFavoritos: usuario.productosFavoritos
+    });
+  } catch (error) {
+    res.status(500).json({
+      mensaje: 'Error al eliminar el producto de favoritos',
+      error: error.message
+    });
+  }
+}; 
+
 

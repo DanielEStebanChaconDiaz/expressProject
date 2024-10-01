@@ -8,13 +8,14 @@ export default function Favorite() {
     const [allFavorites, setAllFavorites] = useState([]);
     const [displayedFavorites, setDisplayedFavorites] = useState([]);
     const [userId, setUserId] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const obtenerUsuarioLogueado = async () => {
         try {
             const response = await axios.get('https://localhost:3000/api/usuarios/me', {
                 withCredentials: true
             });
-            console.log(response.data);
+            console.log('Usuario logueado:', response.data);
             setUserId(response.data._id);
             return response.data;
         } catch (error) {
@@ -38,28 +39,46 @@ export default function Favorite() {
         }
     };
 
+    const fetchFavorites = async () => {
+        const usuario = await obtenerUsuarioLogueado();
+        if (usuario && usuario.productosFavoritos) {
+            console.log('Productos favoritos:', usuario.productosFavoritos);
+            await obtenerProductosFavoritos(usuario.productosFavoritos);
+        }
+    };
+
     useEffect(() => {
         const fetchData = async () => {
-            const usuario = await obtenerUsuarioLogueado();
-            if (usuario && usuario.productosFavoritos) {
-                console.log('Productos favoritos:', usuario.productosFavoritos);
-                obtenerProductosFavoritos(usuario.productosFavoritos);
-            }
+            setIsLoading(true);
+            await fetchFavorites();
+            setIsLoading(false);
         };
         fetchData();
     }, []);
 
     const handleRemoveFavorite = async (idProducto) => {
+        if (!userId) {
+            console.error('userId no está definido');
+            return;
+        }
+
+        console.log('Eliminando producto:', idProducto, 'para usuario:', userId);
+        const url = `https://localhost:3000/api/usuarios/${userId}/productos-favoritos/${idProducto}`;
+        console.log('URL del fetch:', url);
+
         try {
-            await axios.post(`https://localhost:3000/api/usuarios/${userId}/productos-favoritos`, {
-                idProducto
-            }, {
+            const response = await axios.delete(url, {
                 withCredentials: true
             });
+            
+            console.log('Respuesta del servidor:', response.data);
 
-            const updatedFavorites = allFavorites.filter(favorite => favorite._id !== idProducto);
-            setAllFavorites(updatedFavorites);
-            setDisplayedFavorites(updatedFavorites);
+            if (response.status === 200) {
+                // Reload favorites after successful deletion
+                await fetchFavorites();
+            } else {
+                throw new Error('La respuesta del servidor no fue exitosa');
+            }
         } catch (error) {
             console.error('Error al eliminar el producto de favoritos:', error);
         }
@@ -107,6 +126,14 @@ export default function Favorite() {
         { name: 'Pintura tradicional', icon: '../../public/img/category10.svg' },
     ];
 
+    if (isLoading) {
+        return <div>Cargando...</div>;
+    }
+
+    if (!userId) {
+        return <div>Error al cargar la información del usuario. Por favor, recarga la página.</div>;
+    }
+
     return (
         <div className='favorite-container'>
             <header className="header-category">
@@ -133,7 +160,7 @@ export default function Favorite() {
                     <div key={favorite._id} className="product-card-favorite">
                         <button
                             className="close-button"
-                            onClick={() => handleRemoveFavorite(favorite._id)}
+                            onClick={() => handleRemoveFavorite(favorite.id)}
                         >×</button>
 
                         <img src={favorite.imagen} alt={favorite.nombre} />
