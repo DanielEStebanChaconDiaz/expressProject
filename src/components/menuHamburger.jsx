@@ -100,7 +100,7 @@ export default function Menu() {
         <li>
           <div className="favoritos">
             <img src="../../public/img/chat.svg" alt="" />
-            <a href="#/chat">Comentarios</a>
+            <a href="#/comentario">Comentarios</a>
           </div>
         </li>
         <li>
@@ -111,7 +111,7 @@ export default function Menu() {
         </li>
         <li>
           <div className="favoritos" onClick={handleLogout}>
-            <img src="../../public/img/logout.svg" alt="" />
+            <img src="../../public/img/logout.png" alt="" />
             <span>Cerrar sesión</span>
           </div>
         </li>

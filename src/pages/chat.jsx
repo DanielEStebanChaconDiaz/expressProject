@@ -26,8 +26,7 @@ export default function Chat() {
         });
 
         newSocket.on('chat message', ({ text, userId }) => {
-            // Determina la clase según el ID del usuario
-            const messageClass = userId === 'admin' ? 'workshop-random-message' : 'user-random-message'; // Cambia según el ID del admin
+            const messageClass = userId === 'admin' ? 'workshop-random-message' : 'user-random-message';
             const messageObj = { text, class: messageClass };
 
             setMessages((prevMessages) => [...prevMessages, messageObj]);
@@ -41,9 +40,8 @@ export default function Chat() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (input && socket) {
-            // Enviar mensaje desde el navegador
-            socket.emit('chat message', input); // Envía solo el texto del mensaje
-            setInput(''); // Reinicia el input después de enviar el mensaje
+            socket.emit('chat message', input);
+            setInput('');
         }
     };
 
@@ -72,8 +70,10 @@ export default function Chat() {
             <main className="random-main">
                 {messages.map((msg, index) => (
                     <div key={index} className={`random-message ${msg.class}`}>
+                    <div className="random-message-content">
                         {msg.text}
                     </div>
+                </div>
                 ))}
             </main>
 

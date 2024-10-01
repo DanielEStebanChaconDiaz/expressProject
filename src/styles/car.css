@@ -1,12 +1,4 @@
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-}
-  
-  
+ 
 .car-container {
     width: 100%;
     min-height: 95vh; 
@@ -17,23 +9,17 @@
 }
 
 .titulo-car {
-    margin-left: 25px;
-    margin-top: 22px;
+
     font-size: 18px;
     margin-bottom: 4px;
 }
 
 .titulo2-car{
-    margin-left: 28px;
+  width: 100%;
     color: #666;
     font-size: 13px;
-    margin-bottom: 20px;
 }
 
-.carrito-compras {
-    margin-top: 20px;
-  }
-  
   .cart-items {
     margin-top: 20px;
   }

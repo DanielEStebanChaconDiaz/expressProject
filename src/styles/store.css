@@ -1,10 +1,4 @@
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-}
 .taller-info p, .taller-info h3{
   color: white !important;
 }
@@ -13,48 +7,28 @@
   width: 100%;
   min-height: 95vh; 
   background-image: url('../../public/img/fondo-store.svg');
-  background-size: contain;
-  background-position: center;
+  background-size: 150%; /* Aumenta el tamaño de la imagen al 150% */
+  background-repeat: no-repeat;
+  background-position: center; /* Centra la imagen */
 }
 
-.search-bar {
-  background-color: #3D3D3D;
-  display: flex ;
-  width: 18rem;
-  height: 2rem;
-  border-radius: 7px;
-  border: transparent;
-  padding: 5px 10px 5px 35px; 
-}
-.search-container {
-  position: relative;
-  margin: 0 10px;
-}
 
-.search-icon {
-  position: absolute;
-  right: 86%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px; 
-  height: 18px;
+.imagen-triangulo-store{
+  width: 20px;
+  margin-top: 10px;
 }
-
 
 /*talleres*/
 /* Sección de talleres */
 .talleres-section h2 {
-  margin-left: 25px;
-  margin-top: 22px;
   font-size: 18px;
   margin-bottom: 4px;
 }
 
 .talleres-section p {
-  margin-left: 28px;
   color: #666;
   font-size: 13px;
-  margin-bottom: 20px;
+
 }
 
 .talleres-grid {
@@ -63,6 +37,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  padding-bottom: 80px;
+  margin-top: 0.8rem;
 }
 
 .taller-card {
@@ -110,5 +88,24 @@ margin-bottom: 10px;
 .img-ajustes img{
   width: 27px;
   margin-top: 24px;
-  margin-left: 50px;
+  margin-left: 30px;
 }
+
+.texto-encabezado{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 4rem;
+  position: relative;
+  /* border: 1px solid red; */
+}
+ .texto-encabezado h2{
+  position: absolute;
+  left: 1.6rem;
+  bottom: 1rem;
+ }
+ .texto-encabezado p{
+  position: absolute;
+  left: 1.6rem;
+  bottom: 0;
+ }

@@ -34,12 +34,15 @@ export default function Home() {
   ];
 
   return (
-    <>
+
       <div className="App">
         <Header/>
 
         <section className="categories">
-          <h3>Categorias</h3>
+          <div className='header-principales'>
+            <img src="../../public/img/triangulo-principales.svg" alt="" />
+            <h3>Categorias</h3>
+          </div>
           <div className='category-box'>
             {categories.map((category, index) => (
               <div key={index} className="category-item">
@@ -51,15 +54,20 @@ export default function Home() {
         </section>
 
         <section className="workshops">
-          <h3>Talleres del mes</h3>
-          <p>¡Aprende cómo hacerlos en estos talleres educativos!</p>
-          <img src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
+          <div className='talleres-triangulos'>
+            <img src="../../public/img/home-triangulos.svg" alt="" />
+            <h3>Talleres del mes</h3>
+          <p>¡Aprende cómo hacerlos en estos talleres educativos!</p> 
+          </div>
+          <div className='caja-talleres-mes'>
+          <img className='taller-ejemplo' src="../../public/img/ejemplo1.svg" alt="Taller del mes" />
+     
+          </div>
         </section>
               <Footer/>
 
       </div>
 
-      {/* Componente de menú hamburguesa */}
-    </>
+
   );
 }

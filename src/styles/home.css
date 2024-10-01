@@ -1,17 +1,8 @@
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
-}
-
-
 .App {
+  width: 100%;
+  height: 100vh;
   padding-bottom: 50px; 
-  background-image: url('../../public/img/fondo-home.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
+
 }
 
 /* Header */
@@ -86,10 +77,11 @@
   display: flex;
   flex-direction: column;
 }
-
+.categories img{
+  width: 20px;
+}
 .categories h3{
-  margin-top: 22px;
-  margin-left: 25px;
+  margin-left: 5px;
 
 }
 
@@ -107,6 +99,8 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   margin-left: 10px;
+  overflow-x: scroll;
+  scrollbar-width: none;
 }
 .category-item img {
  width: 3rem;
@@ -128,20 +122,21 @@
 }
 
 .workshops h3 {
+  position: absolute;
   margin-bottom: 7px;
 }
 
 .workshops p {
   display: flex;
   justify-content: center;
+  align-items: center;
   /* border: 1px solid red; */
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 20px;
   color: #7A7A7A;
 }
 
-.workshops img {
-  margin-top: 15px;
+.taller-ejemplo {
   width: 100%;
   max-width: 300px;
   border-radius: 10px;
@@ -154,7 +149,7 @@
   justify-content: space-around;
   align-items: center;
   padding: 13px;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -168,5 +163,26 @@
 
 .nav-item1 img{
   width: 70px;
+}
+
+
+.header-principales{
+  /* border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  margin-top: 3%;
+}
+
+.talleres-triangulos{
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.talleres-triangulos img{
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 350px;
 }
 

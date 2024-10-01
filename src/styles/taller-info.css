@@ -15,8 +15,9 @@
   
   .taller-info-card h2 {
     color: white;
-    position: absolute;
-    top:36.2%;
+    
+    margin-top: -40px;
+    margin-bottom: 20px;
     font-size: 16px;
     
   }
@@ -80,4 +81,13 @@
     align-items:center ;
     height: 8vh;
     /* border: 1px solid red */
+  }
+  .image-container {
+    width: 400px;
+    height: 300px;
+  }
+  .image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }

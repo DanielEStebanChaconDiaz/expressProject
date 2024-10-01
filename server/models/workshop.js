@@ -34,9 +34,8 @@ const TallerSchema = new mongoose.Schema({
   
   // URL del documental asociado al taller (opcional)
   documental: { type: String },
-  
-  // URL de la imagen del taller (opcional)
-  imagen: { type: String }
+  imagen: { type: String },
+  video: { type: String}
 });
 
 // Crear un índice de texto en el nombre del taller para búsquedas eficientes

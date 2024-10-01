@@ -22,7 +22,7 @@ export default function Register() {
                     <img src="../../public/img/facebook.svg" alt="" /> Regístrate con Facebook
                 </button>
                 <button className="social-btn insta-btn"onClick={DiscordAuth}>
-                    <img src="../../public/img/instagram.svg" alt="" /> Regístrate con Instagram
+                    <img src="../../public/img/discord.png" alt="" /> Regístrate con Discord
                 </button>
                 <button className="social-btn gmail-btn"onClick={GoogleAuth}>
                     <img src="../../public/img/gmail.svg" alt="" /> Regístrate con Gmail
