@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/offer.css'
+import { useNavigate } from 'react-router-dom';
+import '../styles/offer.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import DiscountFigure1 from '../components/DiscountFigure1';
 import DiscountFigure2 from '../components/DiscountFigure2';
 
-export default function Offer(){
+export default function Offer() {
     const [productos, setProductos] = useState([]);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
+    const navigate = useNavigate();
     
     useEffect(() => {
         fetchProductos();
@@ -43,16 +45,20 @@ export default function Offer(){
         }
     };
 
+    const handleProductClick = (producto) => {
+        navigate('/productCard2', { state: { producto } });
+    };
+
     const categorias = ['Textilería', 'Cerámica', 'Joyería', 'Talla en piedra', 'Talla en madera', 'Bordado', 'Joyeria', 'Hojalatería', 'Estampado', 'Pintura Tradicional'];
 
-    return(
+    return (
         <div className='offer-container'>
-            <Header/>
+            <Header />
 
             <section className="promociones-section">
                 <h2>Descuentos y promociones</h2>
                 <p>En cientos de artesanías</p>
-                
+
                 <div className="categorias-carrusel">
                     <div className="categorias-tabs">
                         <button 
@@ -71,12 +77,12 @@ export default function Offer(){
                             </button>
                         ))}
                     </div>
-                </div>  
+                </div>
 
                 <div className="productos-grid">
                     {productos.length > 0 ? (
                         productos.map((producto, index) => (
-                            <div key={index} className="producto-card">
+                            <div key={index} className="producto-card" onClick={() => handleProductClick(producto)}>
                                 <div className="imagen-wrapper">
                                     <img src={producto.imagen} alt={producto.nombre} />
                                     {producto.descuento && (
@@ -99,7 +105,7 @@ export default function Offer(){
                 </div>
             </section>
             
-            <Footer/>
+            <Footer />
         </div>
     );
 }

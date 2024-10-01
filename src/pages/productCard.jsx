@@ -5,7 +5,7 @@ import heartIcon from '../../public/img/heart.svg';
 import cartIcon from '../../public/img/carrito.svg';
 import axios from 'axios';
 import '../styles/productCard.css';
-import heartCompleteIcon from '../../public/img/heart-complete.svg';  // Ícono de corazón lleno
+import heartCompleteIcon from '../../public/img/heart-complete.svg';
 
 export default function ProductCard() {
     const [userId, setUserId] = useState(null);

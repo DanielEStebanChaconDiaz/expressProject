@@ -1,12 +1,21 @@
 import '../styles/productCard.css'
-import heartIcon from '../../public/img/heart-complete.svg';  // Ícono de corazón
-import cartIcon from '../../public/img/carrito.svg';  
-import { useNavigate } from 'react-router-dom';
+import heartIcon from '../../public/img/heart-complete.svg';
+import cartIcon from '../../public/img/carrito.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 export default function ProductCard2(){
     const navigate = useNavigate();
+    const location = useLocation();
+    const producto = location.state?.producto;
+
     const handleClick = () => {
         navigate(-1);
     };
+
+    if (!producto) {
+        return <div>No se encontró información del producto.</div>;
+    }
+
     return(
         <div className='productCard-container'>
             <header className="header-craft">
@@ -16,40 +25,42 @@ export default function ProductCard2(){
                 </div>
                 <div className="image-container">
                     <img 
-                    src="https://via.placeholder.com/400x300" 
-                    alt="Tapiz Chumpi Andino III" 
+                    src={producto.imagen} 
+                    alt={producto.nombre} 
                     className="product-image" 
                     />
-                    <div className='descuento-card'>
-                        <img src="../../public/img/star-card.svg" alt="" />
-                        <h3>-35%</h3>
-                    </div>
+                    {producto.descuento && (
+                        <div className='descuento-card'>
+                            <img src="../../public/img/star-card.svg" alt="" />
+                            <h3>{producto.descuento}</h3>
+                        </div>
+                    )}
                 </div>
             </header>
             <section>
                 <div className="product-info-card">
                     <div className="product-header-card">
-                        <h3 className="product-title-card">Tapiz Chumpi Andino III</h3>
+                        <h3 className="product-title-card">{producto.nombre}</h3>
                     </div>
 
                     <div className='card-price-icon'>
                         <div className='card-up-title'>
-
-                        <p className="product-price-card"><s>S/. 600</s> S/.65</p> 
-                        <p className="product-taller-card">Taller Awaq Ayllus</p>
+                            <p className="product-price-card">
+                                {producto.precioOriginal && <s>S/. {producto.precioOriginal}</s>} S/. {producto.precio}
+                            </p> 
+                            <p className="product-taller-card">{producto.tienda}</p>
                         </div>
-                        <img src={heartIcon} alt="Favorito" className="favorite-icon" /> {/* Ícono de favorito */}
+                        <img src={heartIcon} alt="Favorito" className="favorite-icon" />
                     </div>
 
-
                     <div className="product-details-card">
-                        <p><strong>Dimensiones:</strong> 60 x 80 cm</p>
-                        <p><strong>Descripción:</strong> Tapiz tridimensional con diseños de la tradición textil andina prehispánica. Elaborado con lana de ovino y tejido en telar a pedal.</p>
+                        <p><strong>Dimensiones:</strong> {producto.dimensiones || 'No especificadas'}</p>
+                        <p><strong>Descripción:</strong> {producto.descripcion || 'No hay descripción disponible.'}</p>
                     </div>
 
                     <div className='ok-card'>
-
-                        <img src="../../public/img/productCard-ok.svg" alt="" /><p className="shipping-info-card">Cuenta con envío hacia tu ubicación</p>
+                        <img src="../../public/img/productCard-ok.svg" alt="" />
+                        <p className="shipping-info-card">Cuenta con envío hacia tu ubicación</p>
                     </div>
                     
                     <button className="add-to-cart">
