@@ -10,6 +10,7 @@ import heartCompleteIcon from '../../public/img/heart-complete.svg';  // Ícono 
 export default function ProductCard() {
     const [userId, setUserId] = useState(null);
     const location = useLocation();
+    const { producto } = location.state || {};
     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = useState(false);
     const [mensaje, setMensaje] = useState('');
