@@ -3,6 +3,8 @@ import axios from 'axios';
 import '../styles/offer.css'
 import Header from '../components/header';
 import Footer from '../components/footer';
+import DiscountFigure1 from '../components/DiscountFigure1';
+import DiscountFigure2 from '../components/DiscountFigure2';
 
 export default function Offer(){
     const [productos, setProductos] = useState([]);
@@ -78,16 +80,10 @@ export default function Offer(){
                                 <div className="imagen-wrapper">
                                     <img src={producto.imagen} alt={producto.nombre} />
                                     {producto.descuento && (
-                                        <span className="etiqueta-descuento">
-                                            <img src="../../public/img/icon-discount.svg" alt="descuento estrella" className="estrella-icon" />
-                                            {producto.descuento}
-                                        </span>
+                                        <DiscountFigure1 text={producto.descuento} />
                                     )}
                                     {producto.oferta && (
-                                        <span className="etiqueta-oferta">
-                                            <img src="../../public/img/icon-discount.svg" alt="oferta estrella" className="estrella-icon" />
-                                            {producto.oferta}
-                                        </span>
+                                        <DiscountFigure2 text={producto.oferta} />
                                     )}
                                 </div>
                                 <div className="producto-info">
