@@ -6,6 +6,7 @@ import Footer from '../components/footer';
 import DiscountFigure1 from '../components/DiscountFigure1';
 import DiscountFigure2 from '../components/DiscountFigure2';
 
+
 export default function Offer(){
     const [productos, setProductos] = useState([]);
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
@@ -50,8 +51,11 @@ export default function Offer(){
             <Header/>
 
             <section className="promociones-section">
+            <div className='texto-encabezado'>
+                <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
                 <h2>Descuentos y promociones</h2>
                 <p>En cientos de artesanías</p>
+            </div>
                 
                 <div className="categorias-carrusel">
                     <div className="categorias-tabs">

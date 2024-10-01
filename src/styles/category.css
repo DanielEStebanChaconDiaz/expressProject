@@ -2,7 +2,7 @@
     width: 100%;
     height: 100vh;
     background-image: url('../../public/img/fondo-categoria.svg');
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
@@ -51,7 +51,7 @@
 .categories-cate {
     display: flex;
     flex-direction: column;
-    margin-top: 2.5%;
+    margin-top: 2.7%;
   }
   
 

@@ -4,9 +4,8 @@
     background-image: url(../../public/img/fondo-documental.svg);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
 
-    padding-top: 65px;
+    padding-top: 90px;
 }
 
 .video-documental img{
@@ -18,7 +17,7 @@
 
 
 .header-documental{
-    margin-top: 35px;
+    margin-top: -18px;
     padding-left: 50px;
     padding-right: 50px;
     margin-bottom: 100px;
