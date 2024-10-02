@@ -18,6 +18,7 @@ export default function Chat() {
         newSocket.on('connect', () => {
             console.log('Conectado al servidor');
             setConnectionError(false);
+            newSocket.emit('get previous messages');
         });
 
         newSocket.on('connect_error', (error) => {
@@ -27,9 +28,17 @@ export default function Chat() {
 
         newSocket.on('chat message', ({ text, userId }) => {
             const messageClass = userId === 'admin' ? 'workshop-random-message' : 'user-random-message';
-            const messageObj = { text, class: messageClass };
-
+            const messageObj = { text, userId, class: messageClass };
             setMessages((prevMessages) => [...prevMessages, messageObj]);
+        });
+
+        newSocket.on('previous messages', (previousMessages) => {
+            const formattedMessages = previousMessages.map(msg => ({
+                text: msg.text,
+                userId: msg.userId,
+                class: msg.userId === 'admin' ? 'workshop-random-message' : 'user-random-message'
+            }));
+            setMessages(formattedMessages);
         });
 
         setSocket(newSocket);
@@ -70,10 +79,10 @@ export default function Chat() {
             <main className="random-main">
                 {messages.map((msg, index) => (
                     <div key={index} className={`random-message ${msg.class}`}>
-                    <div className="random-message-content">
-                        {msg.text}
+                        <div className="random-message-content">
+                            {msg.text}
+                        </div>
                     </div>
-                </div>
                 ))}
             </main>
 

@@ -5,8 +5,8 @@ const connectMongoDB = require('../server/config/config');
 const facebookRoutes = require('../server/routes/facebookRoutes');
 const googleRoutes = require('../server/routes/googleRoutes');
 const usuarioRoutes = require('../server/routes/usersRoutes');
-const couponRoutes = require('../server/routes/couponRoutes')
-const messagesRoutes = require('../server/routes/messageRoutes')
+const couponRoutes = require('../server/routes/couponRoutes');
+const messagesRoutes = require('../server/routes/messageRoutes');
 const tiendaRoutes = require('./routes/shopRoutes');
 const tallerRoutes = require('./routes/workshopRoutes');
 const pedidoRoutes = require('./routes/orderRoutes');
@@ -20,9 +20,9 @@ const discordRoutes = require('./routes/discordRoutes');
 const cors = require('cors');
 const socketIo = require('socket.io');
 const updateSessionUser = require('../server/utils/updateMiddleware');
-const app = express();
 const multer = require('multer');
 const setupChat = require('../server/services/chatBot');
+const app = express();
 
 require('dotenv').config();
 
@@ -42,17 +42,19 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: { secure: true, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 } // 24 horas
-  }));
-  
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(updateSessionUser);
+
+// Rutas
 app.use(facebookRoutes);
 app.use(googleRoutes);
 app.use(discordRoutes);
 app.use('/api/usuarios', usuarioRoutes);
-app.use('/api/cupones', couponRoutes)
-app.use('/api/mensajes', messagesRoutes)
+app.use('/api/cupones', couponRoutes);
+app.use('/api/mensajes', messagesRoutes);
 app.use('/api/tiendas', tiendaRoutes);
 app.use('/api/talleres', tallerRoutes);
 app.use('/api/pedidos', pedidoRoutes);
@@ -60,6 +62,7 @@ app.use('/api/productos', productoRoutes);
 app.use('/api/talleryproductos', talleryproductoRoutes);
 app.use(bodyParser.json());
 
+// Middleware de manejo de errores
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (err instanceof multer.MulterError) {
@@ -68,14 +71,16 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Error interno del servidor' });
 });
 
-
+// Configuración de SSL para HTTPS
 const sslOptions = {
     key: fs.readFileSync(path.join(__dirname, 'private.key')),
     cert: fs.readFileSync(path.join(__dirname, 'certificate.crt'))
 };
 
+// Crear servidor HTTPS
 const server = https.createServer(sslOptions, app);
 
+// Configuración de Socket.IO
 const io = socketIo(server, {
     cors: {
         origin: "https://localhost:5000",
@@ -85,8 +90,10 @@ const io = socketIo(server, {
     }
 });
 
+// Iniciar el servicio del chatbot
 setupChat(io);
 
+// Iniciar el servidor
 server.listen({
     host: process.env.EXPRESS_HOST || 'localhost',
     port: process.env.PORT || 3000
