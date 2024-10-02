@@ -57,8 +57,11 @@ export default function Offer() {
             <Header />
 
             <section className="promociones-section">
+            <div className='texto-encabezado'>
+                <img src="../../public/img/triangulo-principales.svg" alt="" className='imagen-triangulo-store'/>
                 <h2>Descuentos y promociones</h2>
                 <p>En cientos de artesanías</p>
+            </div>
 
                 <div className="categorias-carrusel">
                     <div className="categorias-tabs">

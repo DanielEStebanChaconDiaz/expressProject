@@ -4,7 +4,6 @@
     left: 0;
     right: 0;
     background-color: white;
-    border: 1px solid #ddd;
     border-top: none;
     max-height: 400px;
     overflow-y: auto;
